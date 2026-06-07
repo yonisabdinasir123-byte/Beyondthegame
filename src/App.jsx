@@ -1072,9 +1072,78 @@ function ForgotPasswordModal({ isOpen, onClose, onBack }) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Splash screen
+// ─────────────────────────────────────────────────────────────
+const SPLASH_DURATION = 2600 // ms before auto-dismiss starts
+const SPLASH_EXIT_MS  = 700  // must match CSS animation duration
+
+function SplashScreen({ onDone }) {
+  const [phase, setPhase] = useState('enter') // 'enter' | 'hold' | 'exit'
+
+  const startExit = useCallback(() => {
+    if (phase === 'exit') return
+    setPhase('exit')
+    setTimeout(onDone, SPLASH_EXIT_MS)
+  }, [phase, onDone])
+
+  // Auto-dismiss
+  useEffect(() => {
+    const t = setTimeout(startExit, SPLASH_DURATION)
+    return () => clearTimeout(t)
+  }, [startExit])
+
+  // Skip on any key
+  useEffect(() => {
+    const onKey = () => startExit()
+    window.addEventListener('keydown', onKey, { once: true })
+    return () => window.removeEventListener('keydown', onKey)
+  }, [startExit])
+
+  return (
+    <div
+      className={`splash splash--${phase}`}
+      onClick={startExit}
+      role="status"
+      aria-label="Beyond the Game is loading"
+    >
+      {/* Decorative background rings */}
+      <span className="splash__ring splash__ring--1" aria-hidden="true" />
+      <span className="splash__ring splash__ring--2" aria-hidden="true" />
+
+      <div className="splash__content">
+        {/* Ball */}
+        <div className="splash__ball-wrap" aria-hidden="true">
+          <span className="splash__ball">⚽</span>
+        </div>
+
+        {/* Wordmark */}
+        <div className="splash__wordmark">
+          <h1 className="splash__title">Beyond the Game</h1>
+          <p className="splash__tagline">Life after the academy</p>
+        </div>
+
+        {/* Progress bar */}
+        <div className="splash__bar-track" aria-hidden="true">
+          <div className="splash__bar-fill" />
+        </div>
+
+        <button
+          type="button"
+          className="splash__skip"
+          onClick={(e) => { e.stopPropagation(); startExit() }}
+        >
+          Tap to skip
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
 // Root App
 // ─────────────────────────────────────────────────────────────
 export default function App() {
+  const [splashDone, setSplashDone] = useState(false)
   const [modal, setModal] = useState(null) // 'login' | 'signup' | 'forgot' | null
 
   const openLogin  = useCallback(() => setModal('login'),  [])
@@ -1088,6 +1157,10 @@ export default function App() {
 
   return (
     <>
+      {!splashDone && (
+        <SplashScreen onDone={() => setSplashDone(true)} />
+      )}
+
       <SkipLink />
 
       <Navbar onLogin={openLogin} onSignup={openSignup} />
