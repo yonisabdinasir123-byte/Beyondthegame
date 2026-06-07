@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App          from './App.jsx'
 import PathwayPage  from './pages/PathwayPage.jsx'
+import RecoveryPage from './pages/RecoveryPage.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/"        element={<App />} />
-        <Route path="/pathway" element={<PathwayPage />} />
+        <Route path="/"         element={<App />} />
+        <Route path="/pathway"  element={<PathwayPage />} />
+        <Route path="/recovery" element={<RecoveryPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
