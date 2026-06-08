@@ -815,6 +815,23 @@
   box-shadow: var(--sh-lg);
   transform: translateY(-3px);
 }
+.support-card--linked {
+  position: relative;
+}
+.support-card--linked::after {
+  content: 'Full guide';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--card-accent, var(--amber-700));
+  color: #fff;
+  font-size: .6875rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: .2em .55em;
+  border-radius: 4px;
+}
 
 .support-card__icon {
   width: 52px;

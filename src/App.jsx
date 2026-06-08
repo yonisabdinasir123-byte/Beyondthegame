@@ -155,6 +155,15 @@ const SUPPORT_CARDS = [
     accent: 'var(--c-community)',
     bg: 'var(--c-community-bg)',
   },
+  {
+    id: 'academy',
+    emoji: '🏆',
+    title: 'Life After Academy',
+    text: 'An in-depth guide covering the non-league pyramid, real player stories, the freedom player market, psychological literacy courses, and practical life skills — everything for your next chapter after the academy system.',
+    accent: '#1A4731',
+    bg: '#ECFDF5',
+    link: '/academy',
+  },
 ]
 
 const TESTIMONIALS = [
@@ -457,7 +466,7 @@ function SupportCardsSection() {
             Whatever you're going through,<br />there's support here
           </h2>
           <p className="section__subtitle">
-            Six dedicated pathways covering every major challenge young people
+            Seven dedicated pathways covering every major challenge young people
             face after leaving the academy system. Pick the one that speaks to
             you most right now.
           </p>
@@ -467,7 +476,7 @@ function SupportCardsSection() {
           {SUPPORT_CARDS.map(card => (
             <article
               key={card.id}
-              className="support-card"
+              className={`support-card${card.link ? ' support-card--linked' : ''}`}
               role="listitem"
               style={{ '--card-accent': card.accent, '--card-bg': card.bg }}
             >
@@ -476,9 +485,15 @@ function SupportCardsSection() {
               </div>
               <h3 className="support-card__title">{card.title}</h3>
               <p className="support-card__text">{card.text}</p>
-              <button type="button" className="support-card__cta">
-                Find out more <IconArrow />
-              </button>
+              {card.link ? (
+                <Link to={card.link} className="support-card__cta">
+                  Explore guide <IconArrow />
+                </Link>
+              ) : (
+                <button type="button" className="support-card__cta">
+                  Find out more <IconArrow />
+                </button>
+              )}
             </article>
           ))}
         </div>
