@@ -5,6 +5,9 @@ node_modules/
 dist/
 dist-ssr/
 
+# Generated standalone single-file build (offline preview artifact)
+BeyondTheGame.html
+
 # Local env files
 .env
 .env.local
