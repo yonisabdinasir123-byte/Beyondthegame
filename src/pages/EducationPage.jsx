@@ -1,0 +1,234 @@
+/**
+ * EducationPage.jsx — Local colleges, open days, and job fairs/events.
+ *
+ * HOW TO RUN:
+ *   npm run dev  → http://localhost:5173/education
+ *
+ * API INTEGRATIONS:
+ *   Colleges  → Google Places API (replace `colleges` import with async fetch)
+ *   Events    → Eventbrite API (replace `jobEvents` import with async fetch)
+ *   Postcode  → postcodes.io (lookupPostcode util, already wired)
+ *   Distance  → haversine util (already wired — maps to Reed distanceFromLocation)
+ */
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { Link } from 'react-router-dom'
+import { colleges, jobEvents } from '../data/educationData'
+import { lookupPostcode, DEFAULT_COORDS } from '../utils/distance'
+import { storage, formatDate } from '../utils/storage'
+import CollegeSearch from '../components/education/CollegeSearch'
+import EventsList    from '../components/education/EventsList'
+import './EducationPage.css'
+
+const NAV_SECTIONS = [
+  { id: 'colleges', label: '🏫 Colleges',  title: 'Local Colleges & Open Days' },
+  { id: 'events',   label: '🗓️ Events',    title: 'Job Fairs & Events'          },
+]
+
+function PageHeader() {
+  return (
+    <header className="edu-page-header" role="banner">
+      <div className="edu-page-header__inner">
+        <Link to="/" className="edu-back-link" aria-label="Back to home">← Home</Link>
+        <span className="edu-page-header__title">Education Hub</span>
+      </div>
+    </header>
+  )
+}
+
+function SectionNav({ activeId }) {
+  const scrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const offset = 60 + 52 + 16
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' })
+  }
+  return (
+    <nav className="edu-section-nav" aria-label="Education sections">
+      <div className="edu-section-nav__inner">
+        {NAV_SECTIONS.map(s => (
+          <button
+            key={s.id}
+            type="button"
+            className={`edu-nav-tab${activeId === s.id ? ' edu-nav-tab--active' : ''}`}
+            onClick={() => scrollTo(s.id)}
+            aria-pressed={activeId === s.id}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+    </nav>
+  )
+}
+
+function PostcodeBar({ onCoords }) {
+  const [postcode, setPostcode] = useState(() => storage.get('user-postcode', ''))
+  const [status,   setStatus]   = useState(postcode ? 'saved' : 'idle') // idle|loading|saved|error
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault()
+    if (!postcode.trim()) return
+    setStatus('loading')
+    const coords = await lookupPostcode(postcode)
+    if (coords) {
+      storage.set('user-postcode',  postcode.trim().toUpperCase())
+      storage.set('user-coords',    coords)
+      onCoords(coords)
+      setStatus('saved')
+    } else {
+      setStatus('error')
+    }
+  }
+
+  // Auto-resolve on mount if we have a saved postcode/coords
+  useEffect(() => {
+    const saved = storage.get('user-coords', null)
+    if (saved) { onCoords(saved); setStatus('saved') }
+  }, [])
+
+  return (
+    <form className="edu-postcode-bar" onSubmit={handleSubmit} aria-label="Set your location">
+      <label htmlFor="edu-postcode" className="edu-postcode-label">
+        📍 Your postcode (for distance filters)
+      </label>
+      <div className="edu-postcode-row">
+        <input
+          id="edu-postcode"
+          type="text"
+          className={`edu-input edu-postcode-input${status === 'error' ? ' edu-input--error' : ''}`}
+          value={postcode}
+          onChange={e => { setPostcode(e.target.value.toUpperCase()); setStatus('idle') }}
+          placeholder="e.g. M1 1AE"
+          maxLength={8}
+          autoComplete="postal-code"
+          spellCheck={false}
+        />
+        <button type="submit" className="edu-cta edu-cta--primary" disabled={status === 'loading'}>
+          {status === 'loading' ? 'Finding…' : 'Set location'}
+        </button>
+        {status === 'saved' && <span className="edu-postcode-ok" aria-live="polite">✓ Location set</span>}
+      </div>
+      {status === 'error' && <p className="form-error" role="alert">Couldn't find that postcode — check it and try again.</p>}
+      <p className="edu-postcode-note">We use this only to calculate distances. No account or sign-in needed.</p>
+    </form>
+  )
+}
+
+function Section({ id, title, children }) {
+  return (
+    <section id={id} className="edu-section" aria-labelledby={`${id}-heading`}>
+      <div className="edu-section__inner">
+        <h2 id={`${id}-heading`} className="edu-section__title">{title}</h2>
+        {children}
+      </div>
+    </section>
+  )
+}
+
+export default function EducationPage() {
+  const [activeId,    setActiveId]    = useState('colleges')
+  const [userCoords,  setUserCoords]  = useState(() => storage.get('user-coords', null))
+  const [savedDays,   setSavedDays]   = useState(() => storage.get('saved-opendays', []))
+  const observerRef = useRef(null)
+
+  useEffect(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio >= 0.2) setActiveId(e.target.id)
+      })
+    }, { rootMargin: '-60px 0px -40% 0px', threshold: [0.2, 0.5] })
+    NAV_SECTIONS.forEach(s => {
+      const el = document.getElementById(s.id)
+      if (el) obs.observe(el)
+    })
+    observerRef.current = obs
+    return () => obs.disconnect()
+  }, [])
+
+  const handleSaveOpenDay = useCallback(({ collegeId, collegeName, openDayDate }) => {
+    const key   = `${collegeId}_${openDayDate}`
+    const entry = { id: key, openDayKey: key, collegeId, collegeName, openDayDate, savedAt: new Date().toISOString() }
+    setSavedDays(prev => {
+      if (prev.find(s => s.openDayKey === key)) return prev
+      const next = [...prev, entry]
+      storage.set('saved-opendays', next)
+      return next
+    })
+  }, [])
+
+  return (
+    <>
+      <a href="#colleges" className="skip-link">Skip to content</a>
+      <PageHeader />
+
+      <main>
+        <div className="edu-hero">
+          <div className="edu-hero__inner">
+            <h1 className="edu-hero__title">Education & Events</h1>
+            <p className="edu-hero__sub">
+              Find local colleges, open days, and careers events near you.
+              Save open days to your checklist and explore what's on.
+            </p>
+          </div>
+        </div>
+
+        <div className="edu-section__inner edu-postcode-wrap">
+          <PostcodeBar onCoords={setUserCoords} />
+        </div>
+
+        {savedDays.length > 0 && (
+          <div className="edu-saved-bar">
+            <div className="edu-section__inner">
+              <p className="edu-saved-bar__text">
+                📅 You've saved <strong>{savedDays.length}</strong> open day{savedDays.length !== 1 ? 's' : ''}.
+                {' '}
+                <button
+                  type="button"
+                  className="edu-link-btn"
+                  onClick={() => { setSavedDays([]); storage.set('saved-opendays', []) }}
+                >
+                  Clear saved
+                </button>
+              </p>
+              <ul className="edu-saved-list" role="list">
+                {savedDays.map(s => (
+                  <li key={s.openDayKey} className="edu-saved-item">
+                    <span>🏫 {s.collegeName}</span>
+                    <span className="edu-saved-item__date">{formatDate(s.openDayDate)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        <SectionNav activeId={activeId} />
+
+        <Section id="colleges" title="Local Colleges & Open Days">
+          <p className="edu-section__desc">
+            Search by name, area, or course. Results update live as you type.
+            Filter by distance and save open days so you don't miss them.
+          </p>
+          <CollegeSearch
+            colleges={colleges}
+            userCoords={userCoords ?? DEFAULT_COORDS}
+            onSaveOpenDay={handleSaveOpenDay}
+          />
+        </Section>
+
+        <Section id="events" title="Job Fairs & Careers Events">
+          <p className="edu-section__desc">
+            Upcoming events near you — job fairs, recruitment days, and careers talks.
+            Free to attend unless stated otherwise.
+          </p>
+          <EventsList events={jobEvents} userCoords={userCoords ?? DEFAULT_COORDS} />
+        </Section>
+      </main>
+
+      <footer className="edu-footer">
+        <p>© 2025 Beyond the Game · Distances are approximate.</p>
+        <Link to="/" className="edu-footer__link">← Back to home</Link>
+      </footer>
+    </>
+  )
+}

@@ -216,7 +216,22 @@ function Navbar({ onLogin, onSignup }) {
             <li><a href="#community" className="navbar__nav-link">Community</a></li>
             <li>
               <Link to="/pathway" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
-                ⚽ Pathway Finder
+                ⚽ Pathway
+              </Link>
+            </li>
+            <li>
+              <Link to="/education" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
+                🏫 Education
+              </Link>
+            </li>
+            <li>
+              <Link to="/jobs" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
+                💼 Jobs
+              </Link>
+            </li>
+            <li>
+              <Link to="/careers" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
+                🌟 Careers
               </Link>
             </li>
           </ul>
@@ -262,7 +277,11 @@ function Navbar({ onLogin, onSignup }) {
             <li><a href="#pathways" className="navbar__nav-link" onClick={closeMobile}>My Pathway</a></li>
             <li><a href="#support" className="navbar__nav-link" onClick={closeMobile}>Support</a></li>
             <li><a href="#community" className="navbar__nav-link" onClick={closeMobile}>Community</a></li>
-            <li><Link to="/pathway" className="navbar__nav-link" onClick={closeMobile}>⚽ Pathway Finder</Link></li>
+            <li><Link to="/pathway"   className="navbar__nav-link" onClick={closeMobile}>⚽ Pathway</Link></li>
+            <li><Link to="/education" className="navbar__nav-link" onClick={closeMobile}>🏫 Education</Link></li>
+            <li><Link to="/jobs"      className="navbar__nav-link" onClick={closeMobile}>💼 Jobs</Link></li>
+            <li><Link to="/careers"   className="navbar__nav-link" onClick={closeMobile}>🌟 Career Suggester</Link></li>
+            <li><Link to="/checklist" className="navbar__nav-link" onClick={closeMobile}>✅ Networking</Link></li>
           </ul>
           <div className="navbar__mobile-auth">
             <button type="button" className="navbar__btn navbar__btn--ghost" onClick={handleLogin} style={{ flex: 1 }}>
