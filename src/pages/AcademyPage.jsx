@@ -1,5 +1,5 @@
 /**
- * AcademyPage.jsx — "Beyond the Academy" support page.
+ * AcademyPage.jsx — "Life After Academy" support page (part of Beyond the Game).
  *
  * This is a page WITHIN the Beyond the Game site. It reuses the shared site
  * header + footer (and auth modals) via <SiteLayout>, and renders its own

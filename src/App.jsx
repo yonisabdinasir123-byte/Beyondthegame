@@ -236,7 +236,7 @@ export function Navbar({ onLogin, onSignup }) {
             </li>
             <li>
               <Link to="/academy" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
-                🏆 Beyond the Academy
+                🏆 Life After Academy
               </Link>
             </li>
           </ul>
@@ -287,7 +287,7 @@ export function Navbar({ onLogin, onSignup }) {
             <li><Link to="/jobs"      className="navbar__nav-link" onClick={closeMobile}>💼 Jobs</Link></li>
             <li><Link to="/careers"   className="navbar__nav-link" onClick={closeMobile}>🌟 Career Suggester</Link></li>
             <li><Link to="/checklist" className="navbar__nav-link" onClick={closeMobile}>✅ Networking</Link></li>
-            <li><Link to="/academy"   className="navbar__nav-link" onClick={closeMobile}>🏆 Beyond the Academy</Link></li>
+            <li><Link to="/academy"   className="navbar__nav-link" onClick={closeMobile}>🏆 Life After Academy</Link></li>
           </ul>
           <div className="navbar__mobile-auth">
             <button type="button" className="navbar__btn navbar__btn--ghost" onClick={handleLogin} style={{ flex: 1 }}>
