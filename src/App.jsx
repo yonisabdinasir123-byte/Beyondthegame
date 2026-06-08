@@ -181,7 +181,7 @@ const TESTIMONIALS = [
 // ─────────────────────────────────────────────────────────────
 // Skip link
 // ─────────────────────────────────────────────────────────────
-function SkipLink() {
+export function SkipLink() {
   return (
     <a href="#main-content" className="skip-link">
       Skip to main content
@@ -192,7 +192,7 @@ function SkipLink() {
 // ─────────────────────────────────────────────────────────────
 // Navbar
 // ─────────────────────────────────────────────────────────────
-function Navbar({ onLogin, onSignup }) {
+export function Navbar({ onLogin, onSignup }) {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const closeMobile = () => setMobileOpen(false)
@@ -232,6 +232,11 @@ function Navbar({ onLogin, onSignup }) {
             <li>
               <Link to="/careers" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
                 🌟 Careers
+              </Link>
+            </li>
+            <li>
+              <Link to="/academy" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
+                🏆 Beyond the Academy
               </Link>
             </li>
           </ul>
@@ -282,6 +287,7 @@ function Navbar({ onLogin, onSignup }) {
             <li><Link to="/jobs"      className="navbar__nav-link" onClick={closeMobile}>💼 Jobs</Link></li>
             <li><Link to="/careers"   className="navbar__nav-link" onClick={closeMobile}>🌟 Career Suggester</Link></li>
             <li><Link to="/checklist" className="navbar__nav-link" onClick={closeMobile}>✅ Networking</Link></li>
+            <li><Link to="/academy"   className="navbar__nav-link" onClick={closeMobile}>🏆 Beyond the Academy</Link></li>
           </ul>
           <div className="navbar__mobile-auth">
             <button type="button" className="navbar__btn navbar__btn--ghost" onClick={handleLogin} style={{ flex: 1 }}>
@@ -555,7 +561,7 @@ function CTABand({ onSignup, onLogin }) {
 // ─────────────────────────────────────────────────────────────
 // Footer
 // ─────────────────────────────────────────────────────────────
-function FooterSection({ onLogin, onSignup }) {
+export function FooterSection({ onLogin, onSignup }) {
   return (
     <footer className="footer" id="about">
       <div className="footer__grid">
@@ -714,7 +720,7 @@ function Modal({ isOpen, onClose, labelId, children }) {
 // ─────────────────────────────────────────────────────────────
 // Login modal
 // ─────────────────────────────────────────────────────────────
-function LoginModal({ isOpen, onClose, onForgotPassword, onSignup }) {
+export function LoginModal({ isOpen, onClose, onForgotPassword, onSignup }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -822,7 +828,7 @@ function LoginModal({ isOpen, onClose, onForgotPassword, onSignup }) {
 // ─────────────────────────────────────────────────────────────
 // Sign up modal
 // ─────────────────────────────────────────────────────────────
-function SignupModal({ isOpen, onClose, onLogin }) {
+export function SignupModal({ isOpen, onClose, onLogin }) {
   const [form, setForm] = useState({
     name: '', email: '', ageGroup: '', password: '', confirmPassword: '', terms: false,
   })
@@ -1010,7 +1016,7 @@ function SignupModal({ isOpen, onClose, onLogin }) {
 // ─────────────────────────────────────────────────────────────
 // Forgot password modal
 // ─────────────────────────────────────────────────────────────
-function ForgotPasswordModal({ isOpen, onClose, onBack }) {
+export function ForgotPasswordModal({ isOpen, onClose, onBack }) {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)

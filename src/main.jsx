@@ -8,6 +8,7 @@ import EducationPage       from './pages/EducationPage.jsx'
 import EmployabilityPage   from './pages/EmployabilityPage.jsx'
 import ChecklistPage       from './pages/ChecklistPage.jsx'
 import CareerSuggesterPage from './pages/CareerSuggesterPage.jsx'
+import AcademyPage         from './pages/AcademyPage.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/jobs"       element={<EmployabilityPage />} />
         <Route path="/checklist"  element={<ChecklistPage />} />
         <Route path="/careers"    element={<CareerSuggesterPage />} />
+        <Route path="/academy"    element={<AcademyPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
