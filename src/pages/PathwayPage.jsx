@@ -31,6 +31,7 @@ import './PathwayPage.css'
 
 // ─── Section nav config ────────────────────────────────────────────────────────
 const SECTIONS = [
+  { id: 'pyramid',    label: '🪜 The Pyramid' },
   { id: 'clubs',      label: '⚽ Clubs'       },
   { id: 'showcases',  label: '🔍 Showcases'   },
   { id: 'tournaments',label: '🏆 Tournaments' },
@@ -38,6 +39,176 @@ const SECTIONS = [
   { id: 'cv-builder', label: '📄 AI CV'       },
   { id: 'stories',    label: '💬 Stories'     },
 ]
+
+// ─── Animated stat counter — counts up when scrolled into view ─────────────────
+function usePyramidCounters(rootRef) {
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || typeof IntersectionObserver === 'undefined') return
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const els = root.querySelectorAll('[data-target]')
+
+    if (reduce) {
+      els.forEach(el => {
+        const t = parseInt(el.dataset.target || '0', 10)
+        if (t) el.textContent = t.toLocaleString('en-GB') + (el.dataset.suffix || '')
+      })
+      return
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return
+        const el = entry.target
+        const target = parseInt(el.dataset.target || '0', 10)
+        const suffix = el.dataset.suffix || ''
+        if (!target) return
+        obs.unobserve(el)
+        const duration = 1600
+        let startTime = null
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4)
+        const step = (ts) => {
+          if (!startTime) startTime = ts
+          const progress = Math.min((ts - startTime) / duration, 1)
+          el.textContent = Math.round(easeOutQuart(progress) * target).toLocaleString('en-GB') + suffix
+          if (progress < 1) requestAnimationFrame(step)
+        }
+        requestAnimationFrame(step)
+      })
+    }, { threshold: 0.5 })
+
+    els.forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [rootRef])
+}
+
+// ─── The Pyramid — non-league → professional ladder (moved from Academy page) ──
+function PyramidSection() {
+  const ref = useRef(null)
+  usePyramidCounters(ref)
+
+  return (
+    <section id="pyramid" className="pwy-pyramid" ref={ref} aria-labelledby="pyramid-heading">
+      <div className="pwy-pyramid__inner">
+        <span className="pwy-pyramid__eyebrow">The route up</span>
+        <h2 className="pwy-pyramid__title" id="pyramid-heading">
+          Non-League to <em>Professional</em>
+        </h2>
+        <p className="pwy-pyramid__lead">
+          The English football pyramid has more than 24 levels. Professional football
+          is at the top — but there are routes all the way up, and real players use
+          them every season.
+        </p>
+
+        {/* Stat counters */}
+        <div className="pwy-pyramid__stats" aria-label="Pyramid statistics">
+          <div className="pwy-pyr-stat">
+            <span className="pwy-pyr-stat__num" data-target="10000">10,000</span>
+            <span className="pwy-pyr-stat__label">boys in UK academies at any one time</span>
+          </div>
+          <div className="pwy-pyr-stat">
+            <span className="pwy-pyr-stat__num">&lt;200</span>
+            <span className="pwy-pyr-stat__label">turn professional each year</span>
+          </div>
+          <div className="pwy-pyr-stat">
+            <span className="pwy-pyr-stat__num" data-target="5" data-suffix="">5</span>
+            <span className="pwy-pyr-stat__label">divisions · Jake Tabor&rsquo;s leap from non-league to Swindon Town</span>
+          </div>
+        </div>
+
+        <div className="pwy-pyramid__layout">
+          {/* Ladder */}
+          <div className="pwy-pyr-steps" role="list" aria-label="Football pyramid steps">
+
+            <div className="pwy-pyr-step" role="listitem">
+              <span className="pwy-pyr-step__level">Step 5</span>
+              <div className="pwy-pyr-step__bar pwy-pyr-step__bar--s5" />
+              <div className="pwy-pyr-step__info">
+                <div className="pwy-pyr-step__name">Combined Counties / Regional Step 5</div>
+                <div className="pwy-pyr-step__detail">Where Jake Tabor scored 127 goals in 91 games at Amersham Town</div>
+              </div>
+              <div className="pwy-pyr-step__badge">Tabor starts here</div>
+            </div>
+
+            <div className="pwy-pyr-step" role="listitem">
+              <span className="pwy-pyr-step__level">Step 4</span>
+              <div className="pwy-pyr-step__bar pwy-pyr-step__bar--s4" />
+              <div className="pwy-pyr-step__info">
+                <div className="pwy-pyr-step__name">Southern / Northern / Isthmian Premier</div>
+                <div className="pwy-pyr-step__detail">Scouts increasingly active at this level. Semi-professional wages begin.</div>
+              </div>
+            </div>
+
+            <div className="pwy-pyr-step" role="listitem">
+              <span className="pwy-pyr-step__level">Step 3</span>
+              <div className="pwy-pyr-step__bar pwy-pyr-step__bar--s3" />
+              <div className="pwy-pyr-step__info">
+                <div className="pwy-pyr-step__name">Division One South/North</div>
+                <div className="pwy-pyr-step__detail">Full-time or near-full-time football. Regular TV and streaming coverage begins.</div>
+              </div>
+            </div>
+
+            <div className="pwy-pyr-step pwy-pyr-step--highlight" role="listitem">
+              <span className="pwy-pyr-step__level">Step 2</span>
+              <div className="pwy-pyr-step__bar pwy-pyr-step__bar--s2" />
+              <div className="pwy-pyr-step__info">
+                <div className="pwy-pyr-step__name">National League North/South</div>
+                <div className="pwy-pyr-step__detail">Joshua Osude: Bishop&rsquo;s Stortford → Hashtag United → Woking → Forest Green Rovers 2026</div>
+              </div>
+              <div className="pwy-pyr-step__badge">Osude route</div>
+            </div>
+
+            <div className="pwy-pyr-step pwy-pyr-step--highlight" role="listitem">
+              <span className="pwy-pyr-step__level">Step 1</span>
+              <div className="pwy-pyr-step__bar pwy-pyr-step__bar--s1" />
+              <div className="pwy-pyr-step__info">
+                <div className="pwy-pyr-step__name">National League</div>
+                <div className="pwy-pyr-step__detail">92nd league club just one promotion away. Jamie Vardy played at Step 4 age 23.</div>
+              </div>
+              <div className="pwy-pyr-step__badge pwy-pyr-step__badge--amber">Hot zone</div>
+            </div>
+
+            <div className="pwy-pyr-step" role="listitem">
+              <span className="pwy-pyr-step__level">EFL</span>
+              <div className="pwy-pyr-step__bar pwy-pyr-step__bar--prem" />
+              <div className="pwy-pyr-step__info">
+                <div className="pwy-pyr-step__name">EFL League Two → Championship → Premier League</div>
+                <div className="pwy-pyr-step__detail">Jake Tabor signed his first professional contract with Swindon Town (League One) in 2025 — a five-division leap.</div>
+              </div>
+              <div className="pwy-pyr-step__badge pwy-pyr-step__badge--white">Pro football</div>
+            </div>
+
+          </div>
+
+          {/* Callouts */}
+          <div className="pwy-pyr-aside">
+            <div className="pwy-pyr-callout">
+              <div className="pwy-pyr-callout__title">Jake Tabor&rsquo;s story</div>
+              <div className="pwy-pyr-callout__body">
+                Wycombe Wanderers told Jake Tabor he wasn&rsquo;t good enough. He dropped to Step 5 and proved them wrong — <strong>127 goals in 91 games</strong> for Amersham Town in the Combined Counties League. In 2025, Swindon Town signed him to his first professional contract, leaping five divisions in a single move.<br /><br />
+                Tabor didn&rsquo;t wait for a club to believe in him. He went and made it impossible for them not to.
+              </div>
+            </div>
+
+            <div className="pwy-pyr-keystat">
+              <div className="pwy-pyr-keystat__num">127</div>
+              <div className="pwy-pyr-keystat__text">goals in 91 non-league games for Jake Tabor — the form that earned his professional contract</div>
+            </div>
+
+            <div className="pwy-pyr-keystat">
+              <div className="pwy-pyr-keystat__num">23</div>
+              <div className="pwy-pyr-keystat__text">the age Jamie Vardy was playing non-league football at Stocksbridge Park Steels, Step 4, before going on to win the Premier League with Leicester City</div>
+            </div>
+
+            <div className="pwy-pyr-scout">
+              <p><strong>What scouts look for:</strong> consistency, goals or assists per 90, professionalism, and a player who performs under pressure week in, week out — regardless of the level. High stats at Step 5 do get noticed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 // ─── Section navigation ────────────────────────────────────────────────────────
 function SectionNav({ activeSection }) {
@@ -153,7 +324,7 @@ export default function PathwayPage() {
   }, [search, filters])
 
   // ── Active section tracking (IntersectionObserver) ────────────────────────
-  const [activeSection, setActiveSection] = useState('clubs')
+  const [activeSection, setActiveSection] = useState('pyramid')
   const observerRef = useRef(null)
 
   useEffect(() => {
@@ -179,6 +350,9 @@ export default function PathwayPage() {
       <PageHeader />
       <Hero />
       <SectionNav activeSection={activeSection} />
+
+      {/* ── 0. The Pyramid ─────────────────────────────────────────────────── */}
+      <PyramidSection />
 
       {/* ── 1. Club Finder ─────────────────────────────────────────────────── */}
       <PwySection

@@ -1,23 +1,15 @@
-/**
- * AcademyPage.jsx — "Life After Academy" support page (part of Beyond the Game).
- *
- * This is a page WITHIN the Beyond the Game site. It reuses the shared site
- * header + footer (and auth modals) via <SiteLayout>, and renders its own
- * editorial sports-brand body styled entirely under `.academy-scope`
- * (see AcademyPage.css) so nothing leaks into the rest of the app.
- */
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import SiteLayout from '../components/SiteLayout'
 import './AcademyPage.css'
 
-/* Animated stat counter — counts up when scrolled into view. */
+/* Animated counter for stats */
 function useCounters(rootRef) {
   useEffect(() => {
     const root = rootRef.current
     if (!root || typeof IntersectionObserver === 'undefined') return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     const els = root.querySelectorAll('.aca-stat-block__num[data-target]')
-
     if (reduce) {
       els.forEach(el => {
         const t = parseInt(el.dataset.target || '0', 10)
@@ -25,7 +17,6 @@ function useCounters(rootRef) {
       })
       return
     }
-
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return
@@ -36,18 +27,16 @@ function useCounters(rootRef) {
         obs.unobserve(el)
         const duration = 1600
         let startTime = null
-        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4)
+        const ease = (t) => 1 - Math.pow(1 - t, 4)
         const step = (ts) => {
           if (!startTime) startTime = ts
-          const progress = Math.min((ts - startTime) / duration, 1)
-          const val = Math.round(easeOutQuart(progress) * target)
-          el.textContent = val.toLocaleString('en-GB') + suffix
-          if (progress < 1) requestAnimationFrame(step)
+          const p = Math.min((ts - startTime) / duration, 1)
+          el.textContent = Math.round(ease(p) * target).toLocaleString('en-GB') + suffix
+          if (p < 1) requestAnimationFrame(step)
         }
         requestAnimationFrame(step)
       })
     }, { threshold: 0.5 })
-
     els.forEach(el => obs.observe(el))
     return () => obs.disconnect()
   }, [rootRef])
@@ -61,25 +50,23 @@ export default function AcademyPage() {
     <SiteLayout>
       <div className="academy-scope" ref={rootRef}>
 
-        {/* ── 1. HERO ─────────────────────────────────────────────────────── */}
+        {/* ── 1. HERO — minimal editorial ────────────────────────────────── */}
         <section className="aca-hero" id="aca-hero" aria-labelledby="aca-hero-headline">
           <div className="aca-hero-pitch" aria-hidden="true" />
-          <div className="aca-hero-glow" aria-hidden="true" />
           <div className="aca-inner aca-hero-content">
-            <div className="aca-hero-kicker">UK Football Academy Reality Check</div>
+            <div className="aca-hero-kicker">Life After the Academy</div>
             <h1 className="aca-hero-headline" id="aca-hero-headline">
               The game<br />
               <em>doesn&rsquo;t end</em><br />
               at release.
             </h1>
             <p className="aca-hero-sub">
-              Whether you&rsquo;re climbing the non-league pyramid or figuring out what
-              comes next, you are not defined by what a club decided when you were 16.
-              This is your resource.
+              Whether you&rsquo;re figuring out what comes next or climbing back into the game,
+              you are not defined by what a club decided when you were young.
             </p>
             <div className="aca-hero-actions">
-              <a href="#aca-pyramid" className="aca-btn aca-btn--lime">See the pathway →</a>
-              <a href="#aca-support" className="aca-btn aca-btn--outline">Find support</a>
+              <a href="#aca-courses" className="aca-btn aca-btn--lime">Explore resources →</a>
+              <a href="#aca-help" className="aca-btn aca-btn--outline">Get help now</a>
             </div>
 
             <div className="aca-hero-stats" aria-label="Academy statistics">
@@ -95,119 +82,17 @@ export default function AcademyPage() {
                 <span className="aca-stat-block__num">98%</span>
                 <span className="aca-stat-block__label">need a plan<br />beyond pro football</span>
               </div>
-              <div className="aca-stat-block">
-                <span className="aca-stat-block__num" style={{ color: 'var(--aca-amber)' }}>5 Divisions</span>
-                <span className="aca-stat-block__label">Jake Tabor&rsquo;s leap from<br />non-league to Swindon Town</span>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* ── 2. PYRAMID ──────────────────────────────────────────────────── */}
-        <section className="aca-section aca-section--alt" id="aca-pyramid" aria-labelledby="aca-pyramid-heading">
-          <div className="aca-inner">
-            <span className="aca-eyebrow">The route up</span>
-            <h2 className="aca-title" id="aca-pyramid-heading">Non-League to <em>Professional</em></h2>
-            <p className="aca-lead">The English football pyramid has more than 24 levels. Professional football is at the top — but there are routes all the way up, and real players use them every season.</p>
-
-            <div className="aca-pyramid-layout">
-              <div>
-                <div className="aca-pyramid-steps" role="list" aria-label="Football pyramid steps">
-
-                  <div className="aca-pyr-step" role="listitem">
-                    <span className="aca-pyr-step__level">Step 5</span>
-                    <div className="aca-pyr-step__bar aca-pyr-step__bar--s5" />
-                    <div className="aca-pyr-step__info">
-                      <div className="aca-pyr-step__name">Combined Counties / Regional Step 5</div>
-                      <div className="aca-pyr-step__detail">Where Jake Tabor scored 127 goals in 91 games at Amersham Town</div>
-                    </div>
-                    <div className="aca-pyr-step__badge">Tabor starts here</div>
-                  </div>
-
-                  <div className="aca-pyr-step" role="listitem">
-                    <span className="aca-pyr-step__level">Step 4</span>
-                    <div className="aca-pyr-step__bar aca-pyr-step__bar--s4" />
-                    <div className="aca-pyr-step__info">
-                      <div className="aca-pyr-step__name">Southern / Northern / Isthmian Premier</div>
-                      <div className="aca-pyr-step__detail">Scouts increasingly active at this level. Semi-professional wages begin.</div>
-                    </div>
-                  </div>
-
-                  <div className="aca-pyr-step" role="listitem">
-                    <span className="aca-pyr-step__level">Step 3</span>
-                    <div className="aca-pyr-step__bar aca-pyr-step__bar--s3" />
-                    <div className="aca-pyr-step__info">
-                      <div className="aca-pyr-step__name">Division One South/North</div>
-                      <div className="aca-pyr-step__detail">Full-time or near-full-time football. Regular TV and streaming coverage begins.</div>
-                    </div>
-                  </div>
-
-                  <div className="aca-pyr-step aca-pyr-step--highlight" role="listitem">
-                    <span className="aca-pyr-step__level">Step 2</span>
-                    <div className="aca-pyr-step__bar aca-pyr-step__bar--s2" />
-                    <div className="aca-pyr-step__info">
-                      <div className="aca-pyr-step__name">National League North/South</div>
-                      <div className="aca-pyr-step__detail">Joshua Osude: Bishop&rsquo;s Stortford → Hashtag United → Woking → Forest Green Rovers 2026</div>
-                    </div>
-                    <div className="aca-pyr-step__badge">Osude route</div>
-                  </div>
-
-                  <div className="aca-pyr-step aca-pyr-step--highlight" role="listitem">
-                    <span className="aca-pyr-step__level">Step 1</span>
-                    <div className="aca-pyr-step__bar aca-pyr-step__bar--s1" />
-                    <div className="aca-pyr-step__info">
-                      <div className="aca-pyr-step__name">National League</div>
-                      <div className="aca-pyr-step__detail">92nd league club just one promotion away. Jamie Vardy played at Step 4 age 23.</div>
-                    </div>
-                    <div className="aca-pyr-step__badge" style={{ background: 'var(--aca-amber)', color: '#000' }}>Hot zone</div>
-                  </div>
-
-                  <div className="aca-pyr-step" role="listitem">
-                    <span className="aca-pyr-step__level">EFL</span>
-                    <div className="aca-pyr-step__bar aca-pyr-step__bar--prem" />
-                    <div className="aca-pyr-step__info">
-                      <div className="aca-pyr-step__name">EFL League Two → Championship → Premier League</div>
-                      <div className="aca-pyr-step__detail">Jake Tabor signed his first professional contract with Swindon Town (League One) in 2025 — a five-division leap.</div>
-                    </div>
-                    <div className="aca-pyr-step__badge" style={{ background: '#fff', color: '#000' }}>Pro football</div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div>
-                <div className="aca-pyramid-callout">
-                  <div className="aca-pyramid-callout__title">Jake Tabor&rsquo;s story</div>
-                  <div className="aca-pyramid-callout__body">
-                    Wycombe Wanderers told Jake Tabor he wasn&rsquo;t good enough. He dropped to Step 5 and proved them wrong — <strong>127 goals in 91 games</strong> for Amersham Town in the Combined Counties League. In 2025, Swindon Town signed him to his first professional contract, leaping five divisions in a single move.<br /><br />
-                    Tabor didn&rsquo;t wait for a club to believe in him. He went and made it impossible for them not to.
-                  </div>
-                </div>
-
-                <div className="aca-key-stat">
-                  <div className="aca-key-stat__num">127</div>
-                  <div className="aca-key-stat__text">goals in 91 non-league games for Jake Tabor — the form that earned his professional contract</div>
-                </div>
-
-                <div className="aca-key-stat">
-                  <div className="aca-key-stat__num">23</div>
-                  <div className="aca-key-stat__text">the age Jamie Vardy was playing non-league football at Stocksbridge Park Steels, Step 4, before going on to win the Premier League with Leicester City</div>
-                </div>
-
-                <div className="aca-scout-box">
-                  <p><strong>What scouts look for:</strong> consistency, goals or assists per 90, professionalism, and a player who performs under pressure week in, week out — regardless of the level. High stats at Step 5 do get noticed.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 3. PLAYERS WHO MADE THE LEAP ───────────────────────────────── */}
+        {/* ── 2. PLAYER STORIES — cards with pathway deep-link ───────────── */}
         <section className="aca-section" id="aca-stories" aria-labelledby="aca-stories-heading">
           <div className="aca-inner">
             <span className="aca-eyebrow">Real journeys</span>
             <h2 className="aca-title" id="aca-stories-heading">Players Who <em>Made The Leap</em></h2>
             <p className="aca-lead">Released, dropped down, or written off — these players found routes back through consistency, character, and refusing to accept someone else&rsquo;s ceiling.</p>
+
             <div className="aca-cards-grid">
 
               <article className="aca-player-card" aria-label="Jake Tabor">
@@ -293,15 +178,22 @@ export default function AcademyPage() {
               </article>
 
             </div>
+
+            {/* Deep-link to the full pyramid on the Pathway page */}
+            <div className="aca-stories-cta">
+              <Link to="/pathway#pyramid" className="aca-stories-link">
+                See the full non-league pyramid and how to climb it →
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* ── 4. FREEDOM PLAYERS ─────────────────────────────────────────── */}
+        {/* ── 3. FREEDOM PLAYERS ─────────────────────────────────────────── */}
         <section className="aca-section aca-section--alt" id="aca-freedom" aria-labelledby="aca-freedom-heading">
           <div className="aca-inner">
             <span className="aca-eyebrow">Life after pro football</span>
             <h2 className="aca-title" id="aca-freedom-heading">Ex-Pros Who <em>Chose Freedom</em></h2>
-            <p className="aca-lead">Walking away from or leaving professional football isn&rsquo;t failure — for some, it&rsquo;s when their real story starts. These players found something that matched or exceeded what football gave them.</p>
+            <p className="aca-lead">Walking away from professional football isn&rsquo;t failure — for some, it&rsquo;s when their real story starts.</p>
 
             <div className="aca-freedom-grid">
 
@@ -375,7 +267,7 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        {/* ── 5. PSYCHOLOGICAL LITERACY COURSES ──────────────────────────── */}
+        {/* ── 4. PSYCHOLOGICAL LITERACY COURSES ──────────────────────────── */}
         <section className="aca-section" id="aca-courses" aria-labelledby="aca-courses-heading">
           <div className="aca-inner">
             <span className="aca-eyebrow">Filling the EPPP gap</span>
@@ -476,7 +368,7 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        {/* ── 6. TRANSFERABLE LIFE SKILLS ────────────────────────────────── */}
+        {/* ── 5. LIFE SKILLS TILES ───────────────────────────────────────── */}
         <section className="aca-section aca-section--alt" id="aca-skills" aria-labelledby="aca-skills-heading">
           <div className="aca-inner">
             <span className="aca-eyebrow">Your skills travel with you</span>
@@ -555,61 +447,25 @@ export default function AcademyPage() {
           </div>
         </section>
 
-        {/* ── 7. WHAT SUPPORT SHOULD LOOK LIKE ───────────────────────────── */}
-        <section className="aca-section" id="aca-support" aria-labelledby="aca-support-heading">
-          <div className="aca-inner">
-            <span className="aca-eyebrow">You deserve proper support</span>
-            <h2 className="aca-title" id="aca-support-heading">What Support <em>Should</em> Look Like</h2>
-            <p className="aca-lead">Too many players go through release with minimal support. Here&rsquo;s what good support looks like — both inside the academy system and at the moment of release. You have every right to expect this.</p>
-
-            <div className="aca-support-grid">
-
-              <div className="aca-support-col aca-support-col--during" aria-label="Support during academy years">
-                <h3 className="aca-support-col__heading">During your academy years</h3>
-                <ul className="aca-support-bullets" role="list">
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--teal" aria-hidden="true">✓</span><span><strong>Dedicated welfare officer</strong> — independent of the coaching staff, someone whose job it is to look after your wellbeing, not your performance metrics</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--teal" aria-hidden="true">✓</span><span><strong>Dual career planning from age 14</strong> — education, vocational pathways, and fallback plans that run alongside your football development</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--teal" aria-hidden="true">✓</span><span><strong>Access to a sport psychologist</strong> — not on an emergency basis, but regularly, to build psychological tools the same way you build technical skills</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--teal" aria-hidden="true">✓</span><span><strong>Honest, early communication</strong> — if the club is likely to release you, you should hear it clearly and with enough time to plan, not a day&rsquo;s notice at the end of a season</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--teal" aria-hidden="true">✓</span><span><strong>Identity-building beyond football</strong> — activities, interests, and conversations that remind you that who you are is not only about what position you play</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--teal" aria-hidden="true">✓</span><span><strong>EPPP-embedded psychosocial curriculum</strong> — as called for by the Journal of Sports Sciences (2024): mental health literacy, resilience tools, and identity work baked into academy education</span></li>
-                </ul>
-              </div>
-
-              <div className="aca-support-col aca-support-col--after" aria-label="Support when you are released">
-                <h3 className="aca-support-col__heading">When you&rsquo;re released</h3>
-                <ul className="aca-support-bullets" role="list">
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--coral" aria-hidden="true">✓</span><span><strong>Minimum 3 sessions with an HCPC psychologist</strong> — the BPS recommendation. Release is a grief process. Professional support should be standard, not a bonus.</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--coral" aria-hidden="true">✓</span><span><strong>Written transition plan</strong> — routes back into football (trials, agent contacts, non-league links), plus alternative education and employment pathways</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--coral" aria-hidden="true">✓</span><span><strong>Contact from PFA After Academy</strong> — the initiative co-founded by Trent Alexander-Arnold provides career transition, networking and mentoring specifically for released players</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--coral" aria-hidden="true">✓</span><span><strong>30-day follow-up check</strong> — someone from the releasing club (or a neutral welfare organisation) should check in within a month of release</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--coral" aria-hidden="true">✓</span><span><strong>Honest appraisal of what went wrong and what can improve</strong> — release meetings should be constructive, specific, and forward-facing, not just a brief conversation at the end of a corridor</span></li>
-                  <li className="aca-support-bullet"><span className="aca-bullet-dot aca-bullet-dot--coral" aria-hidden="true">✓</span><span><strong>Your family&rsquo;s support included</strong> — parents and siblings are often deeply affected by release too. Good clubs acknowledge this and offer guidance for the whole family</span></li>
-                </ul>
-              </div>
-
-            </div>
-
-            <div className="aca-support-note" role="note">
-              <strong>If you&rsquo;ve been released and haven&rsquo;t received this support:</strong> contact the PFA directly at <a href="https://theafteracademy.thepfa.com" target="_blank" rel="noopener">theafteracademy.thepfa.com</a>, or speak to your GP who can refer you to an HCPC-registered psychologist. You do not need to go through this alone, and what you&rsquo;re feeling — grief, anger, confusion — is a completely normal response to a real loss.
-            </div>
-          </div>
-        </section>
-
-        {/* ── 8. CTA ──────────────────────────────────────────────────────── */}
-        <section className="aca-cta" id="aca-cta" aria-labelledby="aca-cta-heading">
+        {/* ── 6. SLIM GET HELP CTA ───────────────────────────────────────── */}
+        <section className="aca-cta" id="aca-help" aria-labelledby="aca-help-heading">
           <div className="aca-cta-glow" aria-hidden="true" />
           <div className="aca-inner" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-            <span className="aca-eyebrow" style={{ display: 'block', marginBottom: '1rem' }}>Your next move</span>
-            <h2 className="aca-cta-title" id="aca-cta-heading">What happens <em>next</em><br />is up to you.</h2>
+            <span className="aca-eyebrow" style={{ display: 'block', marginBottom: '1rem' }}>If you need support now</span>
+            <h2 className="aca-cta-title" id="aca-help-heading">You don&rsquo;t have to<br /><em>figure this out alone.</em></h2>
             <p className="aca-cta-body">
-              Jake Tabor was told he wasn&rsquo;t good enough. He scored 127 goals and proved them wrong. Whatever your situation — still in the pyramid, recently released, or figuring out life after football — there are real people and real resources ready to help you.
+              Release is a real loss — grief, anger, and confusion are completely normal responses.
+              The following organisations provide free, confidential support specifically for players
+              leaving the academy system.
             </p>
             <div className="aca-cta-buttons">
               <a href="https://theafteracademy.thepfa.com" target="_blank" rel="noopener" className="aca-btn aca-btn--lime">PFA After Academy →</a>
-              <a href="https://www.thefa.com/football-learning" target="_blank" rel="noopener" className="aca-btn aca-btn--outline">FA Coaching Badges</a>
               <a href="https://www.bps.org.uk" target="_blank" rel="noopener" className="aca-btn aca-btn--outline">BPS Mental Health</a>
             </div>
+            <p className="aca-cta-note">
+              If you&rsquo;ve been released and haven&rsquo;t received proper support, you can also speak
+              to your GP who can refer you to an HCPC-registered psychologist.
+            </p>
           </div>
         </section>
 
