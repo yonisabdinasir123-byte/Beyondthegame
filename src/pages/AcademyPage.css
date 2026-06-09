@@ -461,6 +461,41 @@
   margin-top: .65rem;
 }
 
+.academy-scope .aca-course-item--advanced {
+  opacity: .72;
+  border-left-color: rgba(255,255,255,.2);
+}
+.academy-scope .aca-course-item--advanced:hover { opacity: 1; }
+
+.academy-scope .aca-course-item__details {
+  margin-top: .5rem;
+}
+.academy-scope .aca-course-item__details-toggle {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--aca-amber);
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  user-select: none;
+}
+.academy-scope .aca-course-item__details-toggle::-webkit-details-marker { display: none; }
+.academy-scope .aca-course-item__details-toggle::before {
+  content: '▸';
+  transition: transform .2s;
+}
+.academy-scope .aca-course-item__details[open] .aca-course-item__details-toggle::before {
+  transform: rotate(90deg);
+}
+.academy-scope .aca-course-item__details-body {
+  margin: .5rem 0 0;
+  font-size: .82rem;
+  color: var(--aca-muted);
+  line-height: 1.6;
+}
+
 /* Reference boxes */
 .academy-scope .aca-ref-boxes {
   display: flex;

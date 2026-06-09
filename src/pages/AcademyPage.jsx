@@ -323,15 +323,19 @@ export default function AcademyPage() {
                   </div>
                 </article>
 
-                <article className="aca-course-item" role="listitem" aria-label="Performance Psychology MSc">
+                <article className="aca-course-item aca-course-item--advanced" role="listitem" aria-label="Performance Psychology MSc">
                   <div className="aca-course-item__num">Course 05</div>
                   <div className="aca-course-item__title">MSc Sport &amp; Exercise Psychology</div>
                   <div className="aca-course-item__provider">Loughborough / Leeds Beckett / St Mary&rsquo;s University — HCPC registration pathway</div>
-                  <div className="aca-course-item__desc">The BPS recommends that released players have access to at least 3 sessions with an HCPC-registered psychologist. This pathway trains those psychologists — and is an option for former players who want to channel their experience into supporting others.</div>
+                  <div className="aca-course-item__desc">This pathway trains HCPC-registered psychologists — an option for former players who want to support others long-term.</div>
+                  <details className="aca-course-item__details">
+                    <summary className="aca-course-item__details-toggle">More detail</summary>
+                    <p className="aca-course-item__details-body">The BPS recommends released players have access to at least 3 sessions with an HCPC-registered psychologist. If you want to become that psychologist, this is the route — but it requires an undergraduate degree first. Start with Course 01 or 02 above if you&rsquo;re just starting out.</p>
+                  </details>
                   <div className="aca-course-item__tags">
+                    <span className="aca-tag aca-tag--ghost">Degree required</span>
                     <span className="aca-tag aca-tag--teal">HCPC pathway</span>
-                    <span className="aca-tag aca-tag--ghost">Academic</span>
-                    <span className="aca-tag aca-tag--ghost">For former players</span>
+                    <span className="aca-tag aca-tag--ghost">Longer-term route</span>
                   </div>
                 </article>
 

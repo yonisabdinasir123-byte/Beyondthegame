@@ -71,9 +71,9 @@
 /* ── Section nav ───────────────────────────────────────────────────────────── */
 .edu-section-nav {
   position: sticky;
-  top: 60px;
+  top: 64px;
   z-index: 100;
-  background: var(--amber-50);
+  background: var(--bg, #FFFBF5);
   border-bottom: 1px solid var(--amber-200);
 }
 .edu-section-nav__inner {
@@ -109,6 +109,7 @@
 .edu-section {
   padding: 3rem 0;
   border-bottom: 1px solid var(--amber-100);
+  scroll-margin-top: 128px; /* navbar 64 + section-nav 64 */
 }
 .edu-section--alt { background: var(--amber-50); }
 .edu-section__inner {

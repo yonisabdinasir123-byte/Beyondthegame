@@ -220,7 +220,11 @@ export function Navbar({ onLogin, onSignup }) {
 
           {/* Desktop links */}
           <ul className="navbar__desktop-nav" role="list">
-            <li><a href="#pathways" className="navbar__nav-link">My Pathway</a></li>
+            <li>
+              <Link to="/" className="navbar__nav-link">
+                Home
+              </Link>
+            </li>
             <li>
               <Link to="/pathway" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
                 ⚽ Pathway
@@ -276,7 +280,7 @@ export function Navbar({ onLogin, onSignup }) {
           aria-hidden={!mobileOpen}
         >
           <ul className="navbar__mobile-nav" role="list">
-            <li><a href="#pathways" className="navbar__nav-link" onClick={closeMobile}>My Pathway</a></li>
+            <li><Link to="/" className="navbar__nav-link" onClick={closeMobile}>Home</Link></li>
             <li><Link to="/pathway"      className="navbar__nav-link" onClick={closeMobile}>⚽ Pathway</Link></li>
             <li><Link to="/education"    className="navbar__nav-link" onClick={closeMobile}>🏫 Education</Link></li>
             <li><Link to="/jobs-careers" className="navbar__nav-link" onClick={closeMobile}>💼 Jobs &amp; Careers</Link></li>
@@ -324,7 +328,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
             Get started today
           </button>
           <button type="button" className="hero__cta hero__cta--secondary" onClick={onFindPath}>
-            Find my pathway
+            Build my pathway →
           </button>
         </div>
 

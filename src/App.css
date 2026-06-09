@@ -81,6 +81,8 @@
   --sh-xl: 0 20px 60px rgba(28,16,9,.25);
 }
 
+html { scroll-padding-top: 64px; }
+
 /* ═══════════════════════════════════════════════════════════
    ACCESSIBILITY
    ═══════════════════════════════════════════════════════════ */
@@ -690,30 +692,42 @@
 
 .pathway__age-btn {
   flex: 1;
-  min-width: 110px;
-  max-width: 200px;
-  padding: 1.375rem 1rem;
-  background: var(--amber-50);
-  border: 2.5px solid var(--amber-200);
-  border-radius: var(--r-lg);
+  min-width: 120px;
+  max-width: 220px;
+  padding: 1.5rem 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 2px solid var(--amber-200);
+  border-radius: var(--r-xl);
   cursor: pointer;
   font-family: var(--font-body);
   text-align: center;
-  transition: all .2s;
+  transition: all .22s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: var(--sh-sm);
+  position: relative;
+  overflow: hidden;
+}
+.pathway__age-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--amber-50) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity .2s;
 }
 .pathway__age-btn:hover {
-  background: var(--amber-100);
-  border-color: var(--amber-400);
-  transform: translateY(-2px);
-  box-shadow: var(--sh-sm);
-}
-.pathway__age-btn.active {
-  background: var(--amber-700);
-  border-color: var(--amber-700);
-  color: #fff;
-  transform: translateY(-2px);
+  border-color: var(--amber-500);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: var(--sh-md);
 }
+.pathway__age-btn:hover::before { opacity: 1; }
+.pathway__age-btn.active {
+  background: linear-gradient(135deg, var(--amber-700) 0%, var(--amber-600) 100%);
+  border-color: var(--amber-700);
+  color: #fff;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(180,83,9,.35);
+}
+.pathway__age-btn.active::before { opacity: 0; }
 
 .pathway__age-num {
   display: block;
