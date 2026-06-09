@@ -213,10 +213,10 @@ export function Navbar({ onLogin, onSignup }) {
     <header>
       <nav className="navbar" aria-label="Main navigation">
         <div className="navbar__inner">
-          <a href="/" className="navbar__logo" aria-label="Beyond the Game — home">
+          <Link to="/" className="navbar__logo" aria-label="Beyond the Game — home">
             <span className="navbar__logo-ball" aria-hidden="true">⚽</span>
             <span className="navbar__logo-text">Beyond the Game</span>
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <ul className="navbar__desktop-nav" role="list">
