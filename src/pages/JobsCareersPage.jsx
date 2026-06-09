@@ -477,7 +477,7 @@ function SectionNav({ activeId }) {
   const scrollTo = (id) => {
     const el = document.getElementById(id)
     if (!el) return
-    const offset = 64 + 52
+    const offset = 120 // navbar (64) + sub-nav (~54) — keeps anchored content clear
     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' })
   }
   return (
@@ -515,7 +515,8 @@ export default function JobsCareersPage() {
           if (e.isIntersecting && e.intersectionRatio >= 0.2) setActiveId(e.target.id)
         })
       },
-      { rootMargin: '-64px 0px -40% 0px', threshold: [0.2, 0.5] },
+      // top margin clears both sticky bars (navbar 64 + sub-nav ≈ 54)
+      { rootMargin: '-118px 0px -40% 0px', threshold: [0.2, 0.5] },
     )
     SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id)

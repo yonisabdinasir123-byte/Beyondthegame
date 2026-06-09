@@ -619,3 +619,242 @@ export const SUBJECT_PRESETS   = ['Sport & PE', 'Maths', 'English', 'Science', '
 export const HOBBY_PRESETS     = ['Football', 'Gym / Fitness', 'Gaming', 'Music', 'Cooking', 'DIY / Building', 'Drawing / Art', 'Writing', 'Animals', 'Outdoor activities']
 export const SKILL_PRESETS     = ['Leadership', 'Teamwork', 'Coaching / Teaching', 'Problem solving', 'Communication', 'Physical fitness', 'Driving', 'IT skills', 'Selling / persuading', 'Caring for others']
 export const JOB_FIELDS        = ['Coaching & Sport', 'Construction & Trades', 'Security', 'Retail', 'Logistics & Warehouse', 'Health & Social Care']
+
+// ══════════════════════════════════════════════════════════════════════════════
+// QUALIFICATIONS MATCHER
+// All entry requirements below reflect REAL UK rules (2024/25):
+//   • GCSE grade 4 = "standard pass" (old grade C). Grade 5 = "strong pass".
+//   • Most Level 3 college courses (A-Levels / BTEC L3) need ~5 GCSEs at grade 4+
+//     usually including English & Maths.
+//   • Intermediate apprenticeship = Level 2 (GCSE-equivalent), low/no entry bar.
+//   • Advanced apprenticeship = Level 3 (A-Level-equivalent), typically needs ~5
+//     GCSEs grade 4+ incl. English & Maths.
+//   • Degree apprenticeship = Level 6/7, needs Level 3 (A-Levels or BTEC L3).
+// ══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Difficulty tiers shown as badges on each matched card.
+ * @typedef {'easy'|'achievable'|'higher'} Difficulty
+ */
+
+/**
+ * A user's self-reported qualifications.
+ * @typedef {Object} QualProfile
+ * @property {number}  gcseCount    - how many GCSEs they hold
+ * @property {string}  gcseGrades   - free-text grade range, e.g. "4–6"
+ * @property {boolean} passedMaths  - GCSE Maths at grade 4+
+ * @property {boolean} passedEnglish- GCSE English at grade 4+
+ * @property {string}  btecLevel    - '' | '1' | '2' | '3'
+ * @property {boolean} hasALevels   - holds one or more A-Levels
+ * @property {string}  otherQuals   - free text
+ * @property {string}  retake       - free text: what they want to improve
+ */
+
+/**
+ * Each opportunity decides its own eligibility + difficulty from the profile.
+ * `evaluate(profile)` returns { eligible, difficulty, statusNote }.
+ * @type {Array<{
+ *   id: string, category: string, title: string, minReq: string,
+ *   body: string, perks?: string, link?: {label: string, url: string},
+ *   evaluate: (p: QualProfile) => { difficulty: Difficulty, eligible: boolean, statusNote: string }
+ * }>}
+ */
+export const QUAL_OPPORTUNITIES = [
+  // ── Local college (16–19) ───────────────────────────────────────────────────
+  {
+    id: 'college-l3',
+    category: 'Local College (16–19)',
+    title: 'A-Levels or BTEC Level 3',
+    minReq: '5 GCSEs at grade 4+ (incl. English & Maths)',
+    body: 'Pick A-Levels or a BTEC Level 3 (a 2-year course). BTEC L3 can be worth up to 3 A-Levels for university or higher apprenticeships.',
+    perks: 'Free for 16–19 year-olds · 6+ subject choices',
+    link: { label: 'Find a college course (UCAS)', url: 'https://www.ucas.com/further-education' },
+    evaluate: (p) => {
+      const has5 = p.gcseCount >= 5 && p.passedMaths && p.passedEnglish
+      if (has5)  return { difficulty: 'achievable', eligible: true,  statusNote: 'You qualify — pick up to 4 subjects.' }
+      const close = p.gcseCount >= 4 && (p.passedMaths || p.passedEnglish)
+      if (close) return { difficulty: 'higher', eligible: false, statusNote: 'Almost there — retaking Maths/English unlocks this.' }
+      return { difficulty: 'higher', eligible: false, statusNote: 'Work toward this — start with a Level 2 course or retakes.' }
+    },
+  },
+  {
+    id: 'college-l2',
+    category: 'Local College (16–19)',
+    title: 'Level 2 Diploma + GCSE resits',
+    minReq: '2+ GCSEs (any grade) — open to most school leavers',
+    body: 'A 1-year course that builds up to Level 3. You can resit GCSE Maths & English here for free while you study.',
+    perks: 'Free for 16–19 · resit Maths/English at the same time',
+    link: { label: 'Resitting GCSEs (Gov.uk)', url: 'https://www.gov.uk/government/publications/gcse-english-and-maths-resits' },
+    evaluate: (p) => {
+      if (p.gcseCount >= 2) return { difficulty: 'easy', eligible: true, statusNote: 'You qualify — a solid route up to Level 3.' }
+      return { difficulty: 'easy', eligible: true, statusNote: 'Open entry — a good place to start building qualifications.' }
+    },
+  },
+
+  // ── Football college programmes ──────────────────────────────────────────────
+  {
+    id: 'football-btec',
+    category: 'Football College Programmes',
+    title: 'Football Academy + BTEC (play & study)',
+    minReq: '4 GCSEs at grade 3+ (varies by provider)',
+    body: 'Train and play competitively while you study a BTEC in Sport. Run by clubs, the LFE (League Football Education) and providers like SCL.',
+    perks: 'Play + study · open days year-round · funded for 16–18',
+    link: { label: 'League Football Education', url: 'https://www.lfe.org.uk/' },
+    evaluate: (p) => {
+      if (p.gcseCount >= 4) return { difficulty: 'easy', eligible: true, statusNote: 'You qualify — check the next open day.' }
+      if (p.gcseCount >= 2) return { difficulty: 'achievable', eligible: true, statusNote: 'Likely eligible — entry varies, contact the provider.' }
+      return { difficulty: 'achievable', eligible: false, statusNote: 'Some programmes accept fewer GCSEs — ask at an open day.' }
+    },
+  },
+
+  // ── Apprenticeships ──────────────────────────────────────────────────────────
+  {
+    id: 'appr-l2',
+    category: 'Apprenticeships',
+    title: 'Intermediate Apprenticeship (Level 2)',
+    minReq: 'Few or no GCSEs needed — easiest entry',
+    body: 'Paid, employer-funded training equal to GCSE level. You earn a wage while you learn and gain a real qualification.',
+    perks: 'Paid from day one · no debt · English/Maths built in',
+    link: { label: 'Find an apprenticeship (Gov.uk)', url: 'https://www.gov.uk/apply-apprenticeship' },
+    evaluate: () => ({ difficulty: 'easy', eligible: true, statusNote: 'Open to most school leavers — paid, employer-funded.' }),
+  },
+  {
+    id: 'appr-l3',
+    category: 'Apprenticeships',
+    title: 'Advanced Apprenticeship (Level 3)',
+    minReq: '~5 GCSEs at grade 4+ (incl. English & Maths)',
+    body: 'Equal to A-Level standard. You earn while you train and it can lead on to a degree apprenticeship later.',
+    perks: 'Paid · A-Level equivalent · route to higher study',
+    link: { label: 'Find an apprenticeship (Gov.uk)', url: 'https://www.gov.uk/apply-apprenticeship' },
+    evaluate: (p) => {
+      const has5 = p.gcseCount >= 5 && p.passedMaths && p.passedEnglish
+      if (has5) return { difficulty: 'achievable', eligible: true, statusNote: 'You qualify — paid and employer-funded.' }
+      return { difficulty: 'higher', eligible: false, statusNote: 'Retaking Maths/English would unlock this.' }
+    },
+  },
+  {
+    id: 'appr-degree',
+    category: 'Apprenticeships',
+    title: 'Degree Apprenticeship (Level 6)',
+    minReq: 'Level 3 needed — A-Levels or BTEC Level 3',
+    body: 'Earn a full degree with no tuition fees while working. The highest-entry route — most do A-Levels or a BTEC L3 first.',
+    perks: 'Degree with no debt · salaried · highest entry bar',
+    link: { label: 'Degree apprenticeships (UCAS)', url: 'https://www.ucas.com/apprenticeships/degree-apprenticeships' },
+    evaluate: (p) => {
+      if (p.hasALevels || p.btecLevel === '3') return { difficulty: 'achievable', eligible: true, statusNote: 'You qualify — strong route, apply early.' }
+      return { difficulty: 'higher', eligible: false, statusNote: 'Work toward this after college or A-Levels.' }
+    },
+  },
+
+  // ── Internships & work experience ────────────────────────────────────────────
+  {
+    id: 'intern',
+    category: 'Internships & Work Experience',
+    title: 'Internships & Work Experience',
+    minReq: 'No formal qualifications — willingness to learn',
+    body: 'Short placements that build your CV and references. A direct way into an industry while you decide your longer route.',
+    perks: 'Entry-level · builds references · often leads to a job',
+    link: { label: 'Search placements (Indeed)', url: 'https://uk.indeed.com/q-work-experience-jobs.html' },
+    evaluate: () => ({ difficulty: 'easy', eligible: true, statusNote: 'Open to everyone — a great first step.' }),
+  },
+]
+
+// Fixed display order for opportunity categories on the page.
+export const QUAL_CATEGORY_ORDER = [
+  'Local College (16–19)',
+  'Football College Programmes',
+  'Apprenticeships',
+  'Internships & Work Experience',
+]
+
+// ── Learn a Skill — free online certificates that lead to real jobs ────────────
+/**
+ * @type {Array<{ id, field, title, provider, cost, leadsTo, link: {label,url} }>}
+ */
+export const SKILL_COURSES = [
+  {
+    id: 'google-data',
+    field: 'Data Analysis',
+    title: 'Google Data Analytics Certificate',
+    provider: 'Google Career Certificates (on Coursera)',
+    cost: 'Free to audit · ~6 months, self-paced',
+    leadsTo: 'Junior Data Analyst · ~£24k–30k starting',
+    link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/data-analytics/' },
+  },
+  {
+    id: 'google-cyber',
+    field: 'Cybersecurity',
+    title: 'Google Cybersecurity Certificate',
+    provider: 'Google Career Certificates (on Coursera)',
+    cost: 'Free to audit · ~6 months, self-paced',
+    leadsTo: 'Security Analyst (entry) · ~£25k–35k starting',
+    link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/cybersecurity/' },
+  },
+  {
+    id: 'google-it',
+    field: 'IT Support',
+    title: 'Google IT Support Certificate',
+    provider: 'Google Career Certificates (on Coursera)',
+    cost: 'Free to audit · ~3–6 months, self-paced',
+    leadsTo: 'IT Support Technician · ~£22k–28k starting',
+    link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/it-support/' },
+  },
+  {
+    id: 'google-marketing',
+    field: 'Digital Marketing',
+    title: 'Google Digital Marketing & E-commerce',
+    provider: 'Google Career Certificates (on Coursera)',
+    cost: 'Free to audit · ~6 months, self-paced',
+    leadsTo: 'Marketing Assistant · ~£22k–28k starting',
+    link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/digital-marketing-ecommerce/' },
+  },
+  {
+    id: 'ms-ai',
+    field: 'AI',
+    title: 'Microsoft Learn — AI & Azure AI Fundamentals',
+    provider: 'Microsoft Learn',
+    cost: 'Completely free · self-paced modules',
+    leadsTo: 'AI/Data trainee roles · foundation for tech jobs',
+    link: { label: 'Start on Microsoft Learn', url: 'https://learn.microsoft.com/en-us/training/paths/get-started-with-artificial-intelligence-on-azure/' },
+  },
+  {
+    id: 'ms-it',
+    field: 'IT Support',
+    title: 'Microsoft Learn — Career Essentials in IT',
+    provider: 'Microsoft Learn',
+    cost: 'Completely free · self-paced modules',
+    leadsTo: 'IT Support & Helpdesk roles',
+    link: { label: 'Start on Microsoft Learn', url: 'https://learn.microsoft.com/en-us/training/' },
+  },
+]
+
+// ── Learn a Trade — practical apprenticeship routes ────────────────────────────
+/**
+ * @type {Array<{ id, trade, emoji, route, leadsTo, link: {label,url} }>}
+ */
+export const TRADE_ROUTES = [
+  {
+    id: 'electrician',
+    trade: 'Electrician',
+    emoji: '⚡',
+    route: 'Level 3 Installation Electrician apprenticeship (~4 years). Earn while you train; no degree needed.',
+    leadsTo: 'Qualified electrician · ~£30k–45k+ once qualified',
+    link: { label: 'Find an electrical apprenticeship', url: 'https://www.gov.uk/apply-apprenticeship' },
+  },
+  {
+    id: 'plumber',
+    trade: 'Plumbing & Heating',
+    emoji: '🔧',
+    route: 'Level 3 Plumbing & Domestic Heating apprenticeship (~4 years). Paid on-the-job training.',
+    leadsTo: 'Qualified plumber · ~£28k–40k+ once qualified',
+    link: { label: 'Find a plumbing apprenticeship', url: 'https://www.gov.uk/apply-apprenticeship' },
+  },
+  {
+    id: 'carpenter',
+    trade: 'Carpentry & Joinery',
+    emoji: '🪚',
+    route: 'Level 2 then Level 3 Carpentry apprenticeship (~2–4 years). Start with few/no GCSEs.',
+    leadsTo: 'Qualified carpenter/joiner · ~£26k–38k+ once qualified',
+    link: { label: 'Find a carpentry apprenticeship', url: 'https://www.gov.uk/apply-apprenticeship' },
+  },
+]

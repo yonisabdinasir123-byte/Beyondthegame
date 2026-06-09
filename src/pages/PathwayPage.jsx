@@ -334,7 +334,8 @@ export default function PathwayPage() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
         if (visible.length > 0) setActiveSection(visible[0].target.id)
       },
-      { threshold: [0.2, 0.5], rootMargin: '-60px 0px -40% 0px' },
+      // top margin clears both sticky bars (navbar 64 + sub-nav ≈ 54)
+      { threshold: [0.2, 0.5], rootMargin: '-118px 0px -40% 0px' },
     )
     SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id)

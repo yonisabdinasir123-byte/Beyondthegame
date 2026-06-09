@@ -748,6 +748,143 @@
   .edu-postcode-input { max-width: 100%; }
 }
 
+/* ── Learn a Skill cards ───────────────────────────────────────────────────── */
+.edu-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.edu-skill-card {
+  background: #fff;
+  border: 1px solid var(--amber-200);
+  border-radius: var(--r-md);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  box-shadow: var(--sh-sm);
+}
+.edu-skill-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.edu-skill-card__field {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--amber-800);
+  background: var(--amber-100);
+  padding: .2rem .55rem;
+  border-radius: 4px;
+}
+.edu-skill-card__free {
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  color: #3F6212;
+  background: #ECFCCB;
+  padding: .2rem .5rem;
+  border-radius: 4px;
+}
+.edu-skill-card__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: .15rem 0 0;
+  line-height: 1.25;
+}
+.edu-skill-card__provider { font-size: .82rem; color: var(--text-muted); margin: 0; }
+.edu-skill-card__cost     { font-size: .82rem; color: var(--text-secondary); margin: 0; font-weight: 600; }
+.edu-skill-card__leads    { font-size: .88rem; color: var(--text-secondary); margin: .2rem 0 0; line-height: 1.5; }
+.edu-skill-card__leads strong { color: var(--text-primary); }
+.edu-skill-card__link {
+  align-self: flex-start;
+  margin-top: .45rem;
+  font-size: .85rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--amber-700);
+  padding: .5rem .9rem;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: background .15s;
+}
+.edu-skill-card__link:hover { background: var(--amber-800); }
+
+/* ── Learn a Trade cards ───────────────────────────────────────────────────── */
+.edu-trade-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+.edu-trade-card {
+  display: flex;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid var(--amber-200);
+  border-left: 4px solid var(--amber-400);
+  border-radius: var(--r-md);
+  padding: 1.35rem;
+  box-shadow: var(--sh-sm);
+}
+.edu-trade-card__emoji { font-size: 1.85rem; flex-shrink: 0; line-height: 1; }
+.edu-trade-card__body  { display: flex; flex-direction: column; gap: .4rem; }
+.edu-trade-card__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+.edu-trade-card__route { font-size: .88rem; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+.edu-trade-card__leads { font-size: .85rem; color: var(--text-secondary); margin: 0; }
+.edu-trade-card__leads strong { color: var(--text-primary); }
+.edu-trade-card__link {
+  align-self: flex-start;
+  margin-top: .2rem;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--amber-800);
+  text-decoration: none;
+  border-bottom: 1px solid var(--amber-300);
+  padding-bottom: 1px;
+}
+.edu-trade-card__link:hover { color: var(--amber-900); border-bottom-color: var(--amber-600); }
+
+/* ── How to enrol steps ────────────────────────────────────────────────────── */
+.edu-enrol-steps {
+  margin-top: 2rem;
+  background: #FFFBEB;
+  border: 1px solid var(--amber-200);
+  border-radius: var(--r-md);
+  padding: 1.35rem 1.5rem;
+}
+.edu-enrol-steps__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--amber-800);
+  margin: 0 0 .75rem;
+}
+.edu-enrol-steps__list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.edu-enrol-steps__list li {
+  font-size: .9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .edu-skill-grid, .edu-trade-grid { grid-template-columns: 1fr; }
+}
+
 /* ── Motion preference ──────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .edu-cta, .edu-radius-tab, .careers-pill, .net-action-btn { transition: none; }

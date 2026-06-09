@@ -1,0 +1,221 @@
+/* QualsMatcher.css — "What Can I Study?" form + matched-opportunity cards.
+   Uses the site's warm amber/cream tokens from App.css. Scoped under .qm-*. */
+
+.qm { display: flex; flex-direction: column; gap: 2rem; }
+
+/* ── Form ──────────────────────────────────────────────────────────────────── */
+.qm-form {
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--amber-200);
+  border-radius: var(--r-lg, 1rem);
+  padding: 1.75rem;
+  box-shadow: var(--sh-sm);
+}
+.qm-form__intro {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+  max-width: 60ch;
+}
+
+.qm-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+.qm-field { display: flex; flex-direction: column; gap: .45rem; }
+.qm-field--wide { grid-column: 1 / -1; }
+.qm-field--checks { gap: .6rem; border: 0; padding: 0; margin: 0; }
+
+.qm-label {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.qm-input {
+  padding: .7rem .85rem;
+  border: 1px solid var(--amber-300);
+  border-radius: var(--r-sm, .375rem);
+  background: var(--bg, #FFFBF5);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  min-height: 46px;
+  transition: border-color .15s;
+}
+.qm-input:focus { outline: none; border-color: var(--amber-600); }
+
+.qm-check {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  font-size: .95rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.qm-check input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--amber-600);
+  flex-shrink: 0;
+}
+
+.qm-actions { display: flex; gap: .75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.qm-btn {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1rem;
+  padding: .8rem 1.5rem;
+  border-radius: var(--r-md, .75rem);
+  cursor: pointer;
+  min-height: 48px;
+  border: 2px solid transparent;
+  transition: background .15s, border-color .15s;
+}
+.qm-btn--primary { background: var(--amber-700); color: #fff; }
+.qm-btn--primary:hover { background: var(--amber-800); }
+.qm-btn--ghost {
+  background: transparent;
+  border-color: var(--amber-300);
+  color: var(--amber-800);
+}
+.qm-btn--ghost:hover { background: var(--amber-50); }
+
+/* ── Results ───────────────────────────────────────────────────────────────── */
+.qm-results { display: flex; flex-direction: column; gap: 1.75rem; }
+.qm-results__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  color: var(--text-primary);
+  margin: 0;
+}
+.qm-results__retake {
+  background: #FFFBEB;
+  border: 1px solid var(--amber-200);
+  border-radius: var(--r-md, .75rem);
+  padding: .85rem 1.1rem;
+  font-size: .95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+.qm-results__retake strong { color: var(--amber-800); }
+
+.qm-cat { display: flex; flex-direction: column; gap: 1rem; }
+.qm-cat__title {
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--amber-800);
+  margin: 0;
+  padding-bottom: .4rem;
+  border-bottom: 2px solid var(--amber-100);
+}
+
+.qm-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.qm-card {
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--amber-200);
+  border-left: 4px solid var(--amber-300);
+  border-radius: var(--r-md, .75rem);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  box-shadow: var(--sh-sm);
+}
+/* Left accent reflects difficulty tier. */
+.qm-card--easy       { border-left-color: #4D7C0F; }   /* green = easy entry */
+.qm-card--achievable { border-left-color: var(--amber-500); }
+.qm-card--higher     { border-left-color: var(--c-feelings, #9F1239); }
+.qm-card--eligible   { box-shadow: 0 0 0 1px var(--amber-200), var(--sh-sm); }
+
+.qm-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.qm-badge {
+  display: inline-block;
+  font-family: var(--font-condensed, 'Barlow Condensed', sans-serif);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: .22rem .6rem;
+  border-radius: 4px;
+}
+.qm-badge--easy       { background: #ECFCCB; color: #3F6212; }
+.qm-badge--achievable { background: var(--amber-100); color: var(--amber-900); }
+.qm-badge--higher     { background: #FFE4E6; color: #9F1239; }
+
+.qm-card__tick {
+  font-size: .8rem;
+  font-weight: 800;
+  color: #4D7C0F;
+}
+.qm-card__work {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.qm-card__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.25;
+}
+.qm-card__min {
+  font-size: .85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.qm-card__min strong { color: var(--text-primary); }
+.qm-card__body {
+  font-size: .9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+.qm-card__perks {
+  font-size: .82rem;
+  color: var(--amber-800);
+  font-weight: 600;
+  margin: 0;
+}
+.qm-card__status {
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: .15rem 0 0;
+}
+.qm-card__link {
+  align-self: flex-start;
+  margin-top: .35rem;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--amber-800);
+  text-decoration: none;
+  border-bottom: 1px solid var(--amber-300);
+  padding-bottom: 1px;
+}
+.qm-card__link:hover { color: var(--amber-900); border-bottom-color: var(--amber-600); }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .qm-grid { grid-template-columns: 1fr; }
+  .qm-form { padding: 1.25rem; }
+  .qm-cards { grid-template-columns: 1fr; }
+}

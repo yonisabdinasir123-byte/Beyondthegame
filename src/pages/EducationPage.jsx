@@ -11,25 +11,31 @@
  *   Distance  → haversine util (already wired — maps to Reed distanceFromLocation)
  */
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { colleges, jobEvents } from '../data/educationData'
+import { colleges, jobEvents, SKILL_COURSES, TRADE_ROUTES } from '../data/educationData'
 import { lookupPostcode, DEFAULT_COORDS } from '../utils/distance'
 import { storage, formatDate } from '../utils/storage'
 import SiteLayout    from '../components/SiteLayout'
 import CollegeSearch from '../components/education/CollegeSearch'
 import EventsList    from '../components/education/EventsList'
+import QualsMatcher  from '../components/education/QualsMatcher'
 import './EducationPage.css'
 
 const NAV_SECTIONS = [
-  { id: 'colleges', label: '🏫 Colleges',  title: 'Local Colleges & Open Days' },
-  { id: 'events',   label: '🗓️ Events',    title: 'Job Fairs & Events'          },
+  { id: 'matcher',  label: '🎯 What Can I Study?', title: 'What Can I Study?'        },
+  { id: 'colleges', label: '🏫 Colleges',          title: 'Local Colleges & Open Days' },
+  { id: 'skills',   label: '💻 Learn a Skill',     title: 'Learn a Skill'            },
+  { id: 'trades',   label: '🔧 Learn a Trade',     title: 'Learn a Trade'            },
+  { id: 'events',   label: '🗓️ Events',            title: 'Job Fairs & Events'        },
 ]
+
+// Cumulative sticky-bar height: navbar (64px) + this sub-nav (~54px).
+const STICKY_OFFSET = 120
 
 function SectionNav({ activeId }) {
   const scrollTo = (id) => {
     const el = document.getElementById(id)
     if (!el) return
-    const offset = 60 + 52 + 16
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' })
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - STICKY_OFFSET, behavior: 'smooth' })
   }
   return (
     <nav className="edu-section-nav" aria-label="Education sections">
@@ -115,7 +121,7 @@ function Section({ id, title, children }) {
 }
 
 export default function EducationPage() {
-  const [activeId,    setActiveId]    = useState('colleges')
+  const [activeId,    setActiveId]    = useState('matcher')
   const [userCoords,  setUserCoords]  = useState(() => storage.get('user-coords', null))
   const [savedDays,   setSavedDays]   = useState(() => storage.get('saved-opendays', []))
   const observerRef = useRef(null)
@@ -125,7 +131,9 @@ export default function EducationPage() {
       entries.forEach(e => {
         if (e.isIntersecting && e.intersectionRatio >= 0.2) setActiveId(e.target.id)
       })
-    }, { rootMargin: '-60px 0px -40% 0px', threshold: [0.2, 0.5] })
+      // rootMargin top must clear BOTH sticky bars (navbar + sub-nav ≈ 118px)
+      // so the active tab reflects the section actually visible below them.
+    }, { rootMargin: '-118px 0px -40% 0px', threshold: [0.2, 0.5] })
     NAV_SECTIONS.forEach(s => {
       const el = document.getElementById(s.id)
       if (el) obs.observe(el)
@@ -189,6 +197,14 @@ export default function EducationPage() {
 
         <SectionNav activeId={activeId} />
 
+        <Section id="matcher" title="What Can I Study?">
+          <p className="edu-section__desc">
+            Enter the qualifications you already have. We'll show what you can
+            study now, and what to work toward — with honest entry requirements.
+          </p>
+          <QualsMatcher />
+        </Section>
+
         <Section id="colleges" title="Local Colleges & Open Days">
           <p className="edu-section__desc">
             Search by name, area, or course. Results update live as you type.
@@ -199,6 +215,71 @@ export default function EducationPage() {
             userCoords={userCoords ?? DEFAULT_COORDS}
             onSaveOpenDay={handleSaveOpenDay}
           />
+        </Section>
+
+        <Section id="skills" title="Learn a Skill">
+          <p className="edu-section__desc">
+            Free online certificates that lead to real, well-paid jobs — no
+            university needed. With self-discipline, these open doors fast.
+          </p>
+          <div className="edu-skill-grid">
+            {SKILL_COURSES.map(c => (
+              <article key={c.id} className="edu-skill-card">
+                <div className="edu-skill-card__head">
+                  <span className="edu-skill-card__field">{c.field}</span>
+                  <span className="edu-skill-card__free">FREE · NO DEGREE</span>
+                </div>
+                <h3 className="edu-skill-card__title">{c.title}</h3>
+                <p className="edu-skill-card__provider">{c.provider}</p>
+                <p className="edu-skill-card__cost">{c.cost}</p>
+                <p className="edu-skill-card__leads"><strong>Leads to:</strong> {c.leadsTo}</p>
+                <a
+                  className="edu-skill-card__link"
+                  href={c.link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {c.link.label} ↗
+                </a>
+              </article>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="trades" title="Learn a Trade">
+          <p className="edu-section__desc">
+            Practical trades you can train into through paid apprenticeships —
+            earn while you learn, with no student debt.
+          </p>
+          <div className="edu-trade-grid">
+            {TRADE_ROUTES.map(t => (
+              <article key={t.id} className="edu-trade-card">
+                <span className="edu-trade-card__emoji" aria-hidden="true">{t.emoji}</span>
+                <div className="edu-trade-card__body">
+                  <h3 className="edu-trade-card__title">{t.trade}</h3>
+                  <p className="edu-trade-card__route">{t.route}</p>
+                  <p className="edu-trade-card__leads"><strong>Leads to:</strong> {t.leadsTo}</p>
+                  <a
+                    className="edu-trade-card__link"
+                    href={t.link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t.link.label} ↗
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="edu-enrol-steps">
+            <h3 className="edu-enrol-steps__title">How to enrol at college</h3>
+            <ol className="edu-enrol-steps__list">
+              <li>Find your local college and check open day dates (above).</li>
+              <li>Apply online via the college site — usually open from autumn.</li>
+              <li>Bring your GCSE results to enrolment in late August.</li>
+              <li>Not got the grades? Ask about resits and Level 2 routes — they'll help you find a place.</li>
+            </ol>
+          </div>
         </Section>
 
         <Section id="events" title="Job Fairs & Careers Events">
