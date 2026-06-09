@@ -44,9 +44,19 @@
   --c-community: #5B21B6;
   --c-community-bg: #FAF5FF;
 
+  /* Dark warm-green palette (used by inner pages) */
+  --bg-deep:       #0f1e0f;
+  --bg-mid:        #1c3320;
+  --accent-lime:   #b8f542;
+  --accent-amber:  #e8a838;
+  --accent-terra:  #c8614a;
+  --dark-text-primary: #f0ead6;
+  --dark-text-muted:   #9aad8f;
+
   /* Typography */
   --font-body:    'Nunito', system-ui, -apple-system, sans-serif;
   --font-heading: 'Playfair Display', Georgia, serif;
+  --font-condensed: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
 
   /* Spacing */
   --sp-xs:  0.25rem;

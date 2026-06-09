@@ -15,6 +15,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import SiteLayout from '../components/SiteLayout'
 
 import { clubs, showcaseGames, tournaments, leagues, testimonials } from '../data/pathwayData'
 
@@ -237,22 +238,19 @@ function SectionNav({ activeSection }) {
   )
 }
 
-// ─── Page header ───────────────────────────────────────────────────────────────
-function PageHeader() {
+// ─── Academy entry card (shown after pyramid section) ─────────────────────────
+function AcademyEntryCard() {
   return (
-    <header className="pwy-header">
-      <div className="pwy-header__inner">
-        <Link to="/" className="pwy-header__back">
-          ← Beyond the Game
-        </Link>
-        <div className="pwy-header__logo">
-          <span aria-hidden="true">⚽</span> Pathway Finder
+    <div className="pwy-academy-card">
+      <div className="pwy-academy-card__inner">
+        <span className="pwy-academy-card__emoji" aria-hidden="true">🏆</span>
+        <div className="pwy-academy-card__body">
+          <h3 className="pwy-academy-card__title">Life After the Academy</h3>
+          <p className="pwy-academy-card__text">Player stories, psychological support, the freedom player market, and practical life skills for your next chapter.</p>
         </div>
-        <div className="pwy-header__auth">
-          <Link to="/" className="pwy-header__auth-btn">Home</Link>
-        </div>
+        <Link to="/academy" className="pwy-academy-card__link">Explore guide →</Link>
       </div>
-    </header>
+    </div>
   )
 }
 
@@ -346,13 +344,14 @@ export default function PathwayPage() {
   }, [])
 
   return (
+    <SiteLayout>
     <div className="pathway-page">
-      <PageHeader />
       <Hero />
       <SectionNav activeSection={activeSection} />
 
       {/* ── 0. The Pyramid ─────────────────────────────────────────────────── */}
       <PyramidSection />
+      <AcademyEntryCard />
 
       {/* ── 1. Club Finder ─────────────────────────────────────────────────── */}
       <PwySection
@@ -421,13 +420,7 @@ export default function PathwayPage() {
         <SuccessStories stories={testimonials} />
       </PwySection>
 
-      {/* Footer */}
-      <footer className="pwy-footer">
-        <div className="pwy-footer__inner">
-          <span>⚽ Beyond the Game · Pathway Finder</span>
-          <Link to="/" className="pwy-footer__link">← Back to support home</Link>
-        </div>
-      </footer>
     </div>
+    </SiteLayout>
   )
 }

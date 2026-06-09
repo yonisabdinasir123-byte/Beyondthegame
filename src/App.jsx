@@ -39,7 +39,7 @@ const AGE_PATHWAYS = {
     label: '16',
     caption: 'left the academy',
     title: 'You left at 16 — and that took real courage',
-    text: `Being released this young can feel like the ground's been pulled from under you. Everything you worked for, every early morning, every sacrifice — it can all feel like it was for nothing. It wasn't. You're 16 with more resilience than most adults. Thousands of players have been exactly where you are and gone on to build incredible lives they never imagined.`,
+    text: `Being released this young can feel like the ground's been pulled from under you — every early morning, every sacrifice. It wasn't for nothing. You're 16 with more resilience than most adults, and thousands of players have been exactly where you are and gone on to build incredible lives.`,
     resources: [
       {
         icon: '📚',
@@ -62,7 +62,7 @@ const AGE_PATHWAYS = {
     label: '18',
     caption: 'left the academy',
     title: 'Leaving at 18 — your path is still wide open',
-    text: `You've spent your teenage years training, sacrificing, believing. Now you're at a crossroads. It's okay to feel lost. It's okay to feel angry or sad about what you expected your life to look like. And it's also okay to start asking — what else am I? Because there's a lot more to you than football, even if it doesn't feel that way right now.`,
+    text: `You've spent your teenage years training, sacrificing, believing — and now you're at a crossroads. It's okay to feel lost, angry, or sad about what you expected your life to look like. There's a lot more to you than football, even if it doesn't feel that way right now.`,
     resources: [
       {
         icon: '🎓',
@@ -85,7 +85,7 @@ const AGE_PATHWAYS = {
     label: '21+',
     caption: 'left the academy',
     title: 'Years of dedication deserve a real next chapter',
-    text: `You've given your early adult years to this game — and that took genuine sacrifice and belief. You know what early mornings, team pressure, and performing under stress really feel like. Those aren't just football skills. They're exactly the qualities that make employers, coaches, and business owners sit up and pay attention. This is a transition, not an ending.`,
+    text: `You've given your early adult years to this game — and that took genuine sacrifice and belief. Those early mornings, team pressure, performing under stress: those aren't just football skills, they're exactly what employers and coaches look for. This is a transition, not an ending.`,
     resources: [
       {
         icon: '🏆',
@@ -221,7 +221,6 @@ export function Navbar({ onLogin, onSignup }) {
           {/* Desktop links */}
           <ul className="navbar__desktop-nav" role="list">
             <li><a href="#pathways" className="navbar__nav-link">My Pathway</a></li>
-            <li><a href="#community" className="navbar__nav-link">Community</a></li>
             <li>
               <Link to="/pathway" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
                 ⚽ Pathway
@@ -233,18 +232,8 @@ export function Navbar({ onLogin, onSignup }) {
               </Link>
             </li>
             <li>
-              <Link to="/jobs" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
-                💼 Jobs
-              </Link>
-            </li>
-            <li>
-              <Link to="/careers" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
-                🌟 Careers
-              </Link>
-            </li>
-            <li>
-              <Link to="/academy" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
-                🏆 Life After the Academy
+              <Link to="/jobs-careers" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
+                💼 Jobs &amp; Careers
               </Link>
             </li>
           </ul>
@@ -263,7 +252,7 @@ export function Navbar({ onLogin, onSignup }) {
               className="navbar__btn navbar__btn--solid"
               onClick={onSignup}
             >
-              Get started free
+              Get started today
             </button>
           </div>
 
@@ -288,20 +277,16 @@ export function Navbar({ onLogin, onSignup }) {
         >
           <ul className="navbar__mobile-nav" role="list">
             <li><a href="#pathways" className="navbar__nav-link" onClick={closeMobile}>My Pathway</a></li>
-            <li><a href="#community" className="navbar__nav-link" onClick={closeMobile}>Community</a></li>
-            <li><Link to="/pathway"   className="navbar__nav-link" onClick={closeMobile}>⚽ Pathway</Link></li>
-            <li><Link to="/education" className="navbar__nav-link" onClick={closeMobile}>🏫 Education</Link></li>
-            <li><Link to="/jobs"      className="navbar__nav-link" onClick={closeMobile}>💼 Jobs</Link></li>
-            <li><Link to="/careers"   className="navbar__nav-link" onClick={closeMobile}>🌟 Career Suggester</Link></li>
-            <li><Link to="/checklist" className="navbar__nav-link" onClick={closeMobile}>✅ Networking</Link></li>
-            <li><Link to="/academy"   className="navbar__nav-link" onClick={closeMobile}>🏆 Life After the Academy</Link></li>
+            <li><Link to="/pathway"      className="navbar__nav-link" onClick={closeMobile}>⚽ Pathway</Link></li>
+            <li><Link to="/education"    className="navbar__nav-link" onClick={closeMobile}>🏫 Education</Link></li>
+            <li><Link to="/jobs-careers" className="navbar__nav-link" onClick={closeMobile}>💼 Jobs &amp; Careers</Link></li>
           </ul>
           <div className="navbar__mobile-auth">
             <button type="button" className="navbar__btn navbar__btn--ghost" onClick={handleLogin} style={{ flex: 1 }}>
               Log in
             </button>
             <button type="button" className="navbar__btn navbar__btn--solid" onClick={handleSignup} style={{ flex: 1 }}>
-              Get started free
+              Get started today
             </button>
           </div>
         </div>
@@ -336,7 +321,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
 
         <div className="hero__ctas">
           <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted}>
-            Get started — it's free
+            Get started today
           </button>
           <button type="button" className="hero__cta hero__cta--secondary" onClick={onFindPath}>
             Find my pathway
@@ -1170,13 +1155,6 @@ function SplashScreen({ onDone }) {
           <div className="splash__bar-fill" />
         </div>
 
-        <button
-          type="button"
-          className="splash__skip"
-          onClick={(e) => { e.stopPropagation(); startExit() }}
-        >
-          Tap to skip
-        </button>
       </div>
     </div>
   )
@@ -1186,7 +1164,7 @@ function SplashScreen({ onDone }) {
 // Root App
 // ─────────────────────────────────────────────────────────────
 export default function App() {
-  const [splashDone, setSplashDone] = useState(false)
+  const [splashDone, setSplashDone] = useState(() => !!sessionStorage.getItem('btg-splash'))
   const [modal, setModal] = useState(null) // 'login' | 'signup' | 'forgot' | null
 
   const openLogin  = useCallback(() => setModal('login'),  [])
@@ -1201,7 +1179,7 @@ export default function App() {
   return (
     <>
       {!splashDone && (
-        <SplashScreen onDone={() => setSplashDone(true)} />
+        <SplashScreen onDone={() => { sessionStorage.setItem('btg-splash', '1'); setSplashDone(true) }} />
       )}
 
       <SkipLink />

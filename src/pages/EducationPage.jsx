@@ -11,10 +11,10 @@
  *   Distance  → haversine util (already wired — maps to Reed distanceFromLocation)
  */
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { Link } from 'react-router-dom'
 import { colleges, jobEvents } from '../data/educationData'
 import { lookupPostcode, DEFAULT_COORDS } from '../utils/distance'
 import { storage, formatDate } from '../utils/storage'
+import SiteLayout    from '../components/SiteLayout'
 import CollegeSearch from '../components/education/CollegeSearch'
 import EventsList    from '../components/education/EventsList'
 import './EducationPage.css'
@@ -23,17 +23,6 @@ const NAV_SECTIONS = [
   { id: 'colleges', label: '🏫 Colleges',  title: 'Local Colleges & Open Days' },
   { id: 'events',   label: '🗓️ Events',    title: 'Job Fairs & Events'          },
 ]
-
-function PageHeader() {
-  return (
-    <header className="edu-page-header" role="banner">
-      <div className="edu-page-header__inner">
-        <Link to="/" className="edu-back-link" aria-label="Back to home">← Home</Link>
-        <span className="edu-page-header__title">Education Hub</span>
-      </div>
-    </header>
-  )
-}
 
 function SectionNav({ activeId }) {
   const scrollTo = (id) => {
@@ -157,12 +146,8 @@ export default function EducationPage() {
   }, [])
 
   return (
-    <>
-      <a href="#colleges" className="skip-link">Skip to content</a>
-      <PageHeader />
-
-      <main>
-        <div className="edu-hero">
+    <SiteLayout>
+      <div className="edu-hero">
           <div className="edu-hero__inner">
             <h1 className="edu-hero__title">Education & Events</h1>
             <p className="edu-hero__sub">
@@ -223,12 +208,6 @@ export default function EducationPage() {
           </p>
           <EventsList events={jobEvents} userCoords={userCoords ?? DEFAULT_COORDS} />
         </Section>
-      </main>
-
-      <footer className="edu-footer">
-        <p>© 2025 Beyond the Game · Distances are approximate.</p>
-        <Link to="/" className="edu-footer__link">← Back to home</Link>
-      </footer>
-    </>
+    </SiteLayout>
   )
 }
