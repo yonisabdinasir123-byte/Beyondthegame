@@ -457,8 +457,71 @@ export default function SupportPage() {
           </div>
         </Section>
 
-        {/* ─── Section G: Substance Awareness ────────────────────────────── */}
-        <Section id="substance-awareness" number="G" title="Substance Awareness">
+        {/* ─── Section G: Life After the Academy ──────────────────────────── */}
+        <Section id="life-after" number="G" title="Life After the Academy">
+          <p className="support-section__intro">
+            The academy system isn't the only route to a good life. Thousands of players have built something real after release — and you can too.
+          </p>
+          <div className="support-cards-grid">
+            <SupportCard
+              icon="🏆"
+              title="Non-league and the freedom player market"
+              description="Step football is competitive, community-driven, and sometimes paid. You can still play the game you love at a level that fits your life."
+            />
+            <SupportCard
+              icon="🎓"
+              title="Sports science and coaching degrees"
+              description="Your football knowledge has real academic value. Sports science, performance analysis, and coaching degrees all build on what you already know."
+            />
+            <SupportCard
+              icon="🧠"
+              title="Psychological literacy"
+              description="Understanding your own mind is a superpower. Learning about resilience, identity, and mental performance changes how you handle everything life throws at you."
+            />
+            <SupportCard
+              icon="📖"
+              title="Real player stories"
+              description="Hearing from people who've walked the same road — and built something great anyway — makes the next step feel possible."
+            />
+          </div>
+          <div className="resources-grid">
+            <ResourceCard
+              name="Football Beyond Borders"
+              description="Uses football as a tool to support young people through education and life transitions."
+              contact="https://www.footballbeyondborders.org"
+              contactLabel="footballbeyondborders.org"
+              cta="https://www.footballbeyondborders.org"
+              ctaText="Find out more"
+            />
+            <ResourceCard
+              name="Non-League Football Portal"
+              description="Clubs, leagues, and trials across England's step football pyramid. Still playing, different level."
+              contact="https://www.nonleaguematters.co.uk"
+              contactLabel="nonleaguematters.co.uk"
+              cta="https://www.nonleaguematters.co.uk"
+              ctaText="Explore the pyramid"
+            />
+            <ResourceCard
+              name="The PFA Education Department"
+              description="Scholarships, courses, and career development for released or transitioning players."
+              contact="https://www.thepfa.com/education"
+              contactLabel="thepfa.com/education"
+              cta="https://www.thepfa.com/education"
+              ctaText="Explore courses"
+            />
+            <ResourceCard
+              name="UCAS"
+              description="University and college applications. Search sports science, coaching, business — your next chapter."
+              contact="https://www.ucas.com"
+              contactLabel="ucas.com"
+              cta="https://www.ucas.com"
+              ctaText="Browse courses"
+            />
+          </div>
+        </Section>
+
+        {/* ─── Section H: Substance Awareness ────────────────────────────── */}
+        <Section id="substance-awareness" number="H" title="Substance Awareness">
           <p className="support-section__intro">
             Leaving sport means losing structure, identity, and community. Some people turn to substances to cope. This is about facts, not fear.
           </p>
@@ -521,7 +584,7 @@ export default function SupportPage() {
         </Section>
 
         {/* ─── Section H: Grooming Awareness ────────────────────────────── */}
-        <Section id="grooming-awareness" number="H" title="Grooming Awareness">
+        <Section id="grooming-awareness" number="I" title="Grooming Awareness">
           <p className="support-section__intro">
             Grooming is how adults build trust with young people to exploit them. Knowing the signs helps you protect yourself and your friends.
           </p>
@@ -584,7 +647,7 @@ export default function SupportPage() {
         </Section>
 
         {/* ─── Section I: Local Mentor Access ────────────────────────────── */}
-        <Section id="local-mentors" number="I" title="Local Mentor Access">
+        <Section id="local-mentors" number="J" title="Local Mentor Access">
           <p className="support-section__intro">
             A mentor is someone further along who believes in you, listens without judgment, and helps you find your next steps. Having one changes lives.
           </p>
@@ -642,7 +705,7 @@ export default function SupportPage() {
         </Section>
 
         {/* ─── Section J: Leadership & Giving Back ──────────────────────── */}
-        <Section id="leadership" number="J" title="Leadership & Giving Back">
+        <Section id="leadership" number="K" title="Leadership & Giving Back">
           <p className="support-section__intro">
             You have more to give than you realise. Stepping into leadership—mentoring others, volunteering, building community—changes both them and you.
           </p>
