@@ -17,6 +17,7 @@ import {
   LoginModal,
   SignupModal,
   ForgotPasswordModal,
+  BackToTop,
 } from '../App.jsx'
 
 export default function SiteLayout({ children }) {
@@ -37,6 +38,7 @@ export default function SiteLayout({ children }) {
       </main>
 
       <FooterSection onLogin={openLogin} onSignup={openSignup} />
+      <BackToTop />
 
       {/* Auth modals — same behaviour as the homepage */}
       <LoginModal

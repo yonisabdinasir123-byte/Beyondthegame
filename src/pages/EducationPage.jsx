@@ -133,7 +133,7 @@ export default function EducationPage() {
       })
       // rootMargin top must clear BOTH sticky bars (navbar + sub-nav ≈ 118px)
       // so the active tab reflects the section actually visible below them.
-    }, { rootMargin: '-118px 0px -40% 0px', threshold: [0.2, 0.5] })
+    }, { rootMargin: '-114px 0px -40% 0px', threshold: [0.2, 0.5] })
     NAV_SECTIONS.forEach(s => {
       const el = document.getElementById(s.id)
       if (el) obs.observe(el)

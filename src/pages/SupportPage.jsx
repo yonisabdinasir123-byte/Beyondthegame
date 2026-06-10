@@ -3,8 +3,44 @@
  * A dedicated support hub for young people in football, covering mental health,
  * finances, identity, career, football exits, community, leadership, and more.
  */
+import { useState, useEffect, useRef } from 'react'
 import SiteLayout from '../components/SiteLayout'
 import './SupportPage.css'
+
+const NAV_SECTIONS = [
+  { id: 'mind-wellbeing',   label: 'Mind & Wellbeing' },
+  { id: 'money-finances',   label: 'Money & Finances' },
+  { id: 'feelings-identity', label: 'Feelings & Identity' },
+  { id: 'work-future',      label: 'Work & Your Future' },
+  { id: 'football-exits',   label: 'Football Exits' },
+  { id: 'community-meets',  label: 'Community' },
+  { id: 'life-after',       label: 'Life After Academy' },
+  { id: 'substance-awareness', label: 'Get Help' },
+]
+
+function SectionNav({ activeId }) {
+  const scrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const offset = 120
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' })
+  }
+  return (
+    <nav className="support-section-nav" aria-label="Support page sections">
+      {NAV_SECTIONS.map(s => (
+        <button
+          key={s.id}
+          type="button"
+          className={`support-nav-btn${activeId === s.id ? ' active' : ''}`}
+          onClick={() => scrollTo(s.id)}
+          aria-current={activeId === s.id ? 'true' : undefined}
+        >
+          {s.label}
+        </button>
+      ))}
+    </nav>
+  )
+}
 
 function Hero() {
   return (
@@ -82,9 +118,29 @@ function ResourceCard({ name, description, contact, contactLabel, cta, ctaText, 
 }
 
 export default function SupportPage() {
+  const [activeId, setActiveId] = useState('mind-wellbeing')
+  const observerRef = useRef(null)
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.intersectionRatio >= 0.2) setActiveId(e.target.id)
+        })
+      },
+      { rootMargin: '-114px 0px -40% 0px', threshold: [0.2, 0.5] },
+    )
+    NAV_SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (el) observerRef.current.observe(el)
+    })
+    return () => observerRef.current?.disconnect()
+  }, [])
+
   return (
     <SiteLayout>
       <div className="support-page">
+        <SectionNav activeId={activeId} />
         <Hero />
 
         {/* ─── Section A: Support Areas ─────────────────────────────────── */}

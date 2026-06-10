@@ -335,7 +335,7 @@ export default function PathwayPage() {
         if (visible.length > 0) setActiveSection(visible[0].target.id)
       },
       // top margin clears both sticky bars (navbar 64 + sub-nav ≈ 54)
-      { threshold: [0.2, 0.5], rootMargin: '-118px 0px -40% 0px' },
+      { threshold: [0.2, 0.5], rootMargin: '-114px 0px -40% 0px' },
     )
     SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id)

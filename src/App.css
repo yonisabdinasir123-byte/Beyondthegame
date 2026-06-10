@@ -1557,3 +1557,42 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   }
   .pathway__age-num { font-size: 1.875rem; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   BACK TO TOP
+   ═══════════════════════════════════════════════════════════ */
+.back-to-top {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 500;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--amber-600);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--sh-md);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.back-to-top:hover {
+  background: var(--amber-700);
+  transform: translateY(-3px);
+  box-shadow: var(--sh-lg);
+}
+.back-to-top:active {
+  transform: translateY(0);
+  box-shadow: var(--sh-sm);
+}
+@media (max-width: 480px) {
+  .back-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+}

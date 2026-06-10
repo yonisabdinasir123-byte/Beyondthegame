@@ -198,6 +198,34 @@ export function SkipLink() {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Back to top button
+// ─────────────────────────────────────────────────────────────
+export function BackToTop() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 300)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  if (!visible) return null
+
+  return (
+    <button
+      type="button"
+      className="back-to-top"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      aria-label="Back to top"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+      </svg>
+    </button>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
 // Navbar
 // ─────────────────────────────────────────────────────────────
 export function Navbar({ onLogin, onSignup }) {
@@ -1196,6 +1224,7 @@ export default function App() {
       </main>
 
       <FooterSection onLogin={openLogin} onSignup={openSignup} />
+      <BackToTop />
 
       {/* Auth modals */}
       <LoginModal
