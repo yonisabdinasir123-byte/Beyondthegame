@@ -828,6 +828,7 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 .support-card {
@@ -884,6 +885,15 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
 }
 .support-card__title-link:hover {
   color: var(--card-accent, var(--amber-700));
+}
+
+.support-card__micro {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-muted, #78350F);
+  white-space: nowrap;
+  display: block;
+  line-height: 1.4;
 }
 
 .support-card__icon {
@@ -947,6 +957,7 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  align-items: stretch;
 }
 
 .testimonial {
@@ -956,6 +967,8 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   box-shadow: var(--sh-sm);
   border-left: 4px solid var(--amber-400);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .testimonial__mark {
@@ -981,7 +994,8 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
 }
 
 .testimonial__footer {
-  margin-top: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;

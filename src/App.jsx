@@ -111,6 +111,7 @@ const SUPPORT_CARDS = [
     id: 'mind',
     emoji: '🧠',
     title: 'Mind & Wellbeing',
+    micro: 'Not alone here',
     link: '/support#mind-wellbeing',
     accent: 'var(--c-mind)',
     bg: 'var(--c-mind-bg)',
@@ -119,6 +120,7 @@ const SUPPORT_CARDS = [
     id: 'money',
     emoji: '💷',
     title: 'Money & Finances',
+    micro: 'Know your money',
     link: '/support#money-finances',
     accent: 'var(--c-money)',
     bg: 'var(--c-money-bg)',
@@ -127,6 +129,7 @@ const SUPPORT_CARDS = [
     id: 'feelings',
     emoji: '❤️',
     title: 'Feelings & Identity',
+    micro: 'Be who you are',
     link: '/support#feelings-identity',
     accent: 'var(--c-feelings)',
     bg: 'var(--c-feelings-bg)',
@@ -135,6 +138,7 @@ const SUPPORT_CARDS = [
     id: 'work',
     emoji: '🎯',
     title: 'Work & Your Future',
+    micro: 'Build your path',
     link: '/support#work-future',
     accent: 'var(--c-work)',
     bg: 'var(--c-work-bg)',
@@ -143,6 +147,7 @@ const SUPPORT_CARDS = [
     id: 'football',
     emoji: '⚽',
     title: 'Football Exit Support',
+    micro: 'Beyond the game',
     link: '/support#football-exits',
     accent: 'var(--c-football)',
     bg: 'var(--c-football-bg)',
@@ -151,6 +156,7 @@ const SUPPORT_CARDS = [
     id: 'community',
     emoji: '🤝',
     title: 'Community & Mates',
+    micro: 'Your people',
     link: '/support#community-meets',
     accent: 'var(--c-community)',
     bg: 'var(--c-community-bg)',
@@ -159,6 +165,7 @@ const SUPPORT_CARDS = [
     id: 'academy',
     emoji: '🏆',
     title: 'Life After Academy',
+    micro: 'What comes next',
     link: '/support#life-after',
     accent: '#1A4731',
     bg: '#ECFDF5',
@@ -506,6 +513,7 @@ function SupportCardsSection() {
               <Link to={card.link} className="support-card__title-link">
                 {card.title}
               </Link>
+              <span className="support-card__micro" aria-hidden="true">{card.micro}</span>
             </article>
           ))}
         </div>
