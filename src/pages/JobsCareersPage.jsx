@@ -540,6 +540,8 @@ export default function JobsCareersPage() {
     <SiteLayout>
       <div className="jc-page">
 
+        <SectionNav activeId={activeId} />
+
         {/* Hero */}
         <div className="jc-hero">
           <div className="jc-hero__inner">
@@ -550,8 +552,6 @@ export default function JobsCareersPage() {
             </p>
           </div>
         </div>
-
-        <SectionNav activeId={activeId} />
 
         {/* ── Career Explorer ─────────────────────────────────────────────── */}
         <section id="career-explorer" className="jc-section" aria-labelledby="ce-heading">

@@ -347,8 +347,8 @@ export default function PathwayPage() {
   return (
     <SiteLayout>
     <div className="pathway-page">
-      <Hero />
       <SectionNav activeSection={activeSection} />
+      <Hero />
 
       {/* ── 0. The Pyramid ─────────────────────────────────────────────────── */}
       <PyramidSection />

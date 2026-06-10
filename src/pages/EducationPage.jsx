@@ -155,6 +155,8 @@ export default function EducationPage() {
 
   return (
     <SiteLayout>
+      <SectionNav activeId={activeId} />
+
       <div className="edu-hero">
           <div className="edu-hero__inner">
             <h1 className="edu-hero__title">Education & Events</h1>
@@ -194,8 +196,6 @@ export default function EducationPage() {
             </div>
           </div>
         )}
-
-        <SectionNav activeId={activeId} />
 
         <Section id="matcher" title="What Can I Study?">
           <p className="edu-section__desc">

@@ -71,7 +71,7 @@
 /* ── Section nav ───────────────────────────────────────────────────────────── */
 .edu-section-nav {
   position: sticky;
-  top: 64px;
+  top: var(--header-height); /* flush below SiteLayout Navbar */
   z-index: 100;
   background: var(--bg, #FFFBF5);
   border-bottom: 1px solid var(--amber-200);

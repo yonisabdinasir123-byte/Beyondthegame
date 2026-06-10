@@ -137,7 +137,7 @@
 /* ─── Section navigation (sticky tab bar) ────────────────────────────────────── */
 .section-nav {
   position: sticky;
-  top: 64px; /* below SiteLayout Navbar */
+  top: var(--header-height); /* flush below SiteLayout Navbar */
   z-index: 100;
   background: var(--bg, #FFFBF5);
   border-bottom: 2px solid var(--amber-100);
@@ -1330,6 +1330,7 @@
    PYRAMID SECTION — light amber/cream editorial band
    ═══════════════════════════════════════════════════════════ */
 .pwy-pyramid {
+  scroll-margin-top: calc(var(--header-height) + var(--subheader-height));
   --pyr-bg:        #FEF9F0;
   --pyr-bg-card:   #FFFFFF;
   --pyr-border:    #FDE68A;
