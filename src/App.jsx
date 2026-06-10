@@ -588,12 +588,12 @@ export function FooterSection({ onLogin, onSignup }) {
         <nav aria-label="Support links">
           <h3 className="footer__col-heading">Support</h3>
           <ul className="footer__links">
-            <li><a href="#support" className="footer__link">Mind &amp; Wellbeing</a></li>
-            <li><a href="#support" className="footer__link">Money &amp; Finances</a></li>
-            <li><a href="#support" className="footer__link">Feelings &amp; Identity</a></li>
-            <li><a href="#support" className="footer__link">Work &amp; Career</a></li>
-            <li><a href="#support" className="footer__link">Football Exit</a></li>
-            <li><a href="#community" className="footer__link">Community</a></li>
+            <li><Link to="/support#mind-wellbeing"   className="footer__link">Mind &amp; Wellbeing</Link></li>
+            <li><Link to="/support#money-finances"   className="footer__link">Money &amp; Finances</Link></li>
+            <li><Link to="/support#feelings-identity" className="footer__link">Feelings &amp; Identity</Link></li>
+            <li><Link to="/support#work-future"      className="footer__link">Work &amp; Career</Link></li>
+            <li><Link to="/support#football-exits"   className="footer__link">Football Exit</Link></li>
+            <li><Link to="/support#community-meets"  className="footer__link">Community</Link></li>
           </ul>
         </nav>
 
@@ -601,11 +601,11 @@ export function FooterSection({ onLogin, onSignup }) {
         <nav aria-label="Pathway links">
           <h3 className="footer__col-heading">Pathways</h3>
           <ul className="footer__links">
-            <li><a href="#pathways" className="footer__link">Left at 16</a></li>
-            <li><a href="#pathways" className="footer__link">Left at 18</a></li>
-            <li><a href="#pathways" className="footer__link">Left at 21+</a></li>
-            <li><a href="#about" className="footer__link">About Us</a></li>
-            <li><a href="#about" className="footer__link">Our Story</a></li>
+            <li><Link to="/pathway" className="footer__link">Left at 16</Link></li>
+            <li><Link to="/pathway" className="footer__link">Left at 18</Link></li>
+            <li><Link to="/pathway" className="footer__link">Left at 21+</Link></li>
+            <li><a href="/#about" className="footer__link">About Us</a></li>
+            <li><a href="/#about" className="footer__link">Our Story</a></li>
           </ul>
         </nav>
 

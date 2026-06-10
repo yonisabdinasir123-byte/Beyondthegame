@@ -250,21 +250,8 @@ export default function SupportPage() {
               title="Body image and comparison"
               description="Athletes often struggle with how their body feels after competition ends. That's normal — and worth talking about."
             />
-            <SupportCard
-              icon="🏳️‍🌈"
-              title="LGBTQ+ support in football"
-              description="Football culture can feel unwelcoming if you're queer. You're not alone — there are communities and spaces for you."
-            />
           </div>
           <div className="resources-grid">
-            <ResourceCard
-              name="The Proud Trust"
-              description="LGBTQ+ support for young people in sport. Peer support, events, and resources."
-              contact="https://www.theproudtrust.org"
-              contactLabel="theproudtrust.org"
-              cta="https://www.theproudtrust.org"
-              ctaText="Connect with community"
-            />
             <ResourceCard
               name="UK Youth"
               description="Youth groups and activities near you — explore new interests and make new friends."
