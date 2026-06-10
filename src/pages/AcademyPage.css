@@ -1,25 +1,30 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    AcademyPage.css — "Life After the Academy" page.
    All rules scoped under .academy-scope — nothing leaks to the rest of the app.
-   Design: dark pitch-green + lime used sparingly as accent; generous whitespace.
+   Design: light amber/cream to match the rest of the site; amber accents,
+   generous whitespace. Decorative accents (rose/teal) kept for card variety.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .academy-scope {
-  --aca-green-950: #0d1a0d;
-  --aca-green-900: #111f11;
-  --aca-green-800: #162616;
-  --aca-green-700: #1e3220;
-  --aca-green-600: #273f29;
-  --aca-lime:      #b8f542;
-  --aca-lime-dark: #92c933;
-  --aca-amber:     #f5a623;
-  --aca-coral:     #ff6b6b;
-  --aca-teal:      #42c5b8;
-  --aca-white:     #ffffff;
-  --aca-off-white: #e4ede4;
-  --aca-muted:     #7a9e7a;
-  --aca-card-bg:   #162616;
-  --aca-card-bdr:  #243824;
+  /* Backgrounds (light) — names kept for minimal churn in rule bodies. */
+  --aca-green-950: #FFFBF5;   /* page / hero / cta background + text on accent chips */
+  --aca-green-900: #FEF9F0;
+  --aca-green-800: #FEF3C7;   /* alternating section background */
+  --aca-green-700: #FDE68A;
+  --aca-green-600: #FCD34D;
+  /* Accents (readable on cream) */
+  --aca-lime:      #B45309;   /* primary accent (was lime) → amber-700 */
+  --aca-lime-dark: #92400E;   /* primary accent hover */
+  --aca-amber:     #C2410C;   /* secondary accent → burnt orange */
+  --aca-coral:     #BE123C;   /* decorative rose */
+  --aca-teal:      #0F766E;   /* decorative teal */
+  /* Text */
+  --aca-white:     #1C1009;   /* primary text (titles/names) */
+  --aca-off-white: #44200A;   /* secondary/body text */
+  --aca-muted:     #78350F;   /* muted text */
+  /* Surfaces */
+  --aca-card-bg:   #FFFFFF;
+  --aca-card-bdr:  #FDE68A;
   --aca-r:    10px;
   --aca-r-lg: 16px;
   --aca-inner: 1120px;
@@ -102,11 +107,11 @@
 }
 .academy-scope .aca-tag--lime  { background: var(--aca-lime);  color: var(--aca-green-950); }
 .academy-scope .aca-tag--amber { background: var(--aca-amber); color: var(--aca-green-950); }
-.academy-scope .aca-tag--coral { background: var(--aca-coral); color: var(--aca-white); }
+.academy-scope .aca-tag--coral { background: var(--aca-coral); color: #fff; }
 .academy-scope .aca-tag--teal  { background: var(--aca-teal);  color: var(--aca-green-950); }
 .academy-scope .aca-tag--ghost {
   background: transparent;
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid rgba(180,83,9,.25);
   color: var(--aca-muted);
 }
 
@@ -133,7 +138,7 @@
 .academy-scope .aca-btn--outline {
   background: transparent;
   color: var(--aca-off-white);
-  border: 1.5px solid rgba(255,255,255,.2);
+  border: 1.5px solid rgba(180,83,9,.3);
 }
 .academy-scope .aca-btn--outline:hover {
   border-color: var(--aca-lime);
@@ -150,8 +155,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(90deg, transparent, transparent calc(100% / 6 - 1px), rgba(184,245,66,.025) calc(100% / 6 - 1px), rgba(184,245,66,.025) calc(100% / 6)),
-    repeating-linear-gradient(0deg, transparent, transparent calc(100% / 10 - 1px), rgba(184,245,66,.02) calc(100% / 10 - 1px), rgba(184,245,66,.02) calc(100% / 10));
+    repeating-linear-gradient(90deg, transparent, transparent calc(100% / 6 - 1px), rgba(180,83,9,.04) calc(100% / 6 - 1px), rgba(180,83,9,.04) calc(100% / 6)),
+    repeating-linear-gradient(0deg, transparent, transparent calc(100% / 10 - 1px), rgba(180,83,9,.03) calc(100% / 10 - 1px), rgba(180,83,9,.03) calc(100% / 10));
   pointer-events: none;
 }
 
@@ -220,14 +225,14 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.06);
+  background: var(--amber-200);
+  border: 1px solid var(--amber-200);
   border-radius: 12px;
   overflow: hidden;
   max-width: 640px;
 }
 .academy-scope .aca-stat-block {
-  background: rgba(255,255,255,.03);
+  background: #fff;
   padding: 1.5rem 1.25rem;
   text-align: center;
 }
@@ -261,11 +266,12 @@
   display: flex;
   flex-direction: column;
   transition: border-color .2s, transform .2s, box-shadow .2s;
+  box-shadow: var(--sh-sm);
 }
 .academy-scope .aca-player-card:hover {
-  border-color: rgba(184,245,66,.4);
+  border-color: var(--amber-400);
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.35);
+  box-shadow: var(--sh-md);
 }
 .academy-scope .aca-player-card__accent       { height: 3px; background: var(--aca-lime); }
 .academy-scope .aca-player-card__accent--amber { background: var(--aca-amber); }
@@ -319,20 +325,20 @@
   letter-spacing: .04em;
   color: var(--aca-lime);
   text-transform: uppercase;
-  background: rgba(184,245,66,.06);
+  background: rgba(180,83,9,.07);
   border-radius: 5px;
   padding: .4rem .65rem;
   margin-top: auto;
 }
-.academy-scope .aca-player-card__fact--amber { color: var(--aca-amber); background: rgba(245,166,35,.06); }
-.academy-scope .aca-player-card__fact--coral { color: var(--aca-coral); background: rgba(255,107,107,.06); }
-.academy-scope .aca-player-card__fact--teal  { color: var(--aca-teal);  background: rgba(66,197,184,.06); }
+.academy-scope .aca-player-card__fact--amber { color: var(--aca-amber); background: rgba(194,65,12,.07); }
+.academy-scope .aca-player-card__fact--coral { color: var(--aca-coral); background: rgba(190,18,60,.07); }
+.academy-scope .aca-player-card__fact--teal  { color: var(--aca-teal);  background: rgba(15,118,110,.08); }
 
 /* Stories deep-link CTA */
 .academy-scope .aca-stories-cta {
   margin-top: 2.5rem;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,.07);
+  border-top: 1px solid var(--amber-200);
   text-align: center;
 }
 .academy-scope .aca-stories-link {
@@ -357,17 +363,18 @@
   gap: 1.5rem;
 }
 .academy-scope .aca-freedom-card {
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.07);
+  background: #fff;
+  border: 1px solid var(--amber-200);
   border-radius: var(--aca-r-lg);
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: .6rem;
   transition: border-color .2s, transform .2s;
+  box-shadow: var(--sh-sm);
 }
 .academy-scope .aca-freedom-card:hover {
-  border-color: rgba(245,166,35,.35);
+  border-color: var(--amber-400);
   transform: translateY(-2px);
 }
 .academy-scope .aca-freedom-card__win {
@@ -413,9 +420,10 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
-  background: rgba(255,255,255,.05);
+  background: var(--amber-200);
   border-radius: var(--aca-r-lg);
   overflow: hidden;
+  border: 1px solid var(--amber-200);
 }
 .academy-scope .aca-course-item {
   background: var(--aca-card-bg);
@@ -424,7 +432,7 @@
   transition: background .15s, border-left-color .15s;
 }
 .academy-scope .aca-course-item:hover {
-  background: rgba(255,255,255,.03);
+  background: var(--aca-green-900);
   border-left-color: var(--aca-amber);
 }
 .academy-scope .aca-course-item__num {
@@ -463,7 +471,7 @@
 
 .academy-scope .aca-course-item--advanced {
   opacity: .72;
-  border-left-color: rgba(255,255,255,.2);
+  border-left-color: var(--amber-200);
 }
 .academy-scope .aca-course-item--advanced:hover { opacity: 1; }
 
@@ -505,13 +513,14 @@
   top: 1.5rem;
 }
 .academy-scope .aca-ref-box {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
+  background: #fff;
+  border: 1px solid var(--amber-200);
   border-radius: var(--aca-r);
   padding: 1.375rem;
   transition: border-color .15s;
+  box-shadow: var(--sh-sm);
 }
-.academy-scope .aca-ref-box:hover { border-color: rgba(184,245,66,.2); }
+.academy-scope .aca-ref-box:hover { border-color: var(--amber-400); }
 .academy-scope .aca-ref-box__icon { font-size: 1.3rem; margin-bottom: .5rem; }
 .academy-scope .aca-ref-box__label {
   font-family: 'Barlow Condensed', sans-serif;
@@ -544,7 +553,7 @@
   letter-spacing: .04em;
   color: var(--aca-lime);
   text-decoration: none;
-  border-bottom: 1px solid rgba(184,245,66,.25);
+  border-bottom: 1px solid var(--amber-300);
   padding-bottom: .1rem;
   transition: border-color .15s, opacity .15s;
 }
@@ -560,17 +569,18 @@
   gap: 1.25rem;
 }
 .academy-scope .aca-skill-tile {
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.06);
+  background: #fff;
+  border: 1px solid var(--amber-200);
   border-radius: var(--aca-r-lg);
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: .75rem;
   transition: border-color .2s, transform .2s;
+  box-shadow: var(--sh-sm);
 }
 .academy-scope .aca-skill-tile:hover {
-  border-color: rgba(184,245,66,.25);
+  border-color: var(--amber-400);
   transform: translateY(-2px);
 }
 .academy-scope .aca-skill-tile__icon {
@@ -580,7 +590,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(184,245,66,.07);
+  background: var(--amber-100);
   border-radius: 10px;
   flex-shrink: 0;
 }
@@ -611,7 +621,7 @@
 
 /* ── CTA (slim Get Help) ──────────────────────────────────────────────────── */
 .academy-scope .aca-cta {
-  background: var(--aca-green-950);
+  background: var(--aca-green-800);
   padding: clamp(4.5rem, 11vw, 8rem) 0;
   text-align: center;
   position: relative;
@@ -620,7 +630,7 @@
 .academy-scope .aca-cta-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 80%, rgba(184,245,66,.04) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 80%, rgba(180,83,9,.06) 0%, transparent 60%);
   pointer-events: none;
 }
 .academy-scope .aca-cta-title {
