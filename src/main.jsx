@@ -7,6 +7,7 @@ import RecoveryPage    from './pages/RecoveryPage.jsx'
 import EducationPage   from './pages/EducationPage.jsx'
 import JobsCareersPage from './pages/JobsCareersPage.jsx'
 import AcademyPage     from './pages/AcademyPage.jsx'
+import SupportPage     from './pages/SupportPage.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/pathway"     element={<PathwayPage />} />
         <Route path="/recovery"    element={<RecoveryPage />} />
         <Route path="/education"   element={<EducationPage />} />
+        <Route path="/support"     element={<SupportPage />} />
         <Route path="/jobs-careers" element={<JobsCareersPage />} />
         <Route path="/academy"     element={<AcademyPage />} />
       </Routes>

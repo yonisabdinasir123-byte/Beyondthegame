@@ -111,7 +111,7 @@ const SUPPORT_CARDS = [
     id: 'mind',
     emoji: '🧠',
     title: 'Mind & Wellbeing',
-    text: 'Feeling low, anxious, or completely lost is a totally normal response to leaving the academy. We connect you with therapists and peer supporters who actually understand what you\'re going through — no waiting lists, no jargon.',
+    link: '/support#mind-wellbeing',
     accent: 'var(--c-mind)',
     bg: 'var(--c-mind-bg)',
   },
@@ -119,7 +119,7 @@ const SUPPORT_CARDS = [
     id: 'money',
     emoji: '💷',
     title: 'Money & Finances',
-    text: 'From benefits you might be entitled to, through budgeting basics, to longer-term financial planning — our guides are written in plain English with no confusing jargon. Know your rights and make your money work harder.',
+    link: '/support#money-finances',
     accent: 'var(--c-money)',
     bg: 'var(--c-money-bg)',
   },
@@ -127,7 +127,7 @@ const SUPPORT_CARDS = [
     id: 'feelings',
     emoji: '❤️',
     title: 'Feelings & Identity',
-    text: 'When football is your whole identity and it\'s suddenly gone, it can feel like losing a part of yourself. This isn\'t weakness — it\'s grief. We have peer groups and one-to-one support to help you find yourself beyond the game.',
+    link: '/support#feelings-identity',
     accent: 'var(--c-feelings)',
     bg: 'var(--c-feelings-bg)',
   },
@@ -135,7 +135,7 @@ const SUPPORT_CARDS = [
     id: 'work',
     emoji: '🎯',
     title: 'Work & Your Future',
-    text: 'CV writing, job searching, apprenticeship applications, interview practice — and honest conversations about what kind of work might actually make you happy. Your academy skills translate further than you think.',
+    link: '/support#work-future',
     accent: 'var(--c-work)',
     bg: 'var(--c-work-bg)',
   },
@@ -143,7 +143,7 @@ const SUPPORT_CARDS = [
     id: 'football',
     emoji: '⚽',
     title: 'Football Exit Support',
-    text: 'Understand your rights, navigate the academy release process, get advice on agents and contracts, and explore whether continuing to play at any level is right for you. You don\'t have to figure this out alone.',
+    link: '/support#football-exits',
     accent: 'var(--c-football)',
     bg: 'var(--c-football-bg)',
   },
@@ -151,7 +151,7 @@ const SUPPORT_CARDS = [
     id: 'community',
     emoji: '🤝',
     title: 'Community & Mates',
-    text: 'Connect with hundreds of young people who\'ve been through the same thing. Share your story, find answers, make real friends who understand what you\'ve been through. You are far from alone in this.',
+    link: '/support#community-meets',
     accent: 'var(--c-community)',
     bg: 'var(--c-community-bg)',
   },
@@ -159,28 +159,27 @@ const SUPPORT_CARDS = [
     id: 'academy',
     emoji: '🏆',
     title: 'Life After Academy',
-    text: 'An in-depth guide covering the non-league pyramid, real player stories, the freedom player market, psychological literacy courses, and practical life skills — everything for your next chapter after the academy system.',
+    link: '/support#life-after',
     accent: '#1A4731',
     bg: '#ECFDF5',
-    link: '/academy',
   },
 ]
 
 const TESTIMONIALS = [
   {
-    text: `I was released at 17 and genuinely thought my life was over. Beyond the Game connected me with a counsellor and a careers advisor within a week. I'm now doing a sports science degree at Leeds and I've never been happier. I wish I'd found this sooner.`,
+    text: `I was released at 17 and thought my life was over. Beyond the Game got me talking to someone within a week.`,
     name: 'Jordan, 19',
     detail: 'Released aged 17 · Championship academy',
     initial: 'J',
   },
   {
-    text: `The financial advice on here was a lifesaver. I didn't even know I was entitled to Universal Credit. The money guide is written in plain English — none of that confusing government language. Got me sorted within two weeks.`,
+    text: `The financial guide changed everything — plain English, no jargon. Got me sorted in two weeks.`,
     name: 'Callum, 21',
     detail: 'Released aged 18 · League One academy',
     initial: 'C',
   },
   {
-    text: `What helped most was talking to other lads who'd actually been through it. You feel so completely alone at first. The community section changed everything for me. I met my best mate through it. We both got our UEFA C together.`,
+    text: `Meeting other lads who'd been through it saved me. You don't feel so alone anymore.`,
     name: 'Marcus, 22',
     detail: 'Released aged 21 · Premier League academy',
     initial: 'M',
@@ -236,6 +235,11 @@ export function Navbar({ onLogin, onSignup }) {
               </Link>
             </li>
             <li>
+              <Link to="/support" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
+                💚 Support
+              </Link>
+            </li>
+            <li>
               <Link to="/jobs-careers" className="navbar__nav-link" style={{ background: 'rgba(255,255,255,.15)', borderRadius: '6px', padding: '0.375rem 0.75rem' }}>
                 💼 Jobs &amp; Careers
               </Link>
@@ -283,6 +287,7 @@ export function Navbar({ onLogin, onSignup }) {
             <li><Link to="/" className="navbar__nav-link" onClick={closeMobile}>Home</Link></li>
             <li><Link to="/pathway"      className="navbar__nav-link" onClick={closeMobile}>⚽ Pathway</Link></li>
             <li><Link to="/education"    className="navbar__nav-link" onClick={closeMobile}>🏫 Education</Link></li>
+            <li><Link to="/support"      className="navbar__nav-link" onClick={closeMobile}>💚 Support</Link></li>
             <li><Link to="/jobs-careers" className="navbar__nav-link" onClick={closeMobile}>💼 Jobs &amp; Careers</Link></li>
           </ul>
           <div className="navbar__mobile-auth">
@@ -463,24 +468,16 @@ function SupportCardsSection() {
           {SUPPORT_CARDS.map(card => (
             <article
               key={card.id}
-              className={`support-card${card.link ? ' support-card--linked' : ''}`}
+              className={`support-card support-card--minimal`}
               role="listitem"
               style={{ '--card-accent': card.accent, '--card-bg': card.bg }}
             >
               <div className="support-card__icon" aria-hidden="true">
                 {card.emoji}
               </div>
-              <h3 className="support-card__title">{card.title}</h3>
-              <p className="support-card__text">{card.text}</p>
-              {card.link ? (
-                <Link to={card.link} className="support-card__cta">
-                  Explore guide <IconArrow />
-                </Link>
-              ) : (
-                <button type="button" className="support-card__cta">
-                  Find out more <IconArrow />
-                </button>
-              )}
+              <Link to={card.link} className="support-card__title-link">
+                {card.title}
+              </Link>
             </article>
           ))}
         </div>
