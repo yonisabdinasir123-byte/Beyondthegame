@@ -17,7 +17,11 @@
  * • Run `npm run dev` — the key is injected at build time.
  */
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { storage } from '../../utils/storage'
+import { notifyProgress, hapticPulse } from '../../utils/goal'
+import { useUnsavedGuard } from '../GoalSystem'
+import PromptCard from '../PromptCard'
 
 // ─── Constants ─────────────────────────────────────────────────────────────────
 const POSITIONS_LIST = [
@@ -176,12 +180,31 @@ function CVOutput({ cv, onRegenerate, loading }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
+const draftHasContent = (d) =>
+  Boolean(d && (d.name || d.currentClub || (d.positions && d.positions.length)))
+
 export default function AICVBuilder() {
-  const [form, setForm]         = useState(INITIAL_FORM)
+  /* Fogg: facilitator — answers auto-restore; nobody types twice */
+  const [form, setForm] = useState(() => ({ ...INITIAL_FORM, ...storage.get('cv-draft', {}) }))
   const [cv, setCV]             = useState('')
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [restored] = useState(() => draftHasContent(storage.get('cv-draft', null)))
+  const startedRef = useRef(restored)
+
+  // Draft auto-saves on every change — work is never lost, so no scary
+  // warning is needed for the form itself. /* No dark patterns: protect, don't trap */
+  useEffect(() => {
+    storage.set('cv-draft', form)
+    if (!startedRef.current && draftHasContent(form)) {
+      startedRef.current = true
+      notifyProgress() /* milestone signal: CV started */
+    }
+  }, [form])
+
+  // A generation in flight WOULD be lost on leave — honest guard, only then.
+  useUnsavedGuard(loading)
 
   const set = key => e => setForm(f => ({ ...f, [key]: e.target.value }))
   const setPositions = positions => setForm(f => ({ ...f, positions }))
@@ -206,11 +229,17 @@ export default function AICVBuilder() {
     try {
       const result = await generateCV(form)
       setCV(result)
+      /* Norman: behavioural — milestone confirmed the moment it happens */
+      storage.set('cv-done', true)
+      notifyProgress()
+      hapticPulse()
     } catch (ex) {
       if (ex.message === 'NO_KEY') {
         setError('No API key found. Add VITE_ANTHROPIC_API_KEY to your .env file to enable the AI CV builder.')
       } else {
-        setError(`Something went wrong: ${ex.message}. Please try again.`)
+        /* Emotional design: frustration absorbed — fix stated, no blame,
+           input preserved (it's auto-saved). */
+        setError(`Something went wrong: ${ex.message}. Your answers are saved — please try again.`)
       }
       setSubmitted(false)
     } finally {
@@ -233,6 +262,13 @@ export default function AICVBuilder() {
 
   return (
     <div className="cv-builder">
+      {/* Fogg: facilitator — returning users see their work is already here */}
+      {restored && !cv && (
+        <PromptCard type="facilitator">
+          Welcome back. Your answers are saved — check them and carry on.
+        </PromptCard>
+      )}
+
       <div className={`cv-builder__layout${cv ? ' cv-builder__layout--split' : ''}`}>
 
         {/* ── Form ── */}
@@ -376,7 +412,14 @@ export default function AICVBuilder() {
                 </div>
               </div>
             ) : cv ? (
-              <CVOutput cv={cv} onRegenerate={handleRegenerate} loading={loading} />
+              <>
+                <CVOutput cv={cv} onRegenerate={handleRegenerate} loading={loading} />
+                {/* Fogg: spark + behaviour chaining — completion offers the
+                    natural next step while the win is fresh. */}
+                <PromptCard type="spark" ctaLabel="Find clubs recruiting now" href="#clubs" live>
+                  CV done — great work. Clubs above are recruiting right now.
+                </PromptCard>
+              </>
             ) : null}
           </div>
         )}

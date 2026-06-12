@@ -7,6 +7,9 @@ import NetworkingTracker from '../components/checklist/NetworkingTracker'
 import { jobAdverts }    from '../data/educationData'
 import { storage }       from '../utils/storage'
 import { DEFAULT_COORDS } from '../utils/distance'
+import { GoalProgress }  from '../components/GoalSystem'
+import PromptCard        from '../components/PromptCard'
+import { getGoal }       from '../utils/goal'
 import './JobsCareersPage.css'
 
 // ── Career Spotlight data ─────────────────────────────────────────────────────
@@ -429,7 +432,8 @@ function CareerSpotlight() {
         {/* Suggest a career */}
         <div className="cs-suggest">
           <div className="cs-suggest__label">
-            <p className="cs-suggest__title">Don&rsquo;t see your path here?</p>
+            {/* Prospect: gain framing — invitation, not absence */}
+            <p className="cs-suggest__title">Want a path we haven&rsquo;t listed?</p>
             <p className="cs-suggest__sub">Tell us what you&rsquo;re interested in and we&rsquo;ll add it to the next update.</p>
           </div>
           <form className="cs-suggest__form" onSubmit={handleSuggest} aria-label="Suggest a career">
@@ -553,6 +557,11 @@ export default function JobsCareersPage() {
           </div>
         </div>
 
+        {/* Goal gradient: progress visible wherever the work happens */}
+        <div className="goal-progress-wrap">
+          <GoalProgress />
+        </div>
+
         {/* ── Career Explorer ─────────────────────────────────────────────── */}
         <section id="career-explorer" className="jc-section" aria-labelledby="ce-heading">
           <div className="jc-section__inner">
@@ -589,6 +598,13 @@ export default function JobsCareersPage() {
                 <strong>📡 Live data note:</strong> These are seed/demo records. When wired to the Reed API, this page will show real live vacancies filtered by your location.
               </div>
             </div>
+            {/* Fogg: signal — goal-matched direction to the listings below */}
+            {getGoal()?.id === 'find-job' && (
+              <PromptCard type="signal">
+                Your goal: 💼 Find a Job. The roles below are sorted near you —
+                filter by field and apply to the ones that fit.
+              </PromptCard>
+            )}
             <JobAdverts adverts={jobAdverts} userCoords={userCoords} />
           </div>
         </section>

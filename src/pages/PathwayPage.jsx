@@ -27,6 +27,10 @@ import Tournaments       from '../components/pathway/Tournaments'
 import CompatibleLeagues from '../components/pathway/CompatibleLeagues'
 import AICVBuilder       from '../components/pathway/AICVBuilder'
 import SuccessStories    from '../components/pathway/SuccessStories'
+import { GoalProgress }  from '../components/GoalSystem'
+import PromptCard        from '../components/PromptCard'
+import MoodBoard         from '../components/MoodBoard'
+import { getGoal }       from '../utils/goal'
 
 import './PathwayPage.css'
 
@@ -38,6 +42,7 @@ const SECTIONS = [
   { id: 'tournaments',label: '🏆 Tournaments' },
   { id: 'leagues',    label: '📋 Leagues'     },
   { id: 'cv-builder', label: '📄 AI CV'       },
+  { id: 'moodboard',  label: '🎨 Mood Board'  },
   { id: 'stories',    label: '💬 Stories'     },
 ]
 
@@ -350,6 +355,11 @@ export default function PathwayPage() {
       <SectionNav activeSection={activeSection} />
       <Hero />
 
+      {/* Goal gradient: progress visible wherever the work happens */}
+      <div className="goal-progress-wrap">
+        <GoalProgress />
+      </div>
+
       {/* ── 0. The Pyramid ─────────────────────────────────────────────────── */}
       <PyramidSection />
       <AcademyEntryCard />
@@ -378,6 +388,14 @@ export default function PathwayPage() {
         title="Upcoming showcase & trial events"
         subtitle="Scout-attended events across the country. Register your interest to secure your spot."
       >
+        {/* Fogg: signal — goal-matched, points straight at the action.
+            Cialdini: scarcity, truthfully — showcases genuinely run once. */}
+        {getGoal()?.id === 'find-club' && (
+          <PromptCard type="signal">
+            Your goal: ⚽ Find a Club. The events below are scout-attended —
+            register before the date shown. Most run once a season.
+          </PromptCard>
+        )}
         <ShowcaseGames games={showcaseGames} />
       </PwySection>
 
@@ -411,7 +429,18 @@ export default function PathwayPage() {
         <AICVBuilder />
       </PwySection>
 
-      {/* ── 6. Success Stories ──────────────────────────────────────────────── */}
+      {/* ── 6. Mood Board ───────────────────────────────────────────────────── */}
+      {/* Norman: reflective — "I'm someone building my future" */}
+      <PwySection
+        id="moodboard"
+        eyebrow="Mood Board"
+        title="Who are you becoming?"
+        subtitle="Build a board of the roles that feel like your future. It saves automatically and counts towards your goal."
+      >
+        <MoodBoard />
+      </PwySection>
+
+      {/* ── 7. Success Stories ──────────────────────────────────────────────── */}
       <PwySection
         id="stories"
         eyebrow="Success Stories"

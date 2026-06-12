@@ -4,6 +4,7 @@
  */
 import { useState, useCallback } from 'react'
 import { storage, today, formatDate } from '../../utils/storage'
+import { notifyProgress } from '../../utils/goal'
 import { networkingPrompts } from '../../data/educationData'
 
 const FOLLOW_UP_OPTIONS = ['Not yet contacted', 'Awaiting reply', 'Follow-up sent', 'Had a response', 'Ongoing conversation', 'Closed / done']
@@ -43,6 +44,7 @@ export default function NetworkingTracker() {
   const persistContacts = useCallback((next) => {
     setContacts(next)
     storage.set('net-contacts', next)
+    notifyProgress() /* milestone signal: contact added */
   }, [])
 
   const persistChecked = useCallback((next) => {

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import SiteLayout from '../components/SiteLayout'
+import PromptCard from '../components/PromptCard'
 import './AcademyPage.css'
 
 /* Animated counter for stats */
@@ -74,13 +75,14 @@ export default function AcademyPage() {
                 <span className="aca-stat-block__num" data-target="10000">10,000</span>
                 <span className="aca-stat-block__label">boys in UK academies<br />at any one time</span>
               </div>
+              {/* Prospect: gain framing — same true numbers, hope-first labels */}
               <div className="aca-stat-block">
-                <span className="aca-stat-block__num">&lt;200</span>
-                <span className="aca-stat-block__label">turn professional<br />each year</span>
+                <span className="aca-stat-block__num">200</span>
+                <span className="aca-stat-block__label">turn professional each year —<br />thousands more build careers around the game</span>
               </div>
               <div className="aca-stat-block">
                 <span className="aca-stat-block__num">98%</span>
-                <span className="aca-stat-block__label">need a plan<br />beyond pro football</span>
+                <span className="aca-stat-block__label">build their future beyond the pitch —<br />this page is that plan</span>
               </div>
             </div>
           </div>
@@ -185,6 +187,12 @@ export default function AcademyPage() {
                 See the full non-league pyramid and how to climb it →
               </Link>
             </div>
+
+            {/* Fogg: spark — catch the emotion while the stories are fresh.
+                Behaviour chaining: story → pathway → goal. */}
+            <PromptCard type="spark" ctaLabel="Find your pathway" to="/pathway">
+              These players started again. So can you.
+            </PromptCard>
           </div>
         </section>
 

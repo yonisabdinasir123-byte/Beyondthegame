@@ -13,6 +13,7 @@
 import { useState } from 'react'
 import { QUAL_OPPORTUNITIES, QUAL_CATEGORY_ORDER } from '../../data/educationData'
 import { storage } from '../../utils/storage'
+import { notifyProgress } from '../../utils/goal'
 import './QualsMatcher.css'
 
 const EMPTY_PROFILE = {
@@ -43,6 +44,7 @@ export default function QualsMatcher() {
   const handleSubmit = (e) => {
     e.preventDefault()
     storage.set('quals-profile', profile)
+    notifyProgress() /* milestone signal: qualifications entered */
     setSubmitted(true)
   }
 

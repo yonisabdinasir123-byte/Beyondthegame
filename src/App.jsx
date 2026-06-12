@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
+import { GoalPicker } from './components/GoalSystem.jsx'
+import PromptCard from './components/PromptCard.jsx'
+import StoryCarousel from './components/StoryCarousel.jsx'
+import { getGoal } from './utils/goal'
 import './App.css'
 
 // ─────────────────────────────────────────────────────────────
@@ -523,6 +527,19 @@ function SupportCardsSection() {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Goal section  /* Goal gradient + Cialdini: commitment */
+// ─────────────────────────────────────────────────────────────
+function GoalSection() {
+  return (
+    <section className="section" id="my-goal" aria-labelledby="goal-picker-heading">
+      <div className="section__inner">
+        <GoalPicker />
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
 // Testimonials
 // ─────────────────────────────────────────────────────────────
 function TestimonialsSection() {
@@ -540,23 +557,19 @@ function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="testimonials-grid">
-          {TESTIMONIALS.map((t, i) => (
-            <blockquote key={i} className="testimonial">
-              <span className="testimonial__mark" aria-hidden="true">"</span>
-              <p className="testimonial__text">{t.text}</p>
-              <footer className="testimonial__footer">
-                <div className="testimonial__avatar" aria-hidden="true">
-                  {t.initial}
-                </div>
-                <div>
-                  <div className="testimonial__name">{t.name}</div>
-                  <div className="testimonial__detail">{t.detail}</div>
-                </div>
-              </footer>
-            </blockquote>
-          ))}
-        </div>
+        {/* Swipeable carousel — partial next card = Gestalt closure cue.
+            Arrow buttons are the keyboard/assistive fallback. */}
+        <StoryCarousel items={TESTIMONIALS} />
+
+        {/* Fogg: spark — emotion from the stories is brief; offer the next
+            step while it's live. Prospect: gain framing. */}
+        <PromptCard
+          type="spark"
+          ctaLabel={getGoal() ? 'See my progress' : 'Set my goal'}
+          href="#my-goal"
+        >
+          Jordan, Callum and Marcus all started with one step. Yours is ready.
+        </PromptCard>
       </div>
     </section>
   )
@@ -1226,6 +1239,9 @@ export default function App() {
       <main id="main-content">
         <HeroSection onGetStarted={openSignup} onFindPath={scrollToPathways} />
         <AgePathwaySection />
+        {/* Priming + commitment: goal selection sits after the age pathway,
+            so users are primed by their own situation before committing. */}
+        <GoalSection />
         <SupportCardsSection />
         <TestimonialsSection />
         <CTABand onSignup={openSignup} onLogin={openLogin} />

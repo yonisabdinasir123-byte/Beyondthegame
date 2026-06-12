@@ -18,6 +18,9 @@ import SiteLayout    from '../components/SiteLayout'
 import CollegeSearch from '../components/education/CollegeSearch'
 import EventsList    from '../components/education/EventsList'
 import QualsMatcher  from '../components/education/QualsMatcher'
+import { GoalProgress } from '../components/GoalSystem'
+import PromptCard    from '../components/PromptCard'
+import { getGoal, notifyProgress } from '../utils/goal'
 import './EducationPage.css'
 
 const NAV_SECTIONS = [
@@ -70,6 +73,7 @@ function PostcodeBar({ onCoords }) {
       storage.set('user-coords',    coords)
       onCoords(coords)
       setStatus('saved')
+      notifyProgress() /* milestone signal: location set */
     } else {
       setStatus('error')
     }
@@ -149,6 +153,7 @@ export default function EducationPage() {
       if (prev.find(s => s.openDayKey === key)) return prev
       const next = [...prev, entry]
       storage.set('saved-opendays', next)
+      notifyProgress() /* milestone signal: open day saved */
       return next
     })
   }, [])
@@ -169,6 +174,11 @@ export default function EducationPage() {
 
         <div className="edu-section__inner edu-postcode-wrap">
           <PostcodeBar onCoords={setUserCoords} />
+        </div>
+
+        {/* Goal gradient: progress visible wherever the work happens */}
+        <div className="goal-progress-wrap">
+          <GoalProgress />
         </div>
 
         {savedDays.length > 0 && (
@@ -208,7 +218,8 @@ export default function EducationPage() {
         <Section id="colleges" title="Local Colleges & Open Days">
           <p className="edu-section__desc">
             Search by name, area, or course. Results update live as you type.
-            Filter by distance and save open days so you don't miss them.
+            {/* Prospect: gain framing — "easy to find" not "don't miss" */}
+            Filter by distance and save open days so they're easy to find later.
           </p>
           <CollegeSearch
             colleges={colleges}
@@ -251,6 +262,13 @@ export default function EducationPage() {
             Practical trades you can train into through paid apprenticeships —
             earn while you learn, with no student debt.
           </p>
+          {/* Fogg: signal — goal-matched direction to the action below */}
+          {getGoal()?.id === 'learn-trade' && (
+            <PromptCard type="signal">
+              Your goal: 🔧 Learn a Trade. Every route below pays you while
+              you train. Pick one and follow its link to apply.
+            </PromptCard>
+          )}
           <div className="edu-trade-grid">
             {TRADE_ROUTES.map(t => (
               <article key={t.id} className="edu-trade-card">

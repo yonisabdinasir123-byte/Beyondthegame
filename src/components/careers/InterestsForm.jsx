@@ -18,6 +18,7 @@
  */
 import { useState, useCallback } from 'react'
 import { storage } from '../../utils/storage'
+import { notifyProgress } from '../../utils/goal'
 import { SUBJECT_PRESETS, HOBBY_PRESETS, SKILL_PRESETS, careerRules } from '../../data/educationData'
 
 function PresetPills({ presets, selected, onToggle, label }) {
@@ -75,6 +76,7 @@ export default function InterestsForm({ onResults }) {
     setter(prev => {
       const next = prev.includes(val) ? prev.filter(x => x !== val) : [...prev, val]
       storage.set(storageKey, next)
+      notifyProgress() /* milestone signal: interests entered */
       return next
     })
   }
