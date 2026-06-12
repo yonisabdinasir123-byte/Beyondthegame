@@ -466,8 +466,9 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
    ═══════════════════════════════════════════════════════════ */
 .hero {
   background: linear-gradient(145deg, var(--amber-700) 0%, var(--amber-600) 45%, var(--orange-500) 100%);
-  padding: 4rem 1rem 5rem;
-  text-align: center;
+  padding: 4.5rem 1rem 3.5rem;
+  /* F-pattern: headline lands in the top-left scanning zone */
+  text-align: left;
   position: relative;
   overflow: hidden;
 }
@@ -476,14 +477,15 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   content: '';
   position: absolute;
   inset: 0;
+  /* Figure-ground: decoration ≤4% so the headline owns the contrast */
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(255,255,255,.07) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,.05) 0%, transparent 40%);
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,.03) 0%, transparent 40%);
   pointer-events: none;
 }
 
 .hero__inner {
-  max-width: 780px;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -505,11 +507,13 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
 
 .hero__title {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5.5vw, 3.75rem);
+  /* Gestalt: focal point — largest type on the page (scale ratio 1.0) */
+  font-size: clamp(2.75rem, 7vw, 5rem);
   color: #fff;
-  line-height: 1.12;
+  line-height: 1.08;
   margin-bottom: .875rem;
-  font-weight: 800;
+  font-weight: 900;
+  max-width: 14ch;
 }
 
 .hero__title em {
@@ -521,23 +525,16 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   font-size: clamp(1.0625rem, 2.5vw, 1.375rem);
   color: rgba(255,255,255,.92);
   font-weight: 500;
-  margin-bottom: 1.25rem;
+  /* Isolation: generous whitespace around the focal block */
+  margin-bottom: 2.25rem;
   line-height: 1.5;
-}
-
-.hero__body {
-  font-size: 1.0625rem;
-  color: rgba(255,255,255,.82);
-  max-width: 580px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.75;
 }
 
 .hero__ctas {
   display: flex;
   flex-wrap: wrap;
   gap: .875rem;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .hero__cta {
@@ -576,29 +573,92 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   transform: translateY(-2px);
 }
 
-/* Hero stats */
-.hero__stats {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 3rem;
-  padding-top: 2.25rem;
-  border-top: 1px solid rgba(255,255,255,.2);
+/* Scroll cue — continuity: after the focal point, the eye is led down.
+   Demoted from a competing secondary button to a quiet text link. */
+.hero__scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 2.5rem;
+  padding: .625rem .25rem;
+  min-height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.78);
+  transition: color .2s;
+}
+.hero__scroll-cue:hover { color: #fff; }
+.hero__scroll-cue:focus-visible {
+  outline: 3px solid var(--amber-200);
+  outline-offset: 2px;
+  border-radius: var(--r-sm, 6px);
 }
 
-.hero__stat-value {
+.hero__scroll-cue-chevron {
+  font-size: 1.25rem;
+  line-height: 1;
+  animation: scrollCueBob 2s ease-in-out infinite;
+}
+
+@keyframes scrollCueBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-cue-chevron { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRUST STRIP — hero body copy + stats, relocated below the
+   fold and muted so nothing rivals the hero focal point
+   ═══════════════════════════════════════════════════════════ */
+.trust-strip {
+  background: var(--bg-alt);
+  padding: 2.5rem 1rem;
+  border-bottom: 1px solid var(--amber-100);
+}
+
+.trust-strip__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem 3rem;
+}
+
+.trust-strip__body {
+  flex: 1 1 380px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.trust-strip__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* Demoted: muted tones, small type — a clear step below the hero */
+.trust-strip__stat-value {
   display: block;
-  font-size: 1.875rem;
-  font-weight: 900;
-  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--amber-800);
   line-height: 1;
   margin-bottom: .25rem;
 }
 
-.hero__stat-label {
+.trust-strip__stat-label {
   font-size: .8125rem;
-  color: rgba(255,255,255,.75);
+  color: var(--text-muted);
   font-weight: 600;
 }
 
@@ -1707,7 +1767,7 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   .navbar__auth        { display: flex; }
   .navbar__hamburger   { display: none; }
 
-  .hero { padding: 5.5rem 1.5rem 6.5rem; }
+  .hero { padding: 5.5rem 1.5rem 4rem; }
 
   .section { padding: 5.5rem 1.5rem; }
 
@@ -1718,6 +1778,12 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
 
 /* Mobile */
 @media (max-width: 639px) {
+  /* Focal block (headline + sub-line + CTA) must fit the first
+     375px viewport without scrolling */
+  .hero { padding: 2.5rem 1rem 2.25rem; }
+  .hero__title { font-size: clamp(2.25rem, 11vw, 2.75rem); }
+  .hero__subtitle { margin-bottom: 1.5rem; }
+  .hero__scroll-cue { margin-top: 1.25rem; }
   .hero__ctas {
     flex-direction: column;
     align-items: stretch;
@@ -1725,6 +1791,8 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   .hero__cta {
     justify-content: center;
   }
+  .trust-strip__inner { gap: 1.5rem; }
+  .trust-strip__stats { gap: 1.5rem 2rem; }
   .cta-band__btns {
     flex-direction: column;
     align-items: center;

@@ -352,6 +352,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
       <div className="hero__inner">
         <span className="hero__badge">Free · Confidential · Made for you</span>
 
+        {/* Gestalt: focal point — largest type on the page, top-left zone */}
         <h1 className="hero__title" id="hero-title">
           You gave everything<br />
           <em>to the game.</em>
@@ -361,33 +362,49 @@ function HeroSection({ onGetStarted, onFindPath }) {
           Now let's help you find what comes next.
         </p>
 
-        <p className="hero__body">
+        <div className="hero__ctas">
+          {/* Gestalt: focal point — sole filled button in the first viewport */}
+          <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted}>
+            Get started today
+          </button>
+        </div>
+
+        {/* Continuity: muted scroll cue — the demoted secondary CTA now
+            guides the eye down instead of competing with the primary */}
+        <button type="button" className="hero__scroll-cue" onClick={onFindPath}>
+          <span className="hero__scroll-cue-chevron" aria-hidden="true">⌄</span>
+          Build my pathway
+        </button>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Trust strip — hero body copy + stats, relocated below the fold
+// and demoted to muted tones so the hero owns the first viewport
+// ─────────────────────────────────────────────────────────────
+function TrustStrip() {
+  return (
+    <section className="trust-strip" aria-label="Key facts about Beyond the Game">
+      <div className="trust-strip__inner">
+        <p className="trust-strip__body">
           Beyond the Game is a free, confidential support space built specifically for young
           people who've left football academies in the UK. Whatever you're feeling right now —
           we understand it, and we're here.
         </p>
-
-        <div className="hero__ctas">
-          <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted}>
-            Get started today
-          </button>
-          <button type="button" className="hero__cta hero__cta--secondary" onClick={onFindPath}>
-            Build my pathway →
-          </button>
-        </div>
-
-        <div className="hero__stats" aria-label="Key facts about Beyond the Game">
-          <div className="hero__stat">
-            <span className="hero__stat-value">2,400+</span>
-            <span className="hero__stat-label">young players supported</span>
+        <div className="trust-strip__stats">
+          <div className="trust-strip__stat">
+            <span className="trust-strip__stat-value">2,400+</span>
+            <span className="trust-strip__stat-label">young players supported</span>
           </div>
-          <div className="hero__stat">
-            <span className="hero__stat-value">100%</span>
-            <span className="hero__stat-label">free &amp; confidential</span>
+          <div className="trust-strip__stat">
+            <span className="trust-strip__stat-value">100%</span>
+            <span className="trust-strip__stat-label">free &amp; confidential</span>
           </div>
-          <div className="hero__stat">
-            <span className="hero__stat-value">24 / 7</span>
-            <span className="hero__stat-label">crisis line access</span>
+          <div className="trust-strip__stat">
+            <span className="trust-strip__stat-value">24 / 7</span>
+            <span className="trust-strip__stat-label">crisis line access</span>
           </div>
         </div>
       </div>
@@ -1237,6 +1254,8 @@ export default function App() {
 
       <main id="main-content">
         <HeroSection onGetStarted={openSignup} onFindPath={scrollToPathways} />
+        {/* Eye path: hero → trust strip (quiet) → pathway → goal → support */}
+        <TrustStrip />
         <AgePathwaySection />
         {/* Priming + commitment: goal selection sits after the age pathway,
             so users are primed by their own situation before committing. */}
