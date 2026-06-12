@@ -485,7 +485,7 @@ function AgePathwaySection() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Support cards
+// Support cards — Gestalt unified nav shell
 // ─────────────────────────────────────────────────────────────
 function SupportCardsSection() {
   return (
@@ -494,32 +494,31 @@ function SupportCardsSection() {
         <div className="section__header">
           <span className="section__eyebrow">Support Areas</span>
           <h2 className="section__title" id="support-heading">
-            Whatever you're going through,<br />there's support here
+            Seven ways we can help
           </h2>
-          <p className="section__subtitle">
-            Seven dedicated pathways covering every major challenge young people
-            face after leaving the academy system. Pick the one that speaks to
-            you most right now.
-          </p>
         </div>
 
-        <div className="cards-grid" role="list">
-          {SUPPORT_CARDS.map(card => (
-            <article
-              key={card.id}
-              className={`support-card support-card--minimal`}
-              role="listitem"
-              style={{ '--card-accent': card.accent, '--card-bg': card.bg }}
-            >
-              <div className="support-card__icon" aria-hidden="true">
-                {card.emoji}
-              </div>
-              <Link to={card.link} className="support-card__title-link">
-                {card.title}
-              </Link>
-              <span className="support-card__micro" aria-hidden="true">{card.micro}</span>
-            </article>
-          ))}
+        {/* Common region: one shell groups all 7 tiles — Gestalt common region */}
+        <div className="sa-shell">
+          <nav aria-label="Support pathways">
+            <ul className="sa-grid" role="list">
+              {SUPPORT_CARDS.map((card, i) => (
+                <li key={card.id} className="sa-tile" style={{ '--i': i }}>
+                  <Link to={card.link} className="sa-tile__link">
+                    <span className="sa-tile__icon-wrap">
+                      <span className="sa-tile__icon" aria-hidden="true">{card.emoji}</span>
+                      {card.id === 'academy' && (
+                        <span className="sa-tile__badge" aria-hidden="true" />
+                      )}
+                    </span>
+                    <span className="sa-tile__title">{card.title}</span>
+                    <span className="sa-tile__micro">{card.micro}</span>
+                    <span className="sa-tile__chevron" aria-hidden="true">›</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </section>
