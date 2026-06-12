@@ -1,0 +1,234 @@
+/* ═══════════════════════════════════════════════════════════
+   SUPPORT RING — closure (implied ring) + continuation (spine)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Desktop ring stage ───────────────────────────────────── */
+.sring-stage {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  aspect-ratio: 1000 / 760; /* matches the SVG viewBox — CLS 0 */
+}
+
+.sring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Gestalt: continuation — ONE unbroken stroke, round caps, no joins */
+.sring-spine {
+  fill: none;
+  stroke: var(--amber-500);
+  stroke-opacity: .35;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: var(--spine-len, 2400);
+  stroke-dashoffset: var(--spine-len, 2400);
+  /* motion: spine draws in once over scene duration */
+  transition: stroke-dashoffset var(--dur-scene) var(--ease-in-out);
+}
+.sring--drawn .sring-spine { stroke-dashoffset: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sring-spine {
+    transition: none;
+    stroke-dashoffset: 0; /* pre-drawn, never animated */
+  }
+}
+
+/* Playful: the travelling ball — decorative only */
+.sring-ball__bg {
+  fill: var(--bg-card);
+  stroke: var(--amber-500);
+  stroke-width: 1.5;
+}
+
+/* ── Central hub — Gestalt: closure focal centre ──────────── */
+.sring-hub {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  text-align: center;
+  background: var(--bg-card);
+  border: 2px solid var(--amber-300);
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  justify-content: center;
+  box-shadow: var(--sh-md), 0 0 0 14px rgba(245, 158, 11, .06);
+  z-index: 2;
+}
+
+.sring-hub__word {
+  font-family: var(--font-heading);
+  font-size: 1.625rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.sring-hub__line {
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* ── Ring cards — identical anatomy, absolute on ring points ── */
+.sring-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sring-stage .sring-tile {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 178px;
+  z-index: 1;
+}
+
+.sring-tile__link {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: .875rem .875rem .75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--amber-200);
+  border-radius: var(--r-lg);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--sh-sm);
+  position: relative;
+  /* motion: system tokens — affordance set */
+  transition:
+    transform  var(--dur-std) var(--ease-out-soft),
+    box-shadow var(--dur-std) var(--ease-out-soft);
+}
+.sring-tile__link:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-md);
+}
+.sring-tile__link:focus-visible {
+  outline: 3px solid var(--amber-500);
+  outline-offset: 2px;
+  transform: none;
+}
+.sring-tile__link:active {
+  transform: translateY(1px);
+  box-shadow: none;
+  transition-duration: var(--dur-micro);
+}
+
+.sring-tile__icon-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  margin-bottom: .375rem;
+}
+.sring-tile__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  background: var(--amber-50);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.sring-tile__badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber-600);
+  border: 2px solid var(--bg-card);
+}
+
+.sring-tile__title {
+  font-family: var(--font-heading);
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+.sring-tile__micro {
+  font-size: .72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.sring-tile__chevron {
+  font-size: 1.0625rem;
+  color: var(--amber-600);
+  line-height: 1;
+  align-self: flex-end;
+  transition: transform var(--dur-micro) var(--ease-out-soft);
+}
+.sring-tile__link:hover .sring-tile__chevron,
+.sring-tile__link:focus-visible .sring-tile__chevron {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sring-tile__link,
+  .sring-tile__chevron { transition: none; }
+}
+
+/* ── Mobile / tablet vertical backbone (<960px) ───────────── */
+.sring-stack {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: .5rem 0;
+}
+
+/* One unbroken vertical stroke behind everything */
+.sring-stack__svg {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sring-stack .sring-hub {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: 168px;
+  height: 168px;
+}
+
+.sring-cards--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  align-items: center;
+  position: relative;
+}
+
+.sring-cards--stack .sring-tile {
+  width: min(100%, 300px);
+}

@@ -10,7 +10,50 @@ import { DEFAULT_COORDS } from '../utils/distance'
 import { GoalProgress }  from '../components/GoalSystem'
 import PromptCard        from '../components/PromptCard'
 import { getGoal }       from '../utils/goal'
+import { useMagnetic, useSpotlight } from '../App.jsx'
 import './JobsCareersPage.css'
+
+// ─── Macro hero — one focal point, one amber CTA ─────────────────────────────
+function JcHero() {
+  const spotRef   = useSpotlight() /* mouse: spotlight follows pointer */
+  const magnetRef = useMagnetic()  /* mouse: CTA eases toward cursor */
+
+  const scrollToExplorer = () => {
+    const el = document.getElementById('career-explorer')
+    if (!el) return
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
+  }
+
+  return (
+    /* figure-ground: dark macro ground, white headline is the figure.
+       SWAP: set --macro-ground to url('/img/macro-pitchside-lens.webp') */
+    <div
+      className="macro-hero"
+      ref={spotRef}
+      style={{ '--macro-ground': 'linear-gradient(130deg, #1a0800 0%, #2c1200 40%, #0f1e0f 100%)' }}
+    >
+      <div className="macro-hero__inner">
+        <span className="macro-hero__eyebrow">Jobs &amp; Careers</span>
+        {/* Gestalt: focal point — largest type, left-aligned F-pattern zone */}
+        <h1 className="macro-hero__title">Real jobs. Real routes. No degree needed.</h1>
+        <p className="macro-hero__sub">Careers matched to your football background.</p>
+        <span className="macro-hero__cta-wrap">
+          {/* Sole amber-filled button in this viewport */}
+          <button type="button" className="macro-hero__cta" onClick={scrollToExplorer} ref={magnetRef}>
+            Explore careers →
+          </button>
+        </span>
+        <br />
+        {/* continuity: muted scroll cue */}
+        <button type="button" className="macro-hero__scroll-cue" onClick={scrollToExplorer}>
+          <span className="macro-hero__scroll-cue-chevron" aria-hidden="true">⌄</span>
+          Your shirt's waiting.
+        </button>
+      </div>
+    </div>
+  )
+}
 
 // ── Career Spotlight data ─────────────────────────────────────────────────────
 const SPOTLIGHT_CLUSTERS = [
@@ -546,16 +589,8 @@ export default function JobsCareersPage() {
 
         <SectionNav activeId={activeId} />
 
-        {/* Hero */}
-        <div className="jc-hero">
-          <div className="jc-hero__inner">
-            <span className="jc-hero__eyebrow">Jobs &amp; Careers</span>
-            <h1 className="jc-hero__title">Find what you're good at — and get paid for it</h1>
-            <p className="jc-hero__sub">
-              Discover careers that match your interests, browse live job listings, and track your networking contacts — all in one place.
-            </p>
-          </div>
-        </div>
+        {/* Hero — macro focal point */}
+        <JcHero />
 
         {/* Goal gradient: progress visible wherever the work happens */}
         <div className="goal-progress-wrap">

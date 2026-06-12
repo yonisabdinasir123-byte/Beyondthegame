@@ -31,6 +31,7 @@ import { GoalProgress }  from '../components/GoalSystem'
 import PromptCard        from '../components/PromptCard'
 import MoodBoard         from '../components/MoodBoard'
 import { getGoal }       from '../utils/goal'
+import { useMagnetic, useSpotlight } from '../App.jsx'
 
 import './PathwayPage.css'
 
@@ -259,16 +260,43 @@ function AcademyEntryCard() {
   )
 }
 
-// ─── Hero ──────────────────────────────────────────────────────────────────────
+// ─── Hero — macro focal point: one headline, one amber CTA ────────────────────
 function Hero() {
+  const spotRef   = useSpotlight() /* mouse: spotlight follows pointer */
+  const magnetRef = useMagnetic()  /* mouse: CTA eases toward cursor */
+
+  const scrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
+  }
+
   return (
-    <div className="pwy-hero">
-      <div className="pwy-hero__inner">
-        <h1 className="pwy-hero__title">Find your football pathway</h1>
-        <p className="pwy-hero__subtitle">
-          Search clubs, discover showcases, enter tournaments, find your league,
-          build a professional CV, and read stories from players who made it happen.
-        </p>
+    /* figure-ground: dark macro ground, white headline is the figure.
+       SWAP: set --macro-ground to url('/img/macro-boot-strike.webp') */
+    <div
+      className="macro-hero"
+      ref={spotRef}
+      style={{ '--macro-ground': 'radial-gradient(ellipse at 35% 55%, #1a3a20 0%, #0f1e0f 55%, #091409 100%)' }}
+    >
+      <div className="macro-hero__inner">
+        <span className="macro-hero__eyebrow">Pathway</span>
+        {/* Gestalt: focal point — largest type, top-left F-pattern zone */}
+        <h1 className="macro-hero__title">Your route to professional football.</h1>
+        <p className="macro-hero__sub">The pyramid has 24 levels — each one a step up.</p>
+        <span className="macro-hero__cta-wrap">
+          {/* Sole amber-filled button in this viewport */}
+          <button type="button" className="macro-hero__cta" onClick={() => scrollTo('pyramid')} ref={magnetRef}>
+            See the Pyramid →
+          </button>
+        </span>
+        <br />
+        {/* continuity: muted scroll cue leads the eye down */}
+        <button type="button" className="macro-hero__scroll-cue" onClick={() => scrollTo('pyramid')}>
+          <span className="macro-hero__scroll-cue-chevron" aria-hidden="true">⌄</span>
+          Game on.
+        </button>
       </div>
     </div>
   )

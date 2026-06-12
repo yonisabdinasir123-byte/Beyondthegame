@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   gap: .375rem;
-  transition: color .15s;
+  transition: color var(--dur-micro) var(--ease-out-soft); /* motion: system tokens */
   min-height: 44px;
   align-items: center;
   justify-content: center;
@@ -1443,8 +1443,22 @@
   border-radius: var(--pyr-r);
   padding: .875rem 1rem;
   position: relative;
-  transition: border-color .2s;
+  transition: border-color var(--dur-std) var(--ease-out-soft); /* motion: system tokens */
   box-shadow: 0 1px 3px rgba(28,16,9,.06);
+}
+
+/* 2D/3D mix: the ladder reads with subtle depth — desktop pointer only */
+@media (hover: hover) and (pointer: fine) {
+  .pwy-pyr-steps {
+    perspective: 900px;
+  }
+  .pwy-pyr-step {
+    transform: rotateX(3deg);
+    transform-origin: 50% 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pwy-pyr-step { transform: none; }
 }
 .pwy-pyr-step--highlight {
   border-color: var(--pyr-amber);

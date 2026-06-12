@@ -288,7 +288,7 @@
   font-weight: 800;
   text-decoration: none;
   cursor: pointer;
-  transition: background .2s, transform .15s;
+  transition: background var(--dur-std) var(--ease-out-soft), transform var(--dur-micro) var(--ease-out-soft); /* motion: system tokens */
   white-space: nowrap;
 }
 .prompt-card__cta:hover { background: var(--amber-700); transform: translateY(-2px); }
@@ -452,7 +452,7 @@
   font-size: 1.125rem;
   color: var(--amber-800);
   cursor: pointer;
-  transition: background .2s, border-color .2s;
+  transition: background var(--dur-micro) var(--ease-out-soft), border-color var(--dur-micro) var(--ease-out-soft); /* motion: system tokens */
 }
 .story-carousel__arrow:hover:not(:disabled) {
   background: var(--amber-50);
@@ -474,4 +474,95 @@
   .prompt-card__cta { align-self: stretch; justify-content: center; }
   .story-carousel__card { flex-basis: 88%; }
   .moodboard__palette { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PEER VOICES — tappable story cards (affordance + 3D tilt)
+   ═══════════════════════════════════════════════════════════ */
+.story-card-link {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--r-lg);
+  /* motion: system tokens — affordance set */
+  transition:
+    transform  var(--dur-std) var(--ease-out-soft),
+    box-shadow var(--dur-std) var(--ease-out-soft);
+}
+
+/* Gradient border sweep — amber→terracotta conic ring on hover/focus */
+.story-card-link::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  z-index: -1;
+  background: conic-gradient(from 0deg, var(--accent-amber), var(--accent-terra), var(--accent-amber));
+  opacity: 0;
+  transition: opacity var(--dur-std) var(--ease-out-soft);
+}
+.story-card-link:hover::before,
+.story-card-link:focus-visible::before { opacity: .9; }
+
+.story-card-link:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-md);
+}
+.story-card-link:focus-visible {
+  outline: 3px solid var(--amber-500);
+  outline-offset: 2px;
+}
+.story-card-link:active {
+  transform: translateY(1px);
+  box-shadow: none;
+  transition-duration: var(--dur-micro);
+}
+
+/* The quote fills the link so equal heights are preserved */
+.story-card-link__quote {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Affordance label — the card states its action */
+.story-card-link__cta {
+  margin-top: .625rem;
+  font-size: .875rem;
+  font-weight: 800;
+  color: var(--amber-700);
+  transition: transform var(--dur-micro) var(--ease-out-soft);
+}
+.story-card-link:hover .story-card-link__cta {
+  transform: translateX(3px);
+}
+
+/* 2D/3D mix: tilt toward cursor — pointer-fine devices only */
+@media (hover: hover) and (pointer: fine) {
+  .story-card-link {
+    transform:
+      perspective(800px)
+      rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg));
+    will-change: transform;
+  }
+  .story-card-link:hover {
+    transform:
+      perspective(800px)
+      rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg))
+      translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-card-link,
+  .story-card-link::before,
+  .story-card-link__cta { transition: none; }
+  .story-card-link,
+  .story-card-link:hover { transform: none; }
 }

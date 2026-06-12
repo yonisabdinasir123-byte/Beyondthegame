@@ -21,7 +21,42 @@ import QualsMatcher  from '../components/education/QualsMatcher'
 import { GoalProgress } from '../components/GoalSystem'
 import PromptCard    from '../components/PromptCard'
 import { getGoal, notifyProgress } from '../utils/goal'
+import { useMagnetic, useSpotlight } from '../App.jsx'
 import './EducationPage.css'
+
+// ─── Macro hero — one focal point, one amber CTA ─────────────────────────────
+function EduHero({ onCheckOptions }) {
+  const spotRef   = useSpotlight() /* mouse: spotlight follows pointer */
+  const magnetRef = useMagnetic()  /* mouse: CTA eases toward cursor */
+  return (
+    /* figure-ground: dark macro ground, white headline is the figure.
+       SWAP: set --macro-ground to url('/img/macro-boots-books.webp') */
+    <div
+      className="macro-hero"
+      ref={spotRef}
+      style={{ '--macro-ground': 'linear-gradient(150deg, #0f1e0f 0%, #1c3320 50%, #2a1600 100%)' }}
+    >
+      <div className="macro-hero__inner">
+        <span className="macro-hero__eyebrow">Education</span>
+        {/* Gestalt: focal point — largest type, top-left F-pattern zone */}
+        <h1 className="macro-hero__title">Find out what you can study.</h1>
+        <p className="macro-hero__sub">Matched to the qualifications you have right now.</p>
+        <span className="macro-hero__cta-wrap">
+          {/* Sole amber-filled button in this viewport */}
+          <button type="button" className="macro-hero__cta" onClick={onCheckOptions} ref={magnetRef}>
+            Check my options →
+          </button>
+        </span>
+        <br />
+        {/* continuity: muted scroll cue */}
+        <button type="button" className="macro-hero__scroll-cue" onClick={onCheckOptions}>
+          <span className="macro-hero__scroll-cue-chevron" aria-hidden="true">⌄</span>
+          Your qualifications open more doors than you think.
+        </button>
+      </div>
+    </div>
+  )
+}
 
 const NAV_SECTIONS = [
   { id: 'matcher',  label: '🎯 What Can I Study?', title: 'What Can I Study?'        },
@@ -160,17 +195,18 @@ export default function EducationPage() {
 
   return (
     <SiteLayout>
+      {/* motion: page entrance — fade + rise, never a hard cut */}
+      <div className="edu-page-enter">
       <SectionNav activeId={activeId} />
 
-      <div className="edu-hero">
-          <div className="edu-hero__inner">
-            <h1 className="edu-hero__title">Education & Events</h1>
-            <p className="edu-hero__sub">
-              Find local colleges, open days, and careers events near you.
-              Save open days to your checklist and explore what's on.
-            </p>
-          </div>
-        </div>
+      <EduHero
+          onCheckOptions={() => {
+            const el = document.getElementById('matcher')
+            if (!el) return
+            const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+            el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
+          }}
+        />
 
         <div className="edu-section__inner edu-postcode-wrap">
           <PostcodeBar onCoords={setUserCoords} />
@@ -307,6 +343,7 @@ export default function EducationPage() {
           </p>
           <EventsList events={jobEvents} userCoords={userCoords ?? DEFAULT_COORDS} />
         </Section>
+      </div>
     </SiteLayout>
   )
 }

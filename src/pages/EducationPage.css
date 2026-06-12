@@ -32,7 +32,7 @@
   text-decoration: none;
   padding: 0.4rem 0.75rem;
   border-radius: var(--r-sm);
-  transition: background 0.15s;
+  transition: background var(--dur-micro) var(--ease-out-soft); /* motion: system tokens */
 }
 .edu-back-link:hover,
 .edu-back-link:focus-visible { background: var(--amber-100); }

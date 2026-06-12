@@ -3,8 +3,75 @@ import { Link } from 'react-router-dom'
 import { GoalPicker } from './components/GoalSystem.jsx'
 import PromptCard from './components/PromptCard.jsx'
 import StoryCarousel from './components/StoryCarousel.jsx'
-import { getGoal } from './utils/goal'
+import SupportRing from './components/SupportRing.jsx'
+import MomentSlideshow from './components/MomentSlideshow.jsx'
+import { getGoal, PROGRESS_EVENT } from './utils/goal'
 import './App.css'
+
+// ─────────────────────────────────────────────────────────────
+// Magnetic CTA hook — button eases ≤6px toward the cursor.
+// Desktop pointer only; a graceful no-op on touch and under
+// reduced motion. Shared by the page heroes.
+// ─────────────────────────────────────────────────────────────
+export function useMagnetic() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const fine = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    if (!fine || reduce) return
+    let raf = 0
+    const move = (e) => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const r = el.getBoundingClientRect()
+        const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2)
+        const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2)
+        el.style.transform = `translate(${(dx * 6).toFixed(1)}px, ${(dy * 6).toFixed(1)}px)`
+      })
+    }
+    const leave = () => { cancelAnimationFrame(raf); raf = 0; el.style.transform = '' }
+    el.addEventListener('mousemove', move)
+    el.addEventListener('mouseleave', leave)
+    return () => {
+      el.removeEventListener('mousemove', move)
+      el.removeEventListener('mouseleave', leave)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+  return ref
+}
+
+// ─────────────────────────────────────────────────────────────
+// Pointer spotlight hook — a soft amber glow follows the cursor
+// on dark macro heroes. Sets CSS vars only; CSS gates the effect
+// to (hover:hover) and (pointer:fine) and hides it under
+// reduced motion.
+// ─────────────────────────────────────────────────────────────
+export function useSpotlight() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const fine = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
+    if (!fine) return
+    let raf = 0
+    const move = (e) => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const r = el.getBoundingClientRect()
+        el.style.setProperty('--spot-x', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`)
+        el.style.setProperty('--spot-y', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`)
+      })
+    }
+    el.addEventListener('mousemove', move)
+    return () => { el.removeEventListener('mousemove', move); cancelAnimationFrame(raf) }
+  }, [])
+  return ref
+}
 
 // ─────────────────────────────────────────────────────────────
 // Inline SVG icons
@@ -347,6 +414,8 @@ export function Navbar({ onLogin, onSignup }) {
 // Hero
 // ─────────────────────────────────────────────────────────────
 function HeroSection({ onGetStarted, onFindPath }) {
+  /* Mouse interaction: magnetic pull on the sole primary CTA */
+  const magnetRef = useMagnetic()
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero__inner">
@@ -364,7 +433,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
 
         <div className="hero__ctas">
           {/* Gestalt: focal point — sole filled button in the first viewport */}
-          <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted}>
+          <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted} ref={magnetRef}>
             Get started today
           </button>
         </div>
@@ -502,7 +571,8 @@ function AgePathwaySection() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Support cards — Gestalt unified nav shell
+// Support cards — symbolic Gestalt ring: closure (implied ring
+// around the SUPPORT hub) + continuation (one unbroken spine)
 // ─────────────────────────────────────────────────────────────
 function SupportCardsSection() {
   return (
@@ -515,28 +585,7 @@ function SupportCardsSection() {
           </h2>
         </div>
 
-        {/* Common region: one shell groups all 7 tiles — Gestalt common region */}
-        <div className="sa-shell">
-          <nav aria-label="Support pathways">
-            <ul className="sa-grid" role="list">
-              {SUPPORT_CARDS.map((card, i) => (
-                <li key={card.id} className="sa-tile" style={{ '--i': i }}>
-                  <Link to={card.link} className="sa-tile__link">
-                    <span className="sa-tile__icon-wrap">
-                      <span className="sa-tile__icon" aria-hidden="true">{card.emoji}</span>
-                      {card.id === 'academy' && (
-                        <span className="sa-tile__badge" aria-hidden="true" />
-                      )}
-                    </span>
-                    <span className="sa-tile__title">{card.title}</span>
-                    <span className="sa-tile__micro">{card.micro}</span>
-                    <span className="sa-tile__chevron" aria-hidden="true">›</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+        <SupportRing cards={SUPPORT_CARDS} />
       </div>
     </section>
   )
@@ -559,6 +608,29 @@ function GoalSection() {
 // Testimonials
 // ─────────────────────────────────────────────────────────────
 function TestimonialsSection() {
+  /* Set-my-goal fix: getGoal() was read once at render and the prompt used a
+     plain hash href — with no smooth scrolling, the jump was invisible and the
+     button appeared dead. Now: live label via PROGRESS_EVENT, smooth scroll
+     with an arrival pulse — the action visibly lands somewhere (continuity). */
+  const [goal, setGoalState] = useState(getGoal)
+
+  useEffect(() => {
+    const sync = () => setGoalState(getGoal())
+    window.addEventListener(PROGRESS_EVENT, sync)
+    return () => window.removeEventListener(PROGRESS_EVENT, sync)
+  }, [])
+
+  const goToGoal = () => {
+    const el = document.getElementById('my-goal')
+    if (!el) return
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' })
+    if (!reduce) {
+      el.classList.add('goal-section--pulse')
+      setTimeout(() => el.classList.remove('goal-section--pulse'), 1300)
+    }
+  }
+
   return (
     <section className="section" id="community" aria-labelledby="testimonials-heading">
       <div className="section__inner">
@@ -581,8 +653,8 @@ function TestimonialsSection() {
             step while it's live. Prospect: gain framing. */}
         <PromptCard
           type="spark"
-          ctaLabel={getGoal() ? 'See my progress' : 'Set my goal'}
-          href="#my-goal"
+          ctaLabel={goal ? 'See my progress' : 'Set my goal'}
+          onAction={goToGoal}
         >
           Jordan, Callum and Marcus all started with one step. Yours is ready.
         </PromptCard>
@@ -1260,8 +1332,13 @@ export default function App() {
         {/* Priming + commitment: goal selection sits after the age pathway,
             so users are primed by their own situation before committing. */}
         <GoalSection />
+        {/* Playful: pitch-line divider — halfway line + centre circle */}
+        <div className="pitch-divider" aria-hidden="true" />
         <SupportCardsSection />
         <TestimonialsSection />
+        {/* Moments of the Game — muted slideshow, after Peer Voices */}
+        <MomentSlideshow />
+        <div className="pitch-divider" aria-hidden="true" />
         <CTABand onSignup={openSignup} onLogin={openLogin} />
       </main>
 
