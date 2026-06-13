@@ -1,0 +1,271 @@
+/* ═══════════════════════════════════════════════════════════
+   FLOATING NAV — the signature "team-sheet" island
+   ═══════════════════════════════════════════════════════════ */
+.fnav {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  pointer-events: none; /* only the bar/panel are interactive */
+  transition: top var(--dur-std) var(--ease-out-soft);
+}
+.fnav--condensed { top: 8px; }
+
+/* ── The island bar ──────────────────────────────────────── */
+.fnav__bar {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 64px;
+  padding: 0 10px 0 18px;
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(7, 33, 29, 0.08);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-float);
+  transition:
+    height var(--dur-std) var(--ease-out-soft),
+    box-shadow var(--dur-std) var(--ease-out-soft),
+    background var(--dur-std) var(--ease-out-soft);
+}
+.fnav--condensed .fnav__bar {
+  height: 54px;
+  box-shadow: 0 6px 20px rgba(7, 33, 29, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* ── Brand ───────────────────────────────────────────────── */
+.fnav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.fnav__mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 50% 38%, var(--lime) 0 30%, transparent 31%),
+    linear-gradient(140deg, var(--teal-500), var(--teal-700));
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+.fnav__brand-text {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* ── Desktop links ───────────────────────────────────────── */
+.fnav__links {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  margin: 0 auto;
+  list-style: none;
+}
+.fnav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--ink-700);
+  text-decoration: none;
+  transition: color var(--dur-micro) var(--ease-out-soft),
+              background var(--dur-micro) var(--ease-out-soft);
+}
+.fnav__link:hover { color: var(--ink); background: rgba(18, 137, 122, 0.08); }
+/* Active page: the brand "pitch line" — a lime underline marker */
+.fnav__link.is-active { color: var(--teal-700); }
+.fnav__link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  bottom: 4px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--lime-600);
+}
+
+/* ── Actions ─────────────────────────────────────────────── */
+.fnav__actions {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.fnav__btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--radius-pill);
+  min-height: 44px;
+  padding: 0 1.15rem;
+  border: 1.5px solid transparent;
+  line-height: 1;
+  transition: background var(--dur-micro) var(--ease-out-soft),
+              border-color var(--dur-micro) var(--ease-out-soft),
+              transform var(--dur-micro) var(--ease-out-soft),
+              box-shadow var(--dur-micro) var(--ease-out-soft);
+}
+.fnav__btn--ghost {
+  background: transparent;
+  color: var(--teal-700);
+  border-color: rgba(11, 90, 80, 0.28);
+}
+.fnav__btn--ghost:hover { border-color: var(--teal-500); background: var(--teal-50); }
+.fnav__btn--solid {
+  background: var(--teal-600);
+  color: #fff;
+}
+.fnav__btn--solid:hover {
+  background: var(--teal-700);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(11, 90, 80, 0.32);
+}
+
+/* ── Mobile toggle ───────────────────────────────────────── */
+.fnav__toggle {
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.fnav__toggle:hover { background: rgba(18, 137, 122, 0.08); }
+.fnav__toggle-glyph {
+  position: relative;
+  width: 22px;
+  height: 16px;
+  display: block;
+}
+.fnav__toggle-glyph span {
+  position: absolute;
+  left: 0;
+  height: 2.5px;
+  width: 100%;
+  border-radius: 3px;
+  background: var(--ink);
+  transition: transform var(--dur-std) var(--ease-out-soft),
+              opacity var(--dur-micro) var(--ease-out-soft);
+}
+.fnav__toggle-glyph span:nth-child(1) { top: 0; }
+.fnav__toggle-glyph span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.fnav__toggle-glyph span:nth-child(3) { bottom: 0; }
+.fnav__toggle-glyph.is-open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.fnav__toggle-glyph.is-open span:nth-child(2) { opacity: 0; }
+.fnav__toggle-glyph.is-open span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+/* ── Mobile panel ────────────────────────────────────────── */
+.fnav__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 290;
+  background: rgba(7, 33, 29, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-std) var(--ease-out-soft);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+.fnav__scrim.is-open { opacity: 1; pointer-events: auto; }
+
+.fnav__panel {
+  pointer-events: auto;
+  position: fixed;
+  top: 80px;
+  left: 16px;
+  right: 16px;
+  z-index: 295;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid rgba(7, 33, 29, 0.08);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--sh-xl);
+  transform-origin: top center;
+  transform: translateY(-10px) scale(0.98);
+  opacity: 0;
+  transition: transform var(--dur-std) var(--ease-out-soft),
+              opacity var(--dur-std) var(--ease-out-soft);
+}
+.fnav__panel.is-open { transform: none; opacity: 1; }
+
+.fnav__panel-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fnav__panel-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.95rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background var(--dur-micro) var(--ease-out-soft);
+}
+.fnav__panel-link:hover { background: var(--teal-50); }
+.fnav__panel-link.is-active { color: var(--teal-700); background: var(--teal-50); }
+.fnav__panel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--lime-600);
+}
+.fnav__panel-saved {
+  margin: 0.5rem 0 0;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-500);
+}
+.fnav__panel-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+.fnav__panel-actions .fnav__btn { flex: 1; }
+
+/* ── Breakpoints ─────────────────────────────────────────── */
+@media (min-width: 880px) {
+  .fnav__links   { display: flex; }
+  .fnav__actions { display: flex; }
+  .fnav__toggle  { display: none; }
+}
+
+/* Reduced motion: keep the condense (state change) but drop big transforms */
+@media (prefers-reduced-motion: reduce) {
+  .fnav, .fnav__bar, .fnav__panel, .fnav__toggle-glyph span { transition: none; }
+  .fnav__panel { transform: none; }
+  .fnav__btn--solid:hover { transform: none; }
+}

@@ -74,7 +74,7 @@ export default function CareerResults({ ruleMatches, aiSuggestions }) {
 
       {aiSuggestions?.length > 0 && (
         <div className="career-results__ai-note" role="note">
-          <span aria-hidden="true">✨</span> These suggestions have been personalised using AI based on your free-text input.
+          <span aria-hidden="true">✨</span> These suggestions are personalised from what you told us about your interests.
         </div>
       )}
 

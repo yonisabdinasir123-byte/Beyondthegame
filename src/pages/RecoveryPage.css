@@ -5,11 +5,13 @@
 /* ── Page shell ────────────────────────────────────────────────────────────── */
 .rec-page-header {
   position: sticky;
-  top: 0;
-  z-index: 200;
+  /* Sit below the floating nav island */
+  top: var(--header-height);
+  z-index: 100;
   background: var(--amber-50);
   border-bottom: 1px solid var(--amber-200);
   height: 60px;
+  margin-top: calc(var(--header-height) + 0.5rem);
   display: flex;
   align-items: center;
 }

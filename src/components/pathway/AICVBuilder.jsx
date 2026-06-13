@@ -235,7 +235,7 @@ export default function AICVBuilder() {
       hapticPulse()
     } catch (ex) {
       if (ex.message === 'NO_KEY') {
-        setError('No API key found. Add VITE_ANTHROPIC_API_KEY to your .env file to enable the AI CV builder.')
+        setError('No API key found. Add VITE_ANTHROPIC_API_KEY to your .env file to enable the CV builder.')
       } else {
         /* Emotional design: frustration absorbed — fix stated, no blame,
            input preserved (it's auto-saved). */

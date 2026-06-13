@@ -59,8 +59,9 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .support-hero {
-  background: linear-gradient(145deg, var(--amber-800, #92400E) 0%, var(--amber-600, #D97706) 55%, var(--orange-500, #F97316) 100%);
-  padding: 4rem 1.25rem 3.5rem;
+  background: linear-gradient(150deg, var(--teal-700) 0%, var(--teal-900) 60%, var(--bg-deep) 100%);
+  /* Clear the floating nav island */
+  padding: calc(var(--header-height) + 2.5rem) 1.25rem 3.5rem;
   text-align: center;
 }
 
@@ -381,7 +382,7 @@
   }
 
   .support-hero {
-    padding: 3rem 1rem 2.5rem;
+    padding: calc(var(--header-height) + 1.25rem) 1rem 2.5rem;
   }
 
   .support-section__header {
@@ -416,7 +417,7 @@
   }
 
   .support-hero {
-    padding: 2.5rem 1rem 2rem;
+    padding: calc(var(--header-height) + 1rem) 1rem 2rem;
   }
 
   .support-hero__title {

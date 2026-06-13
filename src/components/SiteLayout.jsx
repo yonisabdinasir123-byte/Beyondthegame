@@ -12,13 +12,13 @@
 import { useState, useCallback } from 'react'
 import {
   SkipLink,
-  Navbar,
   FooterSection,
   LoginModal,
   SignupModal,
   ForgotPasswordModal,
   BackToTop,
 } from '../App.jsx'
+import FloatingNav from './FloatingNav.jsx'
 
 export default function SiteLayout({ children }) {
   const [modal, setModal] = useState(null) // 'login' | 'signup' | 'forgot' | null
@@ -31,9 +31,9 @@ export default function SiteLayout({ children }) {
   return (
     <>
       <SkipLink />
-      <Navbar onLogin={openLogin} onSignup={openSignup} />
+      <FloatingNav onLogin={openLogin} onSignup={openSignup} />
 
-      <main id="main-content">
+      <main id="main-content" className="site-main">
         {children}
       </main>
 

@@ -9,7 +9,7 @@
  *     import { fetchClubs, fetchShowcases, ... } from '../data/pathwayApi'
  *   Then load in useEffect / React Query / SWR and pass the data as props.
  *
- * AI CV BUILDER
+ * CV BUILDER (guided suggestions)
  *   Requires VITE_ANTHROPIC_API_KEY in .env — see AICVBuilder.jsx for details.
  */
 
@@ -42,7 +42,7 @@ const SECTIONS = [
   { id: 'showcases',  label: '🔍 Showcases'   },
   { id: 'tournaments',label: '🏆 Tournaments' },
   { id: 'leagues',    label: '📋 Leagues'     },
-  { id: 'cv-builder', label: '📄 AI CV'       },
+  { id: 'cv-builder', label: '📄 CV Builder'  },
   { id: 'moodboard',  label: '🎨 Mood Board'  },
   { id: 'stories',    label: '💬 Stories'     },
 ]
@@ -447,12 +447,12 @@ export default function PathwayPage() {
         <CompatibleLeagues leagues={leagues} />
       </PwySection>
 
-      {/* ── 5. AI CV Builder ────────────────────────────────────────────────── */}
+      {/* ── 5. CV Builder ───────────────────────────────────────────────────── */}
       <PwySection
         id="cv-builder"
-        eyebrow="AI CV Builder"
+        eyebrow="CV Builder"
         title="Build your football CV in seconds"
-        subtitle="Fill in your details and our AI writes a polished, professional football CV you can copy and send straight to clubs."
+        subtitle="Fill in your details and we'll turn them into a polished, professional football CV you can copy and send straight to clubs."
       >
         <AICVBuilder />
       </PwySection>

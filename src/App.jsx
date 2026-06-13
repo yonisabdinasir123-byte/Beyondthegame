@@ -5,6 +5,8 @@ import PromptCard from './components/PromptCard.jsx'
 import StoryCarousel from './components/StoryCarousel.jsx'
 import SupportRing from './components/SupportRing.jsx'
 import MomentSlideshow from './components/MomentSlideshow.jsx'
+import FloatingNav from './components/FloatingNav.jsx'
+import { useApp } from './context/AppContext.jsx'
 import { getGoal, PROGRESS_EVENT } from './utils/goal'
 import './App.css'
 
@@ -414,37 +416,79 @@ export function Navbar({ onLogin, onSignup }) {
 // Hero
 // ─────────────────────────────────────────────────────────────
 function HeroSection({ onGetStarted, onFindPath }) {
-  /* Mouse interaction: magnetic pull on the sole primary CTA */
+  /* Mouse interaction: magnetic pull on the sole primary CTA + floodlight
+     spotlight following the cursor across the dark hero ground. */
   const magnetRef = useMagnetic()
+  const spotRef = useSpotlight()
+  /* Shared state: the release-stage chips here set the value that follows
+     the user across the whole site (AppContext), so the age pathway below
+     and inner pages stay in sync. */
+  const { releaseStage, setReleaseStage } = useApp()
+
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" aria-labelledby="hero-title" ref={spotRef}>
       <div className="hero__inner">
-        <span className="hero__badge">Free · Confidential · Made for you</span>
+        {/* Left zone: the thesis — copy + primary action */}
+        <div className="hero__lead">
+          <span className="hero__badge">
+            <span className="hero__badge-dot" aria-hidden="true" />
+            Free · confidential · made for you
+          </span>
 
-        {/* Gestalt: focal point — largest type on the page, top-left zone */}
-        <h1 className="hero__title" id="hero-title">
-          You gave everything<br />
-          <em>to the game.</em>
-        </h1>
+          <h1 className="hero__title" id="hero-title">
+            You gave everything <span className="hero__title-mark">to the game.</span>
+          </h1>
 
-        <p className="hero__subtitle">
-          Now let's help you find what comes next.
-        </p>
+          <p className="hero__subtitle">
+            Leaving the academy isn't the end of your story — it's the start of the
+            next one. Let's work out what comes next, together.
+          </p>
 
-        <div className="hero__ctas">
-          {/* Gestalt: focal point — sole filled button in the first viewport */}
-          <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted} ref={magnetRef}>
-            Get started today
-          </button>
+          <div className="hero__ctas">
+            <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted} ref={magnetRef}>
+              Get started — it's free
+            </button>
+            <button type="button" className="hero__cta hero__cta--ghost" onClick={onFindPath}>
+              Build my pathway
+            </button>
+          </div>
         </div>
 
-        {/* Continuity: muted scroll cue — the demoted secondary CTA now
-            guides the eye down instead of competing with the primary */}
-        <button type="button" className="hero__scroll-cue" onClick={onFindPath}>
-          <span className="hero__scroll-cue-chevron" aria-hidden="true">⌄</span>
-          Build my pathway
-        </button>
+        {/* Right zone: the "team sheet" panel — release-stage entry point.
+            Fills the second column so nothing floats in empty space. */}
+        <aside className="hero__panel" aria-label="Find guidance for your stage">
+          <p className="hero__panel-q" id="hero-stage-label">When did you leave the academy?</p>
+          <div className="hero__stage-row" role="group" aria-labelledby="hero-stage-label">
+            {['16', '18', '21+'].map(stage => (
+              <button
+                key={stage}
+                type="button"
+                className={`hero__stage${releaseStage === stage ? ' is-active' : ''}`}
+                aria-pressed={releaseStage === stage}
+                onClick={() => setReleaseStage(stage)}
+              >
+                <span className="hero__stage-num">{stage}</span>
+                <span className="hero__stage-cap">years old</span>
+              </button>
+            ))}
+          </div>
+          <p className="hero__panel-hint" aria-live="polite">
+            {releaseStage
+              ? `Got it — we'll tailor what you see for leaving at ${releaseStage}.`
+              : 'Pick a stage and the site adjusts to you. Change it anytime.'}
+          </p>
+          <button type="button" className="hero__panel-cta" onClick={onFindPath}>
+            See my pathway
+            <span aria-hidden="true">→</span>
+          </button>
+        </aside>
       </div>
+
+      {/* Continuity: quiet scroll cue leads the eye down */}
+      <button type="button" className="hero__scroll-cue" onClick={onFindPath}>
+        <span className="hero__scroll-cue-chevron" aria-hidden="true">⌄</span>
+        Keep going
+      </button>
     </section>
   )
 }
@@ -484,12 +528,27 @@ function TrustStrip() {
 // ─────────────────────────────────────────────────────────────
 // Age pathway selector
 // ─────────────────────────────────────────────────────────────
+// Map between the local pathway keys and the shared release-stage values.
+const STAGE_TO_KEY = { '16': '16', '18': '18', '21+': '21plus' }
+const KEY_TO_STAGE = { '16': '16', '18': '18', '21plus': '21+' }
+
 function AgePathwaySection() {
-  const [selected, setSelected] = useState(null)
+  const { releaseStage, setReleaseStage } = useApp()
+  // Seed the open panel from the shared stage chosen in the hero.
+  const [selected, setSelected] = useState(() => STAGE_TO_KEY[releaseStage] || null)
   const panelRef = useRef(null)
 
+  // Reflect hero/other-page changes to the shared stage.
+  useEffect(() => {
+    if (releaseStage && STAGE_TO_KEY[releaseStage]) setSelected(STAGE_TO_KEY[releaseStage])
+  }, [releaseStage])
+
   const handleSelect = (key) => {
-    setSelected(prev => prev === key ? null : key)
+    setSelected(prev => {
+      const next = prev === key ? null : key
+      setReleaseStage(next ? KEY_TO_STAGE[next] : null)
+      return next
+    })
   }
 
   useEffect(() => {
@@ -1322,9 +1381,9 @@ export default function App() {
 
       <SkipLink />
 
-      <Navbar onLogin={openLogin} onSignup={openSignup} />
+      <FloatingNav onLogin={openLogin} onSignup={openSignup} />
 
-      <main id="main-content">
+      <main id="main-content" className="site-main">
         <HeroSection onGetStarted={openSignup} onFindPath={scrollToPathways} />
         {/* Eye path: hero → trust strip (quiet) → pathway → goal → support */}
         <TrustStrip />

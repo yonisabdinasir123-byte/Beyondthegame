@@ -1,0 +1,157 @@
+/* ═══════════════════════════════════════════════════════════
+   PAGE LAYOUT — shared skeleton + rhythm for every page
+   ═══════════════════════════════════════════════════════════ */
+.pl {
+  /* Floating nav overlays the page; reserve its space at the top. */
+  padding-top: calc(var(--header-height) + var(--space-2));
+}
+
+/* Single max-width container — the spine of every page */
+.pl-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Full-bleed escape hatch for accent bands */
+.pl-bleed { width: 100%; }
+
+/* ── Consistent vertical rhythm ──────────────────────────── */
+.pl-region { padding-block: var(--space-8); }
+.pl-tone-paper   { background: var(--paper); }
+.pl-tone-surface { background: var(--surface); }
+.pl-tone-deep {
+  background: linear-gradient(155deg, var(--bg-mid) 0%, var(--bg-deep) 70%);
+  color: var(--color-on-dark);
+}
+
+/* ── Page header / intro ─────────────────────────────────── */
+.pl-header { padding-block: var(--space-7) var(--space-6); }
+.pl-header--center { text-align: center; }
+.pl-header--center .pl-intro { margin-inline: auto; }
+
+.pl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-600);
+}
+/* The recurring pitch-line bracket on eyebrows */
+.pl-eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--lime-600);
+}
+
+.pl-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 5.5vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0.6rem 0 0;
+  max-width: 18ch;
+}
+.pl-header--center .pl-title { max-width: 22ch; margin-inline: auto; }
+
+.pl-intro {
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--ink-700);
+  max-width: 56ch;
+  margin: 1rem 0 0;
+}
+.pl-header__extra { margin-top: var(--space-5); }
+
+/* ── Section heading inside regions ──────────────────────── */
+.pl-section-head { margin-bottom: var(--space-6); }
+.pl-section-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0.5rem 0 0;
+}
+.pl-tone-deep .pl-section-title,
+.pl-tone-deep .pl-title { color: #fff; }
+.pl-section-intro {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink-700);
+  max-width: 54ch;
+  margin: 0.75rem 0 0;
+}
+.pl-tone-deep .pl-section-intro,
+.pl-tone-deep .pl-intro { color: var(--color-on-dark-muted); }
+.pl-tone-deep .pl-eyebrow { color: var(--lime); }
+.pl-tone-deep .pl-eyebrow::before { background: var(--lime); }
+
+/* ── Closing CTA ─────────────────────────────────────────── */
+.pl-closing {
+  position: relative;
+  overflow: hidden;
+  margin-top: var(--space-7);
+  padding-block: var(--space-8);
+  background: linear-gradient(150deg, var(--teal-700) 0%, var(--teal-900) 60%, var(--bg-deep) 100%);
+  color: #fff;
+}
+/* Floodlight glow signature in the corner */
+.pl-closing::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(200, 242, 78, 0.18) 0%, transparent 62%);
+  pointer-events: none;
+}
+.pl-closing__inner { position: relative; text-align: center; }
+.pl-closing__mark {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto var(--space-4);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 38%, var(--lime) 0 30%, transparent 31%),
+    rgba(255, 255, 255, 0.1);
+}
+.pl-closing__title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #fff;
+}
+.pl-closing__text {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--color-on-dark);
+  max-width: 52ch;
+  margin: 1rem auto 0;
+}
+.pl-closing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+@media (max-width: 639px) {
+  .pl-region { padding-block: var(--space-7); }
+  .pl-header { padding-block: var(--space-6) var(--space-5); }
+}

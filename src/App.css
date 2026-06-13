@@ -1,102 +1,159 @@
 /* ═══════════════════════════════════════════════════════════
-   DESIGN TOKENS
+   DESIGN TOKENS — "FLOODLIGHT"
+   Single source of truth. The new palette/type are defined first;
+   every legacy token (--amber-*, --bg, --text-*, …) is then ALIASED
+   onto the new values so the entire existing site adopts the new
+   visual direction without touching 3,000+ lines of page CSS.
+   New components read the clean semantic tokens (--color-*, --space-*,
+   --radius-*, --type-*) which ThemeContext mirrors in JS.
    ═══════════════════════════════════════════════════════════ */
 :root {
-  /* Background tones */
-  --bg:          #FFFBF5;
-  --bg-alt:      #FEF9F0;
-  --bg-card:     #FFFFFF;
+  /* ── Brand palette ────────────────────────────────────────
+     Pitch-teal primary (growth, calm, trust) · coral warmth for
+     human CTAs · lime energy pop on dark · cool paper neutral. */
+  --ink:        #0B1F1D;   /* deep teal-black: text + night sections */
+  --ink-700:    #234540;
+  --ink-500:    #46645E;
+  --ink-300:    #8AA39D;
 
-  /* Amber scale */
-  --amber-50:    #FFFBEB;
-  --amber-100:   #FEF3C7;
-  --amber-200:   #FDE68A;
-  --amber-300:   #FCD34D;
-  --amber-400:   #FBBF24;
-  --amber-500:   #F59E0B;
-  --amber-600:   #D97706;
-  --amber-700:   #B45309;
-  --amber-800:   #92400E;
-  --amber-900:   #78350F;
+  --teal-50:    #ECF7F4;
+  --teal-100:   #D4EFE9;
+  --teal-200:   #B0E2D8;
+  --teal-300:   #74CDBC;
+  --teal-400:   #2FAD97;
+  --teal-500:   #12897A;   /* PRIMARY */
+  --teal-600:   #0E6B5F;
+  --teal-700:   #0B5A50;
+  --teal-800:   #073E37;
+  --teal-900:   #06322D;
 
-  /* Orange */
-  --orange-400:  #FB923C;
-  --orange-500:  #F97316;
-  --orange-600:  #EA580C;
-  --orange-800:  #9A3412;
+  --coral-100:  #FFE3DC;
+  --coral-300:  #FFA98F;
+  --coral-500:  #FF6A4D;   /* warm accent — emotional CTAs */
+  --coral-600:  #EA4A2C;   /* coral text on light (AA) */
+  --coral-800:  #B5371E;
 
-  /* Text */
-  --text-primary:   #1C1009;
-  --text-secondary: #44200A;
-  --text-muted:     #78350F;
+  --lime:       #C8F24E;   /* energy pop — on dark only */
+  --lime-600:   #9BCB1E;
+  --lime-ink:   #54710A;   /* lime-derived text on light (AA) */
 
-  /* Support card accents — all ≥ 4.5:1 on their bg */
-  --c-mind:      #166534;
-  --c-mind-bg:   #F0FDF4;
-  --c-money:     #92400E;
-  --c-money-bg:  #FFFBEB;
-  --c-feelings:  #9F1239;
-  --c-feelings-bg: #FFF1F2;
-  --c-work:      #065F46;
-  --c-work-bg:   #ECFDF5;
-  --c-football:  #9A3412;
-  --c-football-bg: #FFF7ED;
-  --c-community: #5B21B6;
-  --c-community-bg: #FAF5FF;
+  --paper:      #F3F6F4;   /* cool off-white (NOT cream) */
+  --paper-deep: #E8EFEB;
+  --surface:    #FFFFFF;
 
-  /* Dark warm-green palette (used by inner pages) */
-  --bg-deep:       #0f1e0f;
-  --bg-mid:        #1c3320;
-  --accent-lime:   #b8f542;
-  --accent-amber:  #e8a838;
-  --accent-terra:  #c8614a;
-  --dark-text-primary: #f0ead6;
-  --dark-text-muted:   #9aad8f;
+  /* ── Semantic colour tokens (new components + ThemeContext) ── */
+  --color-primary:        var(--teal-500);
+  --color-primary-strong: var(--teal-700);
+  --color-primary-deep:   var(--teal-900);
+  --color-accent:         var(--coral-500);
+  --color-accent-strong:  var(--coral-600);
+  --color-pop:            var(--lime);
+  --color-ink:            var(--ink);
+  --color-paper:          var(--paper);
+  --color-surface:        var(--surface);
+  --color-on-primary:     #FFFFFF;
+  --color-on-dark:        #EAF3EF;
+  --color-on-dark-muted:  #91B3AB;
 
-  /* Typography */
-  --font-body:    'Nunito', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-condensed: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  /* ── Legacy aliases → new palette (whole-site recolor) ───── */
+  --bg:          var(--paper);
+  --bg-alt:      var(--paper-deep);
+  --bg-card:     var(--surface);
 
-  /* Spacing */
-  --sp-xs:  0.25rem;
-  --sp-sm:  0.5rem;
-  --sp-md:  1rem;
-  --sp-lg:  1.5rem;
-  --sp-xl:  2rem;
-  --sp-2xl: 3rem;
-  --sp-3xl: 5rem;
+  --amber-50:    var(--teal-50);
+  --amber-100:   var(--teal-100);
+  --amber-200:   var(--teal-200);
+  --amber-300:   var(--teal-300);
+  --amber-400:   var(--teal-400);
+  --amber-500:   var(--teal-500);
+  --amber-600:   var(--teal-600);
+  --amber-700:   var(--teal-700);
+  --amber-800:   var(--teal-800);
+  --amber-900:   var(--teal-900);
 
-  /* Radius */
-  --r-sm:  0.375rem;
-  --r-md:  0.75rem;
-  --r-lg:  1rem;
-  --r-xl:  1.5rem;
-  --r-full: 9999px;
+  --orange-400:  var(--coral-300);
+  --orange-500:  var(--coral-500);
+  --orange-600:  var(--coral-600);
+  --orange-800:  var(--coral-800);
 
-  /* Shadows */
-  --sh-sm: 0 1px 3px rgba(28,16,9,.10), 0 1px 2px rgba(28,16,9,.06);
-  --sh-md: 0 4px 12px rgba(28,16,9,.12), 0 2px 4px rgba(28,16,9,.06);
-  --sh-lg: 0 10px 30px rgba(28,16,9,.15), 0 4px 8px rgba(28,16,9,.06);
+  --text-primary:   var(--ink);
+  --text-secondary: var(--ink-700);
+  --text-muted:     var(--ink-500);
 
-  /* ── Motion system — ALL transitions/animations use these tokens.
-        No ad-hoc timings anywhere. ── */
-  --ease-out-soft: cubic-bezier(0.25, 0.8, 0.25, 1);  /* standard deceleration */
-  --ease-in-out:   cubic-bezier(0.45, 0, 0.25, 1);     /* expanding content */
-  --ease-snap:     cubic-bezier(0.2, 0, 0, 1);          /* presses, quick settles */
-  --dur-micro:  120ms;   /* hovers, presses, icon swaps */
-  --dur-std:    240ms;   /* cards, reveals, tabs */
-  --dur-large:  400ms;   /* accordions, selector growth */
-  --dur-scene:  600ms;   /* page entrances, hero settle, slideshow */
-  --sh-xl: 0 20px 60px rgba(28,16,9,.25);
+  /* Support card accents — retinted cool, all ≥ 4.5:1 on their bg */
+  --c-mind:      #0E6B5F;  --c-mind-bg:   #EAF7F3;
+  --c-money:     #1F6E63;  --c-money-bg:  #ECF6F3;
+  --c-feelings:  #B5371E;  --c-feelings-bg: #FFF0EC;
+  --c-work:      #0B5A50;  --c-work-bg:   #E6F3EF;
+  --c-football:  #54710A;  --c-football-bg: #F2F8E2;
+  --c-community: #3F4E8A;  --c-community-bg: #EEF1FA;
 
-  /* Layout heights — referenced by all sticky sub-navs and scroll offsets */
-  --header-height:    64px;
+  /* Dark "matchday" palette (macro heroes / night sections) */
+  --bg-deep:       #07211D;
+  --bg-mid:        #0E3A33;
+  --accent-lime:   var(--lime);
+  --accent-amber:  var(--lime);    /* macro-hero CTA sweep start */
+  --accent-terra:  var(--coral-500);/* macro-hero CTA sweep end */
+  --dark-text-primary: var(--color-on-dark);
+  --dark-text-muted:   var(--color-on-dark-muted);
+
+  /* ── Typography ───────────────────────────────────────────
+     Display: Bricolage Grotesque · Body: Hanken Grotesk ── */
+  --font-body:    'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Bricolage Grotesque', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-condensed: 'Barlow Condensed', 'Hanken Grotesk', system-ui, sans-serif;
+  /* Type roles (ThemeContext mirrors these) */
+  --type-display: 800 clamp(2.5rem, 6vw, 4.5rem)/1.04 var(--font-heading);
+  --type-h2:      700 clamp(1.6rem, 3.5vw, 2.5rem)/1.12 var(--font-heading);
+  --type-h3:      700 clamp(1.2rem, 2.2vw, 1.5rem)/1.2 var(--font-heading);
+  --type-body:    400 1.0625rem/1.65 var(--font-body);
+  --type-caption: 600 .8rem/1.4 var(--font-body);
+
+  /* ── Spacing — 8px base scale ── */
+  --space-1: 0.25rem; --space-2: 0.5rem;  --space-3: 0.75rem;
+  --space-4: 1rem;    --space-5: 1.5rem;  --space-6: 2rem;
+  --space-7: 3rem;    --space-8: 4.5rem;  --space-9: 7rem;
+  /* Legacy spacing aliases */
+  --sp-xs: var(--space-1); --sp-sm: var(--space-2); --sp-md: var(--space-4);
+  --sp-lg: var(--space-5); --sp-xl: var(--space-6); --sp-2xl: var(--space-7);
+  --sp-3xl: var(--space-8);
+
+  /* Shared content container */
+  --container: 1200px;
+  --container-wide: 1320px;
+
+  /* ── Radius — rounded geometry consistent with the floating nav ── */
+  --radius-sm: 0.5rem;  --radius-md: 0.875rem; --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem; --radius-pill: 9999px;
+  /* Legacy radius aliases */
+  --r-sm: var(--radius-sm); --r-md: var(--radius-md); --r-lg: var(--radius-lg);
+  --r-xl: var(--radius-xl); --r-full: var(--radius-pill);
+
+  /* ── Shadows — cool teal-tinted, layered ── */
+  --sh-sm: 0 1px 2px rgba(7,33,29,.08), 0 1px 3px rgba(7,33,29,.06);
+  --sh-md: 0 4px 14px rgba(7,33,29,.10), 0 2px 6px rgba(7,33,29,.06);
+  --sh-lg: 0 14px 40px rgba(7,33,29,.14), 0 6px 12px rgba(7,33,29,.06);
+  --sh-xl: 0 24px 70px rgba(7,33,29,.22);
+  --shadow-float: 0 10px 34px rgba(7,33,29,.16), 0 2px 8px rgba(7,33,29,.10);
+
+  /* ── Motion system — ALL transitions/animations use these tokens ── */
+  --ease-out-soft: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-in-out:   cubic-bezier(0.45, 0, 0.25, 1);
+  --ease-snap:     cubic-bezier(0.2, 0, 0, 1);
+  --dur-micro:  120ms;
+  --dur-std:    240ms;
+  --dur-large:  400ms;
+  --dur-scene:  600ms;
+
+  /* Layout heights — floating nav occupies ~88px (16px gap + 56–64px pill).
+     Sticky sub-navs and scroll offsets reference these. */
+  --header-height:    88px;
   --subheader-height: 48px;
 }
 
-/* Clears both sticky bars so hash-anchor navigation lands cleanly */
+/* Clears the floating nav + any sticky sub-bar so hash-anchor nav lands cleanly */
 html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height)); }
+body { background: var(--paper); color: var(--text-primary); font-family: var(--font-body); }
 
 /* ═══════════════════════════════════════════════════════════
    ACCESSIBILITY
@@ -472,146 +529,260 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
 }
 
 /* ═══════════════════════════════════════════════════════════
-   HERO
+   HERO — "Floodlight": dark matchday ground, two-zone layout
+   that fills the viewport width (thesis left, team-sheet right)
    ═══════════════════════════════════════════════════════════ */
 .hero {
-  background: linear-gradient(145deg, var(--amber-700) 0%, var(--amber-600) 45%, var(--orange-500) 100%);
-  padding: 4.5rem 1rem 3.5rem;
-  /* F-pattern: headline lands in the top-left scanning zone */
-  text-align: left;
   position: relative;
   overflow: hidden;
+  /* Clear the floating nav, then breathe */
+  padding: calc(var(--header-height) + 2rem) clamp(1rem, 4vw, 2rem) var(--space-8);
+  background:
+    radial-gradient(ellipse 80% 60% at 78% 12%, rgba(18,137,122,.55) 0%, transparent 60%),
+    linear-gradient(160deg, var(--teal-900) 0%, var(--bg-deep) 70%, #04201C 100%);
+  color: var(--color-on-dark);
 }
-
+/* Floodlight cursor spotlight — desktop only (set by useSpotlight) */
+@media (hover: hover) and (pointer: fine) {
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle 380px at var(--spot-x, 80%) var(--spot-y, 18%), rgba(200,242,78,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+/* Pitch-line corner bracket — faint structural signature */
 .hero::before {
   content: '';
   position: absolute;
-  inset: 0;
-  /* Figure-ground: decoration ≤4% so the headline owns the contrast */
+  left: 0; right: 0; bottom: 0;
+  height: 140px;
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(255,255,255,.04) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255,255,255,.03) 0%, transparent 40%);
+    linear-gradient(transparent 49.5%, rgba(255,255,255,.05) 49.5%, rgba(255,255,255,.05) 50.5%, transparent 50.5%);
   pointer-events: none;
 }
 
 .hero__inner {
-  max-width: 1200px;
-  margin: 0 auto;
   position: relative;
   z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+  align-items: center;
 }
 
 .hero__badge {
-  display: inline-block;
-  background: rgba(255,255,255,.18);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.35);
-  border-radius: var(--r-full);
-  padding: .3rem .9rem;
-  font-size: .8125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(200,242,78,.10);
+  color: var(--lime);
+  border: 1px solid rgba(200,242,78,.28);
+  border-radius: var(--radius-pill);
+  padding: .35rem .9rem;
+  font-family: var(--font-condensed);
+  font-size: .9rem;
   font-weight: 700;
-  letter-spacing: .06em;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+.hero__badge-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 3px rgba(200,242,78,.25);
 }
 
 .hero__title {
   font-family: var(--font-heading);
-  /* Gestalt: focal point — largest type on the page (scale ratio 1.0) */
-  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-size: clamp(2.6rem, 6.5vw, 4.75rem);
   color: #fff;
-  line-height: 1.08;
-  margin-bottom: .875rem;
-  font-weight: 900;
-  max-width: 14ch;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+  font-weight: 800;
+  max-width: 15ch;
 }
-
-.hero__title em {
-  font-style: italic;
-  color: var(--amber-200);
+/* The lime marker sweep under the key phrase — the brand signature */
+.hero__title-mark {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  white-space: nowrap;
+}
+.hero__title-mark::after {
+  content: '';
+  position: absolute;
+  left: -2px; right: -2px; bottom: .08em;
+  height: .32em;
+  background: var(--lime);
+  opacity: .85;
+  z-index: -1;
+  border-radius: 3px;
+  transform: skewX(-8deg);
 }
 
 .hero__subtitle {
-  font-size: clamp(1.0625rem, 2.5vw, 1.375rem);
-  color: rgba(255,255,255,.92);
+  font-size: clamp(1.0625rem, 2vw, 1.3rem);
+  color: var(--color-on-dark);
   font-weight: 500;
-  /* Isolation: generous whitespace around the focal block */
-  margin-bottom: 2.25rem;
-  line-height: 1.5;
+  margin: 0 0 2rem;
+  line-height: 1.55;
+  max-width: 44ch;
 }
 
 .hero__ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: .875rem;
+  gap: .75rem;
   justify-content: flex-start;
 }
 
 .hero__cta {
   font-family: var(--font-body);
   font-size: 1.0625rem;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
-  border-radius: var(--r-md);
-  padding: 1rem 2rem;
+  border-radius: var(--radius-pill);
+  padding: 1rem 1.9rem;
   min-height: 56px;
-  border: 2.5px solid transparent;
-  transition: all .2s;
+  border: 1.5px solid transparent;
+  transition: background var(--dur-std) var(--ease-out-soft),
+              transform var(--dur-micro) var(--ease-out-soft),
+              box-shadow var(--dur-std) var(--ease-out-soft),
+              border-color var(--dur-micro) var(--ease-out-soft);
   display: inline-flex;
   align-items: center;
   gap: .5rem;
 }
+/* Warm coral primary — the human, encouraging action */
 .hero__cta--primary {
-  background: #fff;
-  color: var(--amber-800);
-  border-color: #fff;
+  background: var(--coral-500);
+  color: #fff;
+  box-shadow: 0 8px 26px rgba(255,106,77,.34);
 }
 .hero__cta--primary:hover {
-  background: var(--amber-100);
-  border-color: var(--amber-100);
+  background: var(--coral-600);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  box-shadow: 0 12px 32px rgba(255,106,77,.42);
 }
-.hero__cta--secondary {
-  background: transparent;
+.hero__cta--ghost {
+  background: rgba(255,255,255,.06);
   color: #fff;
-  border-color: rgba(255,255,255,.65);
+  border-color: rgba(255,255,255,.30);
 }
-.hero__cta--secondary:hover {
+.hero__cta--ghost:hover {
   background: rgba(255,255,255,.12);
-  border-color: #fff;
+  border-color: rgba(255,255,255,.6);
   transform: translateY(-2px);
 }
 
-/* Scroll cue — continuity: after the focal point, the eye is led down.
-   Demoted from a competing secondary button to a quiet text link. */
-.hero__scroll-cue {
+/* ── Team-sheet panel (right zone) ───────────────────────── */
+.hero__panel {
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-xl);
+  padding: 1.6rem;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--sh-lg);
+}
+.hero__panel-q {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff;
+  margin: 0 0 1rem;
+}
+.hero__stage-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .6rem;
+}
+.hero__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .15rem;
+  padding: 1rem .5rem;
+  background: rgba(255,255,255,.05);
+  border: 1.5px solid rgba(255,255,255,.16);
+  border-radius: var(--radius-md);
+  color: var(--color-on-dark);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: border-color var(--dur-micro) var(--ease-out-soft),
+              background var(--dur-micro) var(--ease-out-soft),
+              transform var(--dur-micro) var(--ease-out-soft);
+}
+.hero__stage:hover { border-color: var(--teal-300); transform: translateY(-2px); }
+.hero__stage.is-active {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+}
+.hero__stage-num { font-family: var(--font-heading); font-weight: 800; font-size: 1.75rem; line-height: 1; }
+.hero__stage-cap { font-size: .72rem; font-weight: 600; opacity: .8; }
+.hero__panel-hint {
+  font-size: .9rem;
+  color: var(--color-on-dark-muted);
+  line-height: 1.5;
+  margin: 1rem 0 1.25rem;
+  min-height: 2.6em;
+}
+.hero__panel-cta {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
-  margin-top: 2.5rem;
+  background: var(--teal-400);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: .95rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: .8rem 1.4rem;
+  min-height: 48px;
+  cursor: pointer;
+  transition: background var(--dur-micro) var(--ease-out-soft), gap var(--dur-micro) var(--ease-out-soft);
+}
+.hero__panel-cta:hover { background: var(--teal-300); gap: .8rem; }
+
+/* Scroll cue — continuity */
+.hero__scroll-cue {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin: var(--space-6) auto 0;
   padding: .625rem .25rem;
   min-height: 44px;
   background: none;
   border: none;
   cursor: pointer;
-  font-family: var(--font-body);
-  font-size: .9375rem;
+  font-family: var(--font-condensed);
+  font-size: 1rem;
   font-weight: 600;
-  color: rgba(255,255,255,.78);
-  transition: color var(--dur-std) var(--ease-out-soft); /* motion: system tokens */
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--color-on-dark-muted);
+  transition: color var(--dur-std) var(--ease-out-soft);
 }
 .hero__scroll-cue:hover { color: #fff; }
 .hero__scroll-cue:focus-visible {
-  outline: 3px solid var(--amber-200);
+  outline: 3px solid var(--lime);
   outline-offset: 2px;
-  border-radius: var(--r-sm, 6px);
+  border-radius: var(--r-sm);
 }
-
 .hero__scroll-cue-chevron {
   font-size: 1.25rem;
   line-height: 1;
-  animation: scrollCueBob 2s ease-in-out infinite;
+  animation: scrollCueBob 2s var(--ease-in-out) infinite;
 }
 
 @keyframes scrollCueBob {
@@ -619,8 +790,15 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   50%      { transform: translateY(4px); }
 }
 
+@media (min-width: 880px) {
+  .hero { padding-block: calc(var(--header-height) + 3rem) var(--space-9); }
+  .hero__inner { grid-template-columns: 1.35fr 0.95fr; }
+  .hero__panel { justify-self: end; max-width: 420px; width: 100%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero__scroll-cue-chevron { animation: none; }
+  .hero__cta, .hero__stage, .hero__panel-cta { transition: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1600,7 +1778,7 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
   .navbar__auth        { display: flex; }
   .navbar__hamburger   { display: none; }
 
-  .hero { padding: 5.5rem 1.5rem 4rem; }
+  .hero { padding: calc(var(--header-height) + 2.5rem) 1.5rem var(--space-8); }
 
   .section { padding: 5.5rem 1.5rem; }
 
@@ -1611,10 +1789,9 @@ html { scroll-padding-top: calc(var(--header-height) + var(--subheader-height));
 
 /* Mobile */
 @media (max-width: 639px) {
-  /* Focal block (headline + sub-line + CTA) must fit the first
-     375px viewport without scrolling */
-  .hero { padding: 2.5rem 1rem 2.25rem; }
-  .hero__title { font-size: clamp(2.25rem, 11vw, 2.75rem); }
+  /* Clear the floating nav, then keep the focal block tight on mobile */
+  .hero { padding: calc(var(--header-height) + 1rem) 1rem var(--space-7); }
+  .hero__title { font-size: clamp(2.1rem, 10vw, 2.85rem); }
   .hero__subtitle { margin-bottom: 1.5rem; }
   .hero__scroll-cue { margin-top: 1.25rem; }
   .hero__ctas {
@@ -1796,7 +1973,8 @@ main#main-content,
 .macro-hero {
   position: relative;
   overflow: hidden;
-  padding: 5rem 1.25rem 3.5rem;
+  /* Clear the floating nav island, then breathe */
+  padding: calc(var(--header-height) + 2rem) clamp(1rem, 4vw, 2rem) var(--space-8);
   /* figure-ground: dark macro ground, white type is the figure.
      SWAP: replace --macro-ground per page with
      background-image: url('/img/macro-….webp'); background-size: cover; */
