@@ -5,7 +5,7 @@
  *
  * Optional server enrichment (server-side proxy keeps any key off the browser):
  *   POST /api/career-suggest with { subjects, hobbies, skills, freeText }
- *   returns tailored suggestions. Toggle with VITE_ENABLE_AI_CAREERS=true.
+ *   returns tailored suggestions. Toggle with VITE_ENABLE_SMART_CAREERS=true.
  *   Falls back cleanly to the rules dataset if the call fails.
  */
 import { useState, useCallback } from 'react'
@@ -102,8 +102,8 @@ export default function InterestsForm({ onResults }) {
     onResults(ruleMatches, null)
 
     // OPTIONAL: server enrichment (server-side proxy)
-    // Guarded by VITE_ENABLE_AI_CAREERS env flag to avoid accidental key exposure.
-    const enriched = import.meta.env.VITE_ENABLE_AI_CAREERS === 'true'
+    // Guarded by VITE_ENABLE_SMART_CAREERS env flag to avoid accidental key exposure.
+    const enriched = import.meta.env.VITE_ENABLE_SMART_CAREERS === 'true'
     if (!enriched || !allInterests.length) return
 
     setLoading(true)

@@ -10,7 +10,8 @@
  *   Then load in useEffect / React Query / SWR and pass the data as props.
  *
  * CV BUILDER (guided suggestions)
- *   Requires VITE_ANTHROPIC_API_KEY in .env. See CVBuilder.jsx for details.
+ *   Generated server-side via /api/generate-cv (ANTHROPIC_API_KEY on the
+ *   server). See CVBuilder.jsx and .env.example for details.
  */
 
 import { useState, useEffect, useRef, useMemo } from 'react'
