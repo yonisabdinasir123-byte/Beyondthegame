@@ -78,11 +78,11 @@ export default function AcademyPage() {
               {/* Prospect: gain framing, same true numbers, hope-first labels */}
               <div className="aca-stat-block">
                 <span className="aca-stat-block__num">200</span>
-                <span className="aca-stat-block__label">turn professional each year , <br />thousands more build careers around the game</span>
+                <span className="aca-stat-block__label">turn professional each year.<br />Thousands more build careers around the game</span>
               </div>
               <div className="aca-stat-block">
                 <span className="aca-stat-block__num">98%</span>
-                <span className="aca-stat-block__label">build their future beyond the pitch , <br />this page is that plan</span>
+                <span className="aca-stat-block__label">build their future beyond the pitch.<br />This page is that plan</span>
               </div>
             </div>
           </div>

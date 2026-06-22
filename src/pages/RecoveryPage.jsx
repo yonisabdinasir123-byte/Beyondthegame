@@ -43,7 +43,7 @@ function HeroSection() {
       <div className="rec-hero__inner">
         <h1 className="rec-hero__title">Your Recovery Hub</h1>
         <p className="rec-hero__sub">
-          Everything in one place to help you look after your body and mind,           at your own pace, on your own terms.
+          Everything in one place to help you look after your body and mind, at your own pace, on your own terms.
         </p>
       </div>
     </section>
