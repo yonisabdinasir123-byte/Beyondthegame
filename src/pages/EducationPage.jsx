@@ -1,20 +1,22 @@
 /**
- * EducationPage.jsx — Local colleges, open days, and job fairs/events.
+ * EducationPage.jsx: Local colleges, open days, and job fairs/events.
  *
  * HOW TO RUN:
- *   npm run dev  → http://localhost:5173/education
+ *   npm run dev  -> http://localhost:5173/education
  *
- * API INTEGRATIONS:
- *   Colleges  → Google Places API (replace `colleges` import with async fetch)
- *   Events    → Eventbrite API (replace `jobEvents` import with async fetch)
- *   Postcode  → postcodes.io (lookupPostcode util, already wired)
- *   Distance  → haversine util (already wired — maps to Reed distanceFromLocation)
+ * LIVE DATA:
+ *   Colleges  -> GET /api/colleges  (Google Places, server-side)
+ *   Events    -> GET /api/events    (Eventbrite, server-side)
+ *   Postcode  -> postcodes.io (lookupPostcode util, already wired)
+ *   Distance  -> haversine util (already wired)
  */
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { colleges, jobEvents, SKILL_COURSES, TRADE_ROUTES } from '../data/educationData'
+import { useState, useEffect, useCallback } from 'react'
+import { SKILL_COURSES, TRADE_ROUTES } from '../data/educationData'
 import { lookupPostcode, DEFAULT_COORDS } from '../utils/distance'
-import { storage, formatDate } from '../utils/storage'
+import { storage } from '../utils/storage'
 import SiteLayout    from '../components/SiteLayout'
+import GlassCard     from '../components/GlassCard'
+import FloatingSection from '../components/FloatingSection'
 import CollegeSearch from '../components/education/CollegeSearch'
 import EventsList    from '../components/education/EventsList'
 import QualsMatcher  from '../components/education/QualsMatcher'
@@ -24,7 +26,7 @@ import { getGoal, notifyProgress } from '../utils/goal'
 import { useMagnetic, useSpotlight } from '../App.jsx'
 import './EducationPage.css'
 
-// ─── Macro hero — one focal point, one amber CTA ─────────────────────────────
+// ── Macro hero: one focal point, one amber CTA ───────────────────────────────
 function EduHero({ onCheckOptions }) {
   const spotRef   = useSpotlight() /* mouse: spotlight follows pointer */
   const magnetRef = useMagnetic()  /* mouse: CTA eases toward cursor */
@@ -38,7 +40,7 @@ function EduHero({ onCheckOptions }) {
     >
       <div className="macro-hero__inner">
         <span className="macro-hero__eyebrow">Education</span>
-        {/* Gestalt: focal point — largest type, top-left F-pattern zone */}
+        {/* Gestalt: focal point, largest type, top-left F-pattern zone */}
         <h1 className="macro-hero__title">Find out what you can study.</h1>
         <p className="macro-hero__sub">Matched to the qualifications you have right now.</p>
         <span className="macro-hero__cta-wrap">
@@ -58,43 +60,7 @@ function EduHero({ onCheckOptions }) {
   )
 }
 
-const NAV_SECTIONS = [
-  { id: 'matcher',  label: '🎯 What Can I Study?', title: 'What Can I Study?'        },
-  { id: 'colleges', label: '🏫 Colleges',          title: 'Local Colleges & Open Days' },
-  { id: 'skills',   label: '💻 Learn a Skill',     title: 'Learn a Skill'            },
-  { id: 'trades',   label: '🔧 Learn a Trade',     title: 'Learn a Trade'            },
-  { id: 'events',   label: '🗓️ Events',            title: 'Job Fairs & Events'        },
-]
-
-// Cumulative sticky-bar height: navbar (64px) + this sub-nav (~54px).
-const STICKY_OFFSET = 120
-
-function SectionNav({ activeId }) {
-  const scrollTo = (id) => {
-    const el = document.getElementById(id)
-    if (!el) return
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - STICKY_OFFSET, behavior: 'smooth' })
-  }
-  return (
-    <nav className="edu-section-nav" aria-label="Education sections">
-      <div className="edu-section-nav__inner">
-        {NAV_SECTIONS.map(s => (
-          <button
-            key={s.id}
-            type="button"
-            className={`edu-nav-tab${activeId === s.id ? ' edu-nav-tab--active' : ''}`}
-            onClick={() => scrollTo(s.id)}
-            aria-pressed={activeId === s.id}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
-    </nav>
-  )
-}
-
-function PostcodeBar({ onCoords }) {
+function PostcodeBar({ onCoords, onTown }) {
   const [postcode, setPostcode] = useState(() => storage.get('user-postcode', ''))
   const [status,   setStatus]   = useState(postcode ? 'saved' : 'idle') // idle|loading|saved|error
 
@@ -104,9 +70,11 @@ function PostcodeBar({ onCoords }) {
     setStatus('loading')
     const coords = await lookupPostcode(postcode)
     if (coords) {
-      storage.set('user-postcode',  postcode.trim().toUpperCase())
+      const clean = postcode.trim().toUpperCase()
+      storage.set('user-postcode',  clean)
       storage.set('user-coords',    coords)
       onCoords(coords)
+      onTown?.(clean)
       setStatus('saved')
       notifyProgress() /* milestone signal: location set */
     } else {
@@ -118,6 +86,9 @@ function PostcodeBar({ onCoords }) {
   useEffect(() => {
     const saved = storage.get('user-coords', null)
     if (saved) { onCoords(saved); setStatus('saved') }
+    const savedPc = storage.get('user-postcode', '')
+    if (savedPc) onTown?.(savedPc)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -142,44 +113,16 @@ function PostcodeBar({ onCoords }) {
         </button>
         {status === 'saved' && <span className="edu-postcode-ok" aria-live="polite">✓ Location set</span>}
       </div>
-      {status === 'error' && <p className="form-error" role="alert">Couldn't find that postcode — check it and try again.</p>}
-      <p className="edu-postcode-note">We use this only to calculate distances. No account or sign-in needed.</p>
+      {status === 'error' && <p className="form-error" role="alert">We could not find that postcode. Check it and try again.</p>}
+      <p className="edu-postcode-note">We use this only to work out distances. No account or sign-in needed.</p>
     </form>
   )
 }
 
-function Section({ id, title, children }) {
-  return (
-    <section id={id} className="edu-section" aria-labelledby={`${id}-heading`}>
-      <div className="edu-section__inner">
-        <h2 id={`${id}-heading`} className="edu-section__title">{title}</h2>
-        {children}
-      </div>
-    </section>
-  )
-}
-
 export default function EducationPage() {
-  const [activeId,    setActiveId]    = useState('matcher')
   const [userCoords,  setUserCoords]  = useState(() => storage.get('user-coords', null))
+  const [town,        setTown]        = useState(() => storage.get('user-postcode', ''))
   const [savedDays,   setSavedDays]   = useState(() => storage.get('saved-opendays', []))
-  const observerRef = useRef(null)
-
-  useEffect(() => {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting && e.intersectionRatio >= 0.2) setActiveId(e.target.id)
-      })
-      // rootMargin top must clear BOTH sticky bars (navbar + sub-nav ≈ 118px)
-      // so the active tab reflects the section actually visible below them.
-    }, { rootMargin: '-114px 0px -40% 0px', threshold: [0.2, 0.5] })
-    NAV_SECTIONS.forEach(s => {
-      const el = document.getElementById(s.id)
-      if (el) obs.observe(el)
-    })
-    observerRef.current = obs
-    return () => obs.disconnect()
-  }, [])
 
   const handleSaveOpenDay = useCallback(({ collegeId, collegeName, openDayDate }) => {
     const key   = `${collegeId}_${openDayDate}`
@@ -195,11 +138,9 @@ export default function EducationPage() {
 
   return (
     <SiteLayout>
-      {/* motion: page entrance — fade + rise, never a hard cut */}
+      {/* motion: page entrance, fade and rise, never a hard cut */}
       <div className="edu-page-enter">
-      <SectionNav activeId={activeId} />
-
-      <EduHero
+        <EduHero
           onCheckOptions={() => {
             const el = document.getElementById('matcher')
             if (!el) return
@@ -208,20 +149,20 @@ export default function EducationPage() {
           }}
         />
 
-        <div className="edu-section__inner edu-postcode-wrap">
-          <PostcodeBar onCoords={setUserCoords} />
-        </div>
+        <div className="edu-shell">
+          <GlassCard glow="teal" className="edu-postcode-card">
+            <PostcodeBar onCoords={setUserCoords} onTown={setTown} />
+          </GlassCard>
 
-        {/* Goal gradient: progress visible wherever the work happens */}
-        <div className="goal-progress-wrap">
-          <GoalProgress />
-        </div>
+          {/* Goal gradient: progress visible wherever the work happens */}
+          <div className="goal-progress-wrap">
+            <GoalProgress />
+          </div>
 
-        {savedDays.length > 0 && (
-          <div className="edu-saved-bar">
-            <div className="edu-section__inner">
+          {savedDays.length > 0 && (
+            <GlassCard glow="lime" className="edu-saved-card">
               <p className="edu-saved-bar__text">
-                📅 You've saved <strong>{savedDays.length}</strong> open day{savedDays.length !== 1 ? 's' : ''}.
+                📅 You have saved <strong>{savedDays.length}</strong> open day{savedDays.length !== 1 ? 's' : ''}.
                 {' '}
                 <button
                   type="button"
@@ -235,43 +176,44 @@ export default function EducationPage() {
                 {savedDays.map(s => (
                   <li key={s.openDayKey} className="edu-saved-item">
                     <span>🏫 {s.collegeName}</span>
-                    <span className="edu-saved-item__date">{formatDate(s.openDayDate)}</span>
+                    <span className="edu-saved-item__date">{s.openDayDate}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        )}
+            </GlassCard>
+          )}
+        </div>
 
-        <Section id="matcher" title="What Can I Study?">
-          <p className="edu-section__desc">
-            Enter the qualifications you already have. We'll show what you can
-            study now, and what to work toward — with honest entry requirements.
-          </p>
+        <FloatingSection
+          id="matcher"
+          eyebrow="What can I study?"
+          title="What can I study?"
+          intro="Enter the qualifications you already have. We will show what you can study now, and what to work toward, with honest entry requirements."
+        >
           <QualsMatcher />
-        </Section>
+        </FloatingSection>
 
-        <Section id="colleges" title="Local Colleges & Open Days">
-          <p className="edu-section__desc">
-            Search by name, area, or course. Results update live as you type.
-            {/* Prospect: gain framing — "easy to find" not "don't miss" */}
-            Filter by distance and save open days so they're easy to find later.
-          </p>
+        <FloatingSection
+          id="colleges"
+          eyebrow="Near you"
+          title="Local colleges and open days"
+          intro="Real colleges near your postcode, with opening hours. Filter by distance and add open-day dates so they are easy to find later."
+        >
           <CollegeSearch
-            colleges={colleges}
             userCoords={userCoords ?? DEFAULT_COORDS}
             onSaveOpenDay={handleSaveOpenDay}
           />
-        </Section>
+        </FloatingSection>
 
-        <Section id="skills" title="Learn a Skill">
-          <p className="edu-section__desc">
-            Free online certificates that lead to real, well-paid jobs — no
-            university needed. With self-discipline, these open doors fast.
-          </p>
+        <FloatingSection
+          id="skills"
+          eyebrow="Free routes"
+          title="Learn a skill"
+          intro="Free online certificates that lead to real, well-paid jobs, with no university needed. With self-discipline, these open doors fast."
+        >
           <div className="edu-skill-grid">
             {SKILL_COURSES.map(c => (
-              <article key={c.id} className="edu-skill-card">
+              <GlassCard as="article" key={c.id} className="edu-skill-card">
                 <div className="edu-skill-card__head">
                   <span className="edu-skill-card__field">{c.field}</span>
                   <span className="edu-skill-card__free">FREE · NO DEGREE</span>
@@ -288,17 +230,18 @@ export default function EducationPage() {
                 >
                   {c.link.label} ↗
                 </a>
-              </article>
+              </GlassCard>
             ))}
           </div>
-        </Section>
+        </FloatingSection>
 
-        <Section id="trades" title="Learn a Trade">
-          <p className="edu-section__desc">
-            Practical trades you can train into through paid apprenticeships —
-            earn while you learn, with no student debt.
-          </p>
-          {/* Fogg: signal — goal-matched direction to the action below */}
+        <FloatingSection
+          id="trades"
+          eyebrow="Earn while you learn"
+          title="Learn a trade"
+          intro="Practical trades you can train into through paid apprenticeships. Earn while you learn, with no student debt."
+        >
+          {/* Fogg: signal, goal-matched direction to the action below */}
           {getGoal()?.id === 'learn-trade' && (
             <PromptCard type="signal">
               Your goal: 🔧 Learn a Trade. Every route below pays you while
@@ -307,7 +250,7 @@ export default function EducationPage() {
           )}
           <div className="edu-trade-grid">
             {TRADE_ROUTES.map(t => (
-              <article key={t.id} className="edu-trade-card">
+              <GlassCard as="article" key={t.id} className="edu-trade-card">
                 <span className="edu-trade-card__emoji" aria-hidden="true">{t.emoji}</span>
                 <div className="edu-trade-card__body">
                   <h3 className="edu-trade-card__title">{t.trade}</h3>
@@ -322,27 +265,28 @@ export default function EducationPage() {
                     {t.link.label} ↗
                   </a>
                 </div>
-              </article>
+              </GlassCard>
             ))}
           </div>
           <div className="edu-enrol-steps">
             <h3 className="edu-enrol-steps__title">How to enrol at college</h3>
             <ol className="edu-enrol-steps__list">
-              <li>Find your local college and check open day dates (above).</li>
-              <li>Apply online via the college site — usually open from autumn.</li>
+              <li>Find your local college and check open-day dates (above).</li>
+              <li>Apply online via the college site, usually open from autumn.</li>
               <li>Bring your GCSE results to enrolment in late August.</li>
-              <li>Not got the grades? Ask about resits and Level 2 routes — they'll help you find a place.</li>
+              <li>Not got the grades? Ask about resits and Level 2 routes. They will help you find a place.</li>
             </ol>
           </div>
-        </Section>
+        </FloatingSection>
 
-        <Section id="events" title="Job Fairs & Careers Events">
-          <p className="edu-section__desc">
-            Upcoming events near you — job fairs, recruitment days, and careers talks.
-            Free to attend unless stated otherwise.
-          </p>
-          <EventsList events={jobEvents} userCoords={userCoords ?? DEFAULT_COORDS} />
-        </Section>
+        <FloatingSection
+          id="events"
+          eyebrow="Get out there"
+          title="Job fairs and careers events"
+          intro="Upcoming job fairs and careers events near you. Free to attend unless stated otherwise."
+        >
+          <EventsList town={town} />
+        </FloatingSection>
       </div>
     </SiteLayout>
   )

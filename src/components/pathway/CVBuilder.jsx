@@ -1,5 +1,5 @@
 /**
- * AICVBuilder.jsx
+ * CVBuilder.jsx
  *
  * HOW THE API CALL WORKS
  * ─────────────────────────────────────────────────────────────────────────────
@@ -14,7 +14,7 @@
  * HOW TO PLUG IN
  * • Create a .env file in the project root:
  *     VITE_ANTHROPIC_API_KEY=sk-ant-...
- * • Run `npm run dev` — the key is injected at build time.
+ * • Run `npm run dev`, the key is injected at build time.
  */
 
 import { useState, useEffect, useRef } from 'react'
@@ -62,9 +62,9 @@ Current Club: ${f.currentClub || 'Not specified'}
 Previous Clubs: ${f.previousClubs || 'None listed'}
 
 KEY STATISTICS:
-Appearances: ${f.appearances || '—'}
-Goals: ${f.goals || '—'}
-Assists: ${f.assists || '—'}${isGK || f.cleanSheets ? `\nClean Sheets: ${f.cleanSheets || '—'}` : ''}
+Appearances: ${f.appearances || ', '}
+Goals: ${f.goals || ', '}
+Assists: ${f.assists || ', '}${isGK || f.cleanSheets ? `\nClean Sheets: ${f.cleanSheets || ', '}` : ''}
 
 ACHIEVEMENTS & HONOURS:
 ${f.achievements || 'None listed'}
@@ -72,24 +72,24 @@ ${f.achievements || 'None listed'}
 PLAYER'S OWN WORDS:
 "${f.bio || 'Not provided'}"
 
-Format the CV EXACTLY as follows — use plain text, no markdown symbols:
+Format the CV EXACTLY as follows, use plain text, no markdown symbols:
 
 ═══════════════════════════════════════════════════════════
-${(f.name || 'PLAYER NAME').toUpperCase()} — FOOTBALL CV
+${(f.name || 'PLAYER NAME').toUpperCase()}, FOOTBALL CV
 ${(f.positions[0] || 'Position').toUpperCase()} | Preferred Foot: ${f.preferredFoot} | Height: ${f.height || 'N/A'}
 ═══════════════════════════════════════════════════════════
 
 PROFILE SUMMARY
-[3–4 compelling sentences. Sell the player's style, key strengths, and ambition. Mention specific technical or physical attributes implied by their position and stats.]
+[3 to 4 compelling sentences. Sell the player's style, key strengths, and ambition. Mention specific technical or physical attributes implied by their position and stats.]
 
 PLAYING ATTRIBUTES
-• [List 7–9 key playing attributes as bullet points relevant to their position(s)]
+• [List 7 to 9 key playing attributes as bullet points relevant to their position(s)]
 
 CAREER HISTORY
 [List each club from most recent to oldest. One or two sentences per club describing their contribution, role, and development.]
 
 KEY STATISTICS
-[Formatted stats — appearances, goals, assists${isGK ? ', clean sheets' : ''}. Add any inferred context.]
+[Formatted stats, appearances, goals, assists${isGK ? ', clean sheets' : ''}. Add any inferred context.]
 
 ACHIEVEMENTS & HONOURS
 [Bullet list based on the achievements provided. If none, suggest likely milestones for their level.]
@@ -183,8 +183,8 @@ function CVOutput({ cv, onRegenerate, loading }) {
 const draftHasContent = (d) =>
   Boolean(d && (d.name || d.currentClub || (d.positions && d.positions.length)))
 
-export default function AICVBuilder() {
-  /* Fogg: facilitator — answers auto-restore; nobody types twice */
+export default function CVBuilder() {
+  /* Fogg: facilitator, answers auto-restore; nobody types twice */
   const [form, setForm] = useState(() => ({ ...INITIAL_FORM, ...storage.get('cv-draft', {}) }))
   const [cv, setCV]             = useState('')
   const [loading, setLoading]   = useState(false)
@@ -193,7 +193,7 @@ export default function AICVBuilder() {
   const [restored] = useState(() => draftHasContent(storage.get('cv-draft', null)))
   const startedRef = useRef(restored)
 
-  // Draft auto-saves on every change — work is never lost, so no scary
+  // Draft auto-saves on every change, work is never lost, so no scary
   // warning is needed for the form itself. /* No dark patterns: protect, don't trap */
   useEffect(() => {
     storage.set('cv-draft', form)
@@ -203,7 +203,7 @@ export default function AICVBuilder() {
     }
   }, [form])
 
-  // A generation in flight WOULD be lost on leave — honest guard, only then.
+  // A generation in flight WOULD be lost on leave, honest guard, only then.
   useUnsavedGuard(loading)
 
   const set = key => e => setForm(f => ({ ...f, [key]: e.target.value }))
@@ -213,7 +213,7 @@ export default function AICVBuilder() {
 
   const validate = () => {
     if (!form.name.trim())         return 'Please enter your name.'
-    if (!form.age || +form.age < 14 || +form.age > 40) return 'Please enter a valid age (14–40).'
+    if (!form.age || +form.age < 14 || +form.age > 40) return 'Please enter a valid age (14 to 40).'
     if (form.positions.length === 0) return 'Please select at least one position.'
     if (!form.currentClub.trim())  return 'Please enter your current or most recent club.'
     return null
@@ -229,7 +229,7 @@ export default function AICVBuilder() {
     try {
       const result = await generateCV(form)
       setCV(result)
-      /* Norman: behavioural — milestone confirmed the moment it happens */
+      /* Norman: behavioural, milestone confirmed the moment it happens */
       storage.set('cv-done', true)
       notifyProgress()
       hapticPulse()
@@ -237,9 +237,9 @@ export default function AICVBuilder() {
       if (ex.message === 'NO_KEY') {
         setError('No API key found. Add VITE_ANTHROPIC_API_KEY to your .env file to enable the CV builder.')
       } else {
-        /* Emotional design: frustration absorbed — fix stated, no blame,
+        /* Emotional design: frustration absorbed, fix stated, no blame,
            input preserved (it's auto-saved). */
-        setError(`Something went wrong: ${ex.message}. Your answers are saved — please try again.`)
+        setError(`Something went wrong: ${ex.message}. Your answers are saved, please try again.`)
       }
       setSubmitted(false)
     } finally {
@@ -262,10 +262,10 @@ export default function AICVBuilder() {
 
   return (
     <div className="cv-builder">
-      {/* Fogg: facilitator — returning users see their work is already here */}
+      {/* Fogg: facilitator, returning users see their work is already here */}
       {restored && !cv && (
         <PromptCard type="facilitator">
-          Welcome back. Your answers are saved — check them and carry on.
+          Welcome back. Your answers are saved, check them and carry on.
         </PromptCard>
       )}
 
@@ -333,7 +333,7 @@ export default function AICVBuilder() {
           <div className="form-group">
             <label className="form-label" htmlFor="cv-prev-clubs">Previous clubs</label>
             <textarea id="cv-prev-clubs" className="form-input form-textarea" value={form.previousClubs}
-              onChange={set('previousClubs')} placeholder="List each club on a new line, e.g.&#10;Radcliffe FC (2023–24)&#10;Bamber Bridge FC (2022–23)" rows={3} />
+              onChange={set('previousClubs')} placeholder="List each club on a new line, e.g.&#10;Radcliffe FC (2023 to 24)&#10;Bamber Bridge FC (2022 to 23)" rows={3} />
           </div>
 
           {/* Stats */}
@@ -414,10 +414,10 @@ export default function AICVBuilder() {
             ) : cv ? (
               <>
                 <CVOutput cv={cv} onRegenerate={handleRegenerate} loading={loading} />
-                {/* Fogg: spark + behaviour chaining — completion offers the
+                {/* Fogg: spark + behaviour chaining, completion offers the
                     natural next step while the win is fresh. */}
                 <PromptCard type="spark" ctaLabel="Find clubs recruiting now" href="#clubs" live>
-                  CV done — great work. Clubs above are recruiting right now.
+                  CV done, great work. Clubs above are recruiting right now.
                 </PromptCard>
               </>
             ) : null}

@@ -1,5 +1,5 @@
 /**
- * recoveryData.js — Seed data + typed shapes for the Recovery page.
+ * recoveryData.js, Seed data + typed shapes for the Recovery page.
  *
  * ─── REAL API INTEGRATION ────────────────────────────────────────────────────
  * Medical locations → NHS Service Search API
@@ -44,9 +44,9 @@
  *
  * @typedef {Object} CheckIn          - daily wellbeing check-in
  * @property {string} date            - YYYY-MM-DD
- * @property {number} mood            - 1–5
- * @property {number} energy          - 1–5
- * @property {number} sleepQuality    - 1–5
+ * @property {number} mood            - 1 to 5
+ * @property {number} energy          - 1 to 5
+ * @property {number} sleepQuality    - 1 to 5
  *
  * @typedef {Object} Appointment
  * @property {string} id
@@ -79,7 +79,7 @@ export const medicalLocations = [
     address: '12 Bridge St, Manchester, M3 2AB',
     postcode: 'M3 2AB',
     distanceMiles: 1.2,
-    openingHours: 'Mon – Sun  08:00 – 20:00',
+    openingHours: 'Mon, Sun  08:00 to 20:00',
     phone: '0161 276 1000',
     website: 'https://www.nhs.uk',
   },
@@ -90,7 +90,7 @@ export const medicalLocations = [
     address: '34 Oldham St, Manchester, M1 1JN',
     postcode: 'M1 1JN',
     distanceMiles: 1.8,
-    openingHours: 'Mon – Sat  07:00 – 21:00, Sun  09:00 – 17:00',
+    openingHours: 'Mon, Sat  07:00 to 21:00, Sun  09:00 to 17:00',
     phone: '0161 355 8500',
     website: 'https://www.nhs.uk',
   },
@@ -101,7 +101,7 @@ export const medicalLocations = [
     address: 'Stott Lane, Salford, M6 8HD',
     postcode: 'M6 8HD',
     distanceMiles: 3.4,
-    openingHours: 'Mon – Sun  08:00 – 22:00',
+    openingHours: 'Mon, Sun  08:00 to 22:00',
     phone: '0161 206 4520',
     website: 'https://www.nhs.uk',
   },
@@ -112,7 +112,7 @@ export const medicalLocations = [
     address: '45 Victoria Rd, Manchester, M14 5QF',
     postcode: 'M14 5QF',
     distanceMiles: 0.8,
-    openingHours: 'Mon – Fri  08:00 – 18:30',
+    openingHours: 'Mon, Fri  08:00 to 18:30',
     phone: '0161 224 1892',
     website: 'https://www.nhs.uk',
   },
@@ -123,7 +123,7 @@ export const medicalLocations = [
     address: '2 Ladybarn Rd, Manchester, M14 6XR',
     postcode: 'M14 6XR',
     distanceMiles: 1.5,
-    openingHours: 'Mon – Fri  08:30 – 18:00, Thu  08:30 – 13:00',
+    openingHours: 'Mon, Fri  08:30 to 18:00, Thu  08:30 to 13:00',
     phone: '0161 248 0800',
     website: 'https://www.nhs.uk',
   },
@@ -134,7 +134,7 @@ export const medicalLocations = [
     address: '88 Claremont Rd, Manchester, M14 4RH',
     postcode: 'M14 4RH',
     distanceMiles: 2.1,
-    openingHours: 'Mon – Fri  08:00 – 17:30',
+    openingHours: 'Mon, Fri  08:00 to 17:30',
     phone: '0161 226 4020',
     website: 'https://www.nhs.uk',
   },
@@ -145,7 +145,7 @@ export const medicalLocations = [
     address: '1 Nicolas Rd, Chorlton, M21 9NJ',
     postcode: 'M21 9NJ',
     distanceMiles: 4.0,
-    openingHours: 'Mon – Fri  08:00 – 20:00, Sat – Sun  09:00 – 17:00',
+    openingHours: 'Mon, Fri  08:00 to 20:00, Sat, Sun  09:00 to 17:00',
     phone: '0161 476 0044',
     website: 'https://www.nhs.uk',
   },
@@ -156,15 +156,15 @@ export const medicalLocations = [
     address: '8 Plymouth Grove W, Manchester, M13 0AG',
     postcode: 'M13 0AG',
     distanceMiles: 1.1,
-    openingHours: 'Mon – Fri  08:00 – 18:00',
+    openingHours: 'Mon, Fri  08:00 to 18:00',
     phone: '0161 273 8241',
     website: 'https://www.nhs.uk',
   },
 ]
 
 // ─── Gyms ─────────────────────────────────────────────────────────────────────
-// valueBand is derived in code from monthlyPrice — not stored in data.
-// Bands: < £20 → 'Amazing value' | £20–£30 → 'Fair' | > £30 → 'Pricey'
+// valueBand is derived in code from monthlyPrice, not stored in data.
+// Bands: < £20 → 'Amazing value' | £20, £30 → 'Fair' | > £30 → 'Pricey'
 /** @type {Gym[]} */
 export const gyms = [
   {
@@ -172,7 +172,7 @@ export const gyms = [
     name: 'PureGym Manchester City Centre',
     location: 'City Centre',
     distanceMiles: 0.9,
-    openingHours: 'Mon – Sun  24 hours',
+    openingHours: 'Mon, Sun  24 hours',
     monthlyPrice: 21.99,
     features: ['Weights', 'Cardio', 'Classes', 'Free Parking'],
   },
@@ -181,7 +181,7 @@ export const gyms = [
     name: 'The Fitness Factory',
     location: 'Ancoats',
     distanceMiles: 1.4,
-    openingHours: 'Mon – Fri  06:00 – 22:00, Sat – Sun  08:00 – 20:00',
+    openingHours: 'Mon, Fri  06:00 to 22:00, Sat, Sun  08:00 to 20:00',
     monthlyPrice: 16.99,
     features: ['Weights', 'Cardio', 'Boxing Ring'],
   },
@@ -190,7 +190,7 @@ export const gyms = [
     name: 'Aqua Spa & Leisure Club',
     location: 'Spinningfields',
     distanceMiles: 1.7,
-    openingHours: 'Mon – Fri  06:30 – 21:30, Sat – Sun  08:00 – 19:00',
+    openingHours: 'Mon, Fri  06:30 to 21:30, Sat, Sun  08:00 to 19:00',
     monthlyPrice: 49.99,
     features: ['Weights', 'Pool', 'Spa', 'Sauna', 'Classes', 'Steam Room'],
     priceNote: 'Higher price reflects pool, spa, sauna, and steam room facilities.',
@@ -200,7 +200,7 @@ export const gyms = [
     name: "JD Gyms Salford",
     location: 'Salford',
     distanceMiles: 3.1,
-    openingHours: 'Mon – Fri  05:30 – 23:00, Sat – Sun  07:00 – 21:00',
+    openingHours: 'Mon, Fri  05:30 to 23:00, Sat, Sun  07:00 to 21:00',
     monthlyPrice: 24.99,
     features: ['Weights', 'Cardio', 'Classes', 'Sauna'],
   },
@@ -209,7 +209,7 @@ export const gyms = [
     name: 'Snap Fitness Northern Quarter',
     location: 'Northern Quarter',
     distanceMiles: 1.6,
-    openingHours: 'Mon – Sun  24 hours',
+    openingHours: 'Mon, Sun  24 hours',
     monthlyPrice: 29.99,
     features: ['Weights', 'Cardio', 'Free Parking'],
   },
@@ -218,7 +218,7 @@ export const gyms = [
     name: 'The Wellbeing Studio',
     location: 'Didsbury',
     distanceMiles: 4.2,
-    openingHours: 'Mon – Fri  07:00 – 20:00, Sat  08:00 – 16:00',
+    openingHours: 'Mon, Fri  07:00 to 20:00, Sat  08:00 to 16:00',
     monthlyPrice: 14.99,
     features: ['Classes', 'Yoga', 'Pilates', 'Meditation'],
   },
@@ -227,7 +227,7 @@ export const gyms = [
     name: 'Manchester Climbing Centre',
     location: 'Castlefield',
     distanceMiles: 2.0,
-    openingHours: 'Mon – Fri  12:00 – 22:00, Sat – Sun  10:00 – 20:00',
+    openingHours: 'Mon, Fri  12:00 to 22:00, Sat, Sun  10:00 to 20:00',
     monthlyPrice: 37.00,
     features: ['Climbing Walls', 'Bouldering', 'Weights', 'Yoga'],
     priceNote: 'Higher price includes unlimited climbing, bouldering, and all courses.',
@@ -237,7 +237,7 @@ export const gyms = [
     name: 'Everyone Active Moss Side',
     location: 'Moss Side',
     distanceMiles: 1.9,
-    openingHours: 'Mon – Fri  06:30 – 22:00, Sat – Sun  08:00 – 18:00',
+    openingHours: 'Mon, Fri  06:30 to 22:00, Sat, Sun  08:00 to 18:00',
     monthlyPrice: 18.50,
     features: ['Pool', 'Weights', 'Cardio', 'Classes'],
   },
@@ -246,7 +246,7 @@ export const gyms = [
     name: 'Ultimate Performance Gym',
     location: 'Deansgate',
     distanceMiles: 1.3,
-    openingHours: 'Mon – Fri  06:00 – 22:00, Sat  07:00 – 18:00',
+    openingHours: 'Mon, Fri  06:00 to 22:00, Sat  07:00 to 18:00',
     monthlyPrice: 89.00,
     features: ['Personal Training', 'Weights', 'Nutrition Coaching', 'Body Scanning'],
     priceNote: 'Premium price includes dedicated personal training and nutrition support.',
@@ -256,7 +256,7 @@ export const gyms = [
     name: 'Local Leisure Hulme',
     location: 'Hulme',
     distanceMiles: 1.1,
-    openingHours: 'Mon – Fri  07:00 – 21:00, Sat – Sun  09:00 – 17:00',
+    openingHours: 'Mon, Fri  07:00 to 21:00, Sat, Sun  09:00 to 17:00',
     monthlyPrice: 13.50,
     features: ['Pool', 'Weights', 'Cardio'],
   },
@@ -282,7 +282,7 @@ export const DEFAULT_CHECKLIST = {
   ],
   reflection: [
     { id: 'cr1', label: 'Write 3 things you are grateful for' },
-    { id: 'cr2', label: 'Review today\'s goals — what went well?' },
+    { id: 'cr2', label: 'Review today\'s goals, what went well?' },
     { id: 'cr3', label: '5-minute mindfulness or breathing session' },
   ],
 }

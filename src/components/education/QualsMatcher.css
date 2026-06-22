@@ -1,4 +1,4 @@
-/* QualsMatcher.css — "What Can I Study?" form + matched-opportunity cards.
+/* QualsMatcher.css, "What Can I Study?" form + matched-opportunity cards.
    Uses the site's warm amber/cream tokens from App.css. Scoped under .qm-*. */
 
 .qm { display: flex; flex-direction: column; gap: 2rem; }

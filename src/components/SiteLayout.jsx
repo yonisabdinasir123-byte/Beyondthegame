@@ -2,7 +2,7 @@
  * SiteLayout.jsx
  * Shared chrome (header + footer + auth modals) for inner pages so they match
  * the main Beyond the Game homepage. Reuses the exact Navbar, FooterSection and
- * modal components from App.jsx — single source of truth, no duplication.
+ * modal components from App.jsx, single source of truth, no duplication.
  *
  * Usage:
  *   <SiteLayout>
@@ -40,7 +40,7 @@ export default function SiteLayout({ children }) {
       <FooterSection onLogin={openLogin} onSignup={openSignup} />
       <BackToTop />
 
-      {/* Auth modals — same behaviour as the homepage */}
+      {/* Auth modals, same behaviour as the homepage */}
       <LoginModal
         isOpen={modal === 'login'}
         onClose={closeModal}

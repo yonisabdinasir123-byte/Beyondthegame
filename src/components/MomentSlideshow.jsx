@@ -1,5 +1,5 @@
 /**
- * MomentSlideshow.jsx — "Moments of the Game".
+ * MomentSlideshow.jsx, "Moments of the Game".
  *
  * WCAG 2.2.2 compliant auto-advancing slideshow:
  *  - 6s auto-advance with a VISIBLE pause control
@@ -38,7 +38,7 @@ const SLIDES = [
     ground: 'radial-gradient(ellipse at 50% 80%, #1a3a20 0%, #0f1e0f 60%, #091409 100%)',
   },
   {
-    caption: 'Beyond the game — the story continues.',
+    caption: 'Beyond the game, the story continues.',
     ground: 'linear-gradient(125deg, #091409 0%, #1c3320 50%, #2c1200 100%)',
   },
 ]
@@ -56,7 +56,7 @@ export default function MomentSlideshow() {
   const touchX = useRef(null)
 
   const count = SLIDES.length
-  const [announce, setAnnounce] = useState('') // manual navigation only — autoplay stays silent
+  const [announce, setAnnounce] = useState('') // manual navigation only, autoplay stays silent
   const go = useCallback((dir) => setIndex(i => (i + dir + count) % count), [count])
   const goManual = useCallback((dir) => {
     setIndex(i => {
@@ -70,7 +70,7 @@ export default function MomentSlideshow() {
     setAnnounce(`Slide ${i + 1} of ${count}: ${SLIDES[i].caption}`)
   }, [count])
 
-  // Auto-advance — suspended while paused, hovered, or holding focus
+  // Auto-advance, suspended while paused, hovered, or holding focus
   useEffect(() => {
     if (paused || hovering || focused) return
     const t = setInterval(() => go(1), ADVANCE_MS)
@@ -83,7 +83,7 @@ export default function MomentSlideshow() {
     if (e.key === ' ' && e.target === e.currentTarget) { e.preventDefault(); setPaused(p => !p) }
   }
 
-  // Swipe — gesture is an enhancement; buttons remain the fallback
+  // Swipe, gesture is an enhancement; buttons remain the fallback
   const onTouchStart = (e) => { touchX.current = e.touches[0].clientX }
   const onTouchEnd = (e) => {
     if (touchX.current == null) return
@@ -97,7 +97,7 @@ export default function MomentSlideshow() {
       <div className="section__inner">
         <div className="section__header">
           <span className="section__eyebrow">Moments of the Game</span>
-          {/* Muted treatment — never competes with the page focal point */}
+          {/* Muted treatment, never competes with the page focal point */}
           <h2 className="section__title" id="moments-heading">
             The love of the game lives on
           </h2>

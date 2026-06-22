@@ -7,7 +7,7 @@ export default function Disclaimer() {
     >
       <span className="rec-disclaimer__icon" aria-hidden="true">ℹ️</span>
       <div className="rec-disclaimer__text">
-        <strong>This page provides general signposting only</strong> — it is not a
+        <strong>This page provides general signposting only</strong>, it is not a
         substitute for professional medical advice. If you have an urgent health
         concern, call{' '}
         <a href="tel:111" className="rec-disclaimer__link">

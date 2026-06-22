@@ -1,6 +1,8 @@
 /**
  * SupportPage.css
- * Light amber/cream palette — matches the rest of the site.
+ * The page floats over the global animated background. Major areas are rendered
+ * as FloatingSection glass panels, and the cards inside use the shared glass
+ * primitives. Text stays dark on light glass for AA contrast.
  */
 
 /* ═══════════════════════════════════════════════════════════════
@@ -8,50 +10,10 @@
    ═══════════════════════════════════════════════════════════════ */
 
 .support-page {
-  background: var(--bg, #FFFBF5);
-  color: var(--text-primary, #1C1009);
+  color: var(--text-primary);
   font-family: var(--font-body);
   min-height: 100vh;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   SUB-NAV
-   ═══════════════════════════════════════════════════════════════ */
-
-.support-section-nav {
-  position: sticky;
-  top: var(--header-height, 64px);
-  z-index: 100;
-  background: var(--bg, #FFFBF5);
-  border-bottom: 2px solid var(--amber-100, #FEF3C7);
-  box-shadow: 0 2px 8px rgba(28, 16, 9, 0.07);
-  display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.support-section-nav::-webkit-scrollbar { display: none; }
-
-.support-nav-btn {
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  padding: 0.875rem 1.125rem;
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--text-muted, #78350F);
-  cursor: pointer;
-  transition: color 0.15s, box-shadow 0.15s;
-  white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  min-height: 48px;
-}
-.support-nav-btn:hover { color: var(--amber-700, #B45309); }
-.support-nav-btn.active {
-  color: var(--amber-800, #92400E);
-  border-bottom-color: var(--amber-600, #D97706);
+  padding-bottom: clamp(2rem, 6vw, 4rem);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -88,64 +50,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SECTIONS
-   ═══════════════════════════════════════════════════════════════ */
-
-.support-section {
-  padding: 3.5rem 1.25rem;
-  border-bottom: 1px solid var(--amber-100, #FEF3C7);
-  scroll-margin-top: 128px;
-}
-
-.support-section:nth-child(even) {
-  background: var(--bg-alt, #FEF9F0);
-}
-
-.support-section__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.support-section__header {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.support-section__number {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--amber-600, #D97706);
-  color: #fff;
-  font-weight: 800;
-  font-size: 1.25rem;
-  flex-shrink: 0;
-}
-
-.support-section__title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  color: var(--text-primary, #1C1009);
-  font-weight: 800;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.support-section__intro {
-  font-size: 1rem;
-  color: var(--text-secondary, #44200A);
-  line-height: 1.7;
-  max-width: 680px;
-  margin-bottom: 2rem;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   SUPPORT CARDS (mini)
+   SUPPORT CARDS (mini), glass tiles on the frosted section
    ═══════════════════════════════════════════════════════════════ */
 
 .support-cards-grid {
@@ -157,21 +62,9 @@
 }
 
 .support-card-minimal {
-  background: var(--bg-card, #FFFFFF);
-  border: 1px solid var(--amber-100, #FEF3C7);
-  border-radius: 12px;
-  padding: 1.375rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  box-shadow: var(--sh-sm, 0 1px 3px rgba(28,16,9,.10));
-  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
-}
-
-.support-card-minimal:hover {
-  box-shadow: var(--sh-md, 0 4px 12px rgba(28,16,9,.12));
-  border-color: var(--amber-300, #FCD34D);
-  transform: translateY(-2px);
 }
 
 .support-card-minimal__icon {
@@ -184,27 +77,27 @@
   font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--text-primary, #1C1009);
-  margin: 0;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
   line-height: 1.25;
 }
 
 .support-card-minimal__desc {
-  font-size: 0.875rem;
-  color: var(--text-secondary, #44200A);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
 }
 
 .support-card-minimal__detail {
   font-size: 0.8rem;
-  color: var(--text-muted, #78350F);
-  margin: 0;
+  color: var(--text-muted);
+  margin: 0.5rem 0 0;
   font-style: italic;
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RESOURCE CARDS
+   RESOURCE CARDS, glass cards with dark text (AA)
    ═══════════════════════════════════════════════════════════════ */
 
 .resources-grid {
@@ -214,22 +107,14 @@
   align-items: stretch;
 }
 
+.resources-grid--spaced {
+  margin-top: 3rem;
+}
+
 .resource-card {
-  background: var(--bg-card, #FFFFFF);
-  border: 1px solid var(--amber-200, #FDE68A);
-  border-radius: 12px;
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: var(--sh-sm, 0 1px 3px rgba(28,16,9,.10));
-  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
-}
-
-.resource-card:hover {
-  box-shadow: var(--sh-md, 0 4px 12px rgba(28,16,9,.12));
-  border-color: var(--amber-400, #FBBF24);
-  transform: translateY(-2px);
 }
 
 .resource-card__header {
@@ -241,7 +126,7 @@
 .resource-card__name {
   font-family: var(--font-heading);
   font-size: 1.1875rem;
-  color: var(--text-primary, #1C1009);
+  color: var(--text-primary);
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
@@ -249,7 +134,7 @@
 
 .resource-card__desc {
   font-size: 0.9rem;
-  color: var(--text-secondary, #44200A);
+  color: var(--text-secondary);
   line-height: 1.65;
   margin: 0;
 }
@@ -261,17 +146,23 @@
 }
 
 .resource-card__link {
-  font-size: 0.875rem;
-  color: var(--amber-700, #B45309);
+  font-size: 0.9rem;
+  color: var(--color-primary-strong, #0E6E62);
   text-decoration: none;
   font-weight: 700;
-  transition: color 0.2s;
+  transition: color var(--dur-std, 0.2s);
   word-break: break-word;
 }
 
 .resource-card__link:hover {
-  color: var(--amber-800, #92400E);
+  color: var(--color-primary, #12897A);
   text-decoration: underline;
+}
+
+.resource-card__link:focus-visible {
+  outline: 3px solid var(--color-primary, #12897A);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm, 6px);
 }
 
 .resource-card__link--phone {
@@ -283,26 +174,31 @@
   margin-top: auto;
   display: inline-block;
   padding: 0.625rem 1.25rem;
-  background: var(--amber-600, #D97706);
+  background: var(--color-primary, #12897A);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-pill, 999px);
   font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 800;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+  transition: background var(--dur-std, 0.2s), transform var(--dur-std, 0.15s), box-shadow var(--dur-std, 0.15s);
 }
 
 .resource-card__cta:hover {
-  background: var(--amber-700, #B45309);
+  background: var(--color-primary-strong, #0E6E62);
   transform: translateY(-2px);
-  box-shadow: var(--sh-sm);
+  box-shadow: var(--glass-shadow);
 }
 
 .resource-card__cta:active {
   transform: translateY(0);
+}
+
+.resource-card__cta:focus-visible {
+  outline: 3px solid var(--color-primary, #12897A);
+  outline-offset: 3px;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -313,30 +209,20 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
   align-items: stretch;
 }
 
 .leadership-sub {
-  background: var(--bg-card, #FFFFFF);
-  border: 1px solid var(--amber-200, #FDE68A);
-  border-radius: 12px;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  box-shadow: var(--sh-sm);
-  transition: box-shadow 0.2s, border-color 0.2s;
-}
-.leadership-sub:hover {
-  box-shadow: var(--sh-md);
-  border-color: var(--amber-400, #FBBF24);
 }
 
 .leadership-sub__title {
   font-family: var(--font-heading);
   font-size: 1.375rem;
-  color: var(--text-primary, #1C1009);
+  color: var(--text-primary);
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
@@ -344,7 +230,7 @@
 
 .leadership-sub__desc {
   font-size: 0.95rem;
-  color: var(--text-secondary, #44200A);
+  color: var(--text-secondary);
   line-height: 1.7;
   margin: 0;
 }
@@ -352,24 +238,29 @@
 .leadership-cta {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: var(--amber-50, #FFFBEB);
-  color: var(--amber-800, #92400E);
-  border: 1.5px solid var(--amber-400, #FBBF24);
-  border-radius: 8px;
+  background: var(--teal-50, #E6F4F1);
+  color: var(--color-primary-strong, #0E6E62);
+  border: 1.5px solid var(--color-primary, #12897A);
+  border-radius: var(--radius-pill, 999px);
   font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: background var(--dur-std, 0.2s), color var(--dur-std, 0.2s), transform var(--dur-std, 0.2s);
   align-self: flex-start;
   margin-top: auto;
 }
 
 .leadership-cta:hover {
-  background: var(--amber-600, #D97706);
-  border-color: var(--amber-600, #D97706);
+  background: var(--color-primary, #12897A);
+  border-color: var(--color-primary, #12897A);
   color: #fff;
   transform: translateY(-2px);
+}
+
+.leadership-cta:focus-visible {
+  outline: 3px solid var(--color-primary, #12897A);
+  outline-offset: 3px;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -377,21 +268,8 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  .support-section {
-    padding: 2.5rem 1rem;
-  }
-
   .support-hero {
     padding: calc(var(--header-height) + 1.25rem) 1rem 2.5rem;
-  }
-
-  .support-section__header {
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .support-section__title {
-    font-size: clamp(1.5rem, 4vw, 2rem);
   }
 
   .support-cards-grid,
@@ -401,21 +279,13 @@
     gap: 1rem;
   }
 
-  .leadership-sub {
-    padding: 1.5rem;
-  }
-
-  .resource-card,
-  .support-card-minimal {
-    padding: 1.125rem;
+  .resource-card__link {
+    display: block;
+    padding: 0.5rem 0;
   }
 }
 
 @media (max-width: 480px) {
-  .support-section {
-    padding: 2rem 0.75rem;
-  }
-
   .support-hero {
     padding: calc(var(--header-height) + 1rem) 1rem 2rem;
   }
@@ -426,15 +296,6 @@
 
   .support-hero__sub {
     font-size: 0.95rem;
-  }
-
-  .support-section__header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .support-section__intro {
-    font-size: 0.9375rem;
   }
 
   .resource-card__cta {
@@ -456,9 +317,10 @@
   }
 }
 
-@media (max-width: 768px) {
-  .resource-card__link {
-    display: block;
-    padding: 0.5rem 0;
+/* Respect reduced motion for any card transitions */
+@media (prefers-reduced-motion: reduce) {
+  .resource-card__cta,
+  .leadership-cta {
+    transition: none;
   }
 }

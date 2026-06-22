@@ -4,14 +4,13 @@ import { GoalPicker } from './components/GoalSystem.jsx'
 import PromptCard from './components/PromptCard.jsx'
 import StoryCarousel from './components/StoryCarousel.jsx'
 import SupportRing from './components/SupportRing.jsx'
-import MomentSlideshow from './components/MomentSlideshow.jsx'
 import FloatingNav from './components/FloatingNav.jsx'
 import { useApp } from './context/AppContext.jsx'
 import { getGoal, PROGRESS_EVENT } from './utils/goal'
 import './App.css'
 
 // ─────────────────────────────────────────────────────────────
-// Magnetic CTA hook — button eases ≤6px toward the cursor.
+// Magnetic CTA hook, button eases ≤6px toward the cursor.
 // Desktop pointer only; a graceful no-op on touch and under
 // reduced motion. Shared by the page heroes.
 // ─────────────────────────────────────────────────────────────
@@ -47,7 +46,7 @@ export function useMagnetic() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Pointer spotlight hook — a soft amber glow follows the cursor
+// Pointer spotlight hook, a soft amber glow follows the cursor
 // on dark macro heroes. Sets CSS vars only; CSS gates the effect
 // to (hover:hover) and (pointer:fine) and hides it under
 // reduced motion.
@@ -111,18 +110,18 @@ const AGE_PATHWAYS = {
   '16': {
     label: '16',
     caption: 'left the academy',
-    title: 'You left at 16 — and that took real courage',
-    text: `Being released this young can feel like the ground's been pulled from under you — every early morning, every sacrifice. It wasn't for nothing. You're 16 with more resilience than most adults, and thousands of players have been exactly where you are and gone on to build incredible lives.`,
+    title: 'You left at 16, and that took real courage',
+    text: `Being released this young can feel like the ground has been pulled from under you. Every early morning, every sacrifice. It wasn't for nothing. You're 16 with more resilience than most adults, and thousands of players have been exactly where you are and gone on to build incredible lives.`,
     resources: [
       {
         icon: '📚',
         title: 'Back to College',
-        text: 'GCSEs, A-levels, BTECs, T-Levels — we help you find the right course and apply with your academy experience as a real advantage.',
+        text: 'GCSEs, A-levels, BTECs and T-Levels. We help you find the right course and apply with your academy experience as a real advantage.',
       },
       {
         icon: '💬',
         title: 'Talk to a Peer',
-        text: 'Connect with other 16–18 year olds who\'ve been through academy release. No professionals, no jargon — just people who get it.',
+        text: 'Connect with other 16 to 18 year olds who\'ve been through academy release. No professionals, no jargon, just people who get it.',
       },
       {
         icon: '🧠',
@@ -134,13 +133,13 @@ const AGE_PATHWAYS = {
   '18': {
     label: '18',
     caption: 'left the academy',
-    title: 'Leaving at 18 — your path is still wide open',
-    text: `You've spent your teenage years training, sacrificing, believing — and now you're at a crossroads. It's okay to feel lost, angry, or sad about what you expected your life to look like. There's a lot more to you than football, even if it doesn't feel that way right now.`,
+    title: 'Leaving at 18, your path is still wide open',
+    text: `You've spent your teenage years training, sacrificing and believing, and now you're at a crossroads. It's okay to feel lost, angry, or sad about what you expected your life to look like. There's a lot more to you than football, even if it doesn't feel that way right now.`,
     resources: [
       {
         icon: '🎓',
         title: 'University & Higher Ed',
-        text: 'Sports science, coaching, physiotherapy, business — your academy background is a genuine asset on any UCAS or apprenticeship application.',
+        text: 'Sports science, coaching, physiotherapy or business. Your academy background is a genuine asset on any UCAS or apprenticeship application.',
       },
       {
         icon: '🔧',
@@ -158,12 +157,12 @@ const AGE_PATHWAYS = {
     label: '21+',
     caption: 'left the academy',
     title: 'Years of dedication deserve a real next chapter',
-    text: `You've given your early adult years to this game — and that took genuine sacrifice and belief. Those early mornings, team pressure, performing under stress: those aren't just football skills, they're exactly what employers and coaches look for. This is a transition, not an ending.`,
+    text: `You've given your early adult years to this game, and that took genuine sacrifice and belief. Those early mornings, team pressure, performing under stress: those aren't just football skills, they're exactly what employers and coaches look for. This is a transition, not an ending.`,
     resources: [
       {
         icon: '🏆',
         title: 'Coaching & Badges',
-        text: 'UEFA C, B, and A licences, grassroots coaching, academy roles — your playing experience is a massive head start. We\'ll help you get started.',
+        text: 'UEFA C, B, and A licences, grassroots coaching, academy roles. Your playing experience is a massive head start, and we\'ll help you get going.',
       },
       {
         icon: '💼',
@@ -253,7 +252,7 @@ const TESTIMONIALS = [
     initial: 'J',
   },
   {
-    text: `The financial guide changed everything — plain English, no jargon. Got me sorted in two weeks.`,
+    text: `The financial guide changed everything. Plain English, no jargon. Got me sorted in two weeks.`,
     name: 'Callum, 21',
     detail: 'Released aged 18 · League One academy',
     initial: 'C',
@@ -320,7 +319,7 @@ export function Navbar({ onLogin, onSignup }) {
     <header>
       <nav className="navbar" aria-label="Main navigation">
         <div className="navbar__inner">
-          <Link to="/" className="navbar__logo" aria-label="Beyond the Game — home">
+          <Link to="/" className="navbar__logo" aria-label="Beyond the Game home">
             <span className="navbar__logo-ball" aria-hidden="true">⚽</span>
             <span className="navbar__logo-text">Beyond the Game</span>
           </Link>
@@ -428,7 +427,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
   return (
     <section className="hero" aria-labelledby="hero-title" ref={spotRef}>
       <div className="hero__inner">
-        {/* Left zone: the thesis — copy + primary action */}
+        {/* Left zone: the thesis, copy + primary action */}
         <div className="hero__lead">
           <span className="hero__badge">
             <span className="hero__badge-dot" aria-hidden="true" />
@@ -440,13 +439,13 @@ function HeroSection({ onGetStarted, onFindPath }) {
           </h1>
 
           <p className="hero__subtitle">
-            Leaving the academy isn't the end of your story — it's the start of the
+            Leaving the academy isn't the end of your story. It's the start of the
             next one. Let's work out what comes next, together.
           </p>
 
           <div className="hero__ctas">
             <button type="button" className="hero__cta hero__cta--primary" onClick={onGetStarted} ref={magnetRef}>
-              Get started — it's free
+              Get started, it's free
             </button>
             <button type="button" className="hero__cta hero__cta--ghost" onClick={onFindPath}>
               Build my pathway
@@ -454,7 +453,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
           </div>
         </div>
 
-        {/* Right zone: the "team sheet" panel — release-stage entry point.
+        {/* Right zone: the "team sheet" panel, release-stage entry point.
             Fills the second column so nothing floats in empty space. */}
         <aside className="hero__panel" aria-label="Find guidance for your stage">
           <p className="hero__panel-q" id="hero-stage-label">When did you leave the academy?</p>
@@ -474,7 +473,7 @@ function HeroSection({ onGetStarted, onFindPath }) {
           </div>
           <p className="hero__panel-hint" aria-live="polite">
             {releaseStage
-              ? `Got it — we'll tailor what you see for leaving at ${releaseStage}.`
+              ? `Got it. We'll tailor what you see for leaving at ${releaseStage}.`
               : 'Pick a stage and the site adjusts to you. Change it anytime.'}
           </p>
           <button type="button" className="hero__panel-cta" onClick={onFindPath}>
@@ -494,31 +493,66 @@ function HeroSection({ onGetStarted, onFindPath }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Trust strip — hero body copy + stats, relocated below the fold
-// and demoted to muted tones so the hero owns the first viewport
+// Trust strip, a quiet, reassuring line below the hero.
+// Stats bar removed (task A); this now carries the welcome copy only.
 // ─────────────────────────────────────────────────────────────
 function TrustStrip() {
   return (
-    <section className="trust-strip" aria-label="Key facts about Beyond the Game">
+    <section className="trust-strip" aria-label="About Beyond the Game">
       <div className="trust-strip__inner">
         <p className="trust-strip__body">
-          Beyond the Game is a free, confidential support space built specifically for young
-          people who've left football academies in the UK. Whatever you're feeling right now —
-          we understand it, and we're here.
+          Beyond the Game is a free, confidential support space built for young
+          people who have left football academies in the UK. Whatever you are feeling
+          right now, we understand it, and we are here for you.
         </p>
-        <div className="trust-strip__stats">
-          <div className="trust-strip__stat">
-            <span className="trust-strip__stat-value">2,400+</span>
-            <span className="trust-strip__stat-label">young players supported</span>
-          </div>
-          <div className="trust-strip__stat">
-            <span className="trust-strip__stat-value">100%</span>
-            <span className="trust-strip__stat-label">free &amp; confidential</span>
-          </div>
-          <div className="trust-strip__stat">
-            <span className="trust-strip__stat-value">24 / 7</span>
-            <span className="trust-strip__stat-label">crisis line access</span>
-          </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────
+// Non-League to Pro, prominent home block (task A).
+// Leads its own zone lower down the page: a confident, glassy
+// feature reminding players that leaving an academy is not the
+// end of the route to professional football.
+// ─────────────────────────────────────────────────────────────
+const NON_LEAGUE_STEPS = [
+  { level: 'Step 5', note: 'Where Jake Tabor scored 127 goals in 91 games for Amersham Town.' },
+  { level: 'Step 2', note: 'Joshua Osude climbed here on his way to Forest Green Rovers.' },
+  { level: 'National League', note: 'One promotion from the EFL. Jamie Vardy played non-league at 23.' },
+  { level: 'EFL', note: 'Jake Tabor signed for Swindon Town in 2025, a five division leap.' },
+]
+
+function NonLeagueSection() {
+  return (
+    <section className="nonleague" id="non-league" aria-labelledby="nonleague-heading">
+      <div className="nonleague__inner glass glass--pad glass--glow-lime">
+        <div className="nonleague__head">
+          <span className="pl-eyebrow">The route up</span>
+          <h2 className="nonleague__title" id="nonleague-heading">
+            Non-League to Pro is a real route, not a fairy tale
+          </h2>
+          <p className="nonleague__lead">
+            The English pyramid has more than 24 levels, and players climb it every season.
+            Released does not mean finished. It means you take a different road to the same place.
+          </p>
+        </div>
+
+        <ol className="nonleague__ladder" aria-label="Steps up the football pyramid">
+          {NON_LEAGUE_STEPS.map((s, i) => (
+            <li key={s.level} className="nonleague__rung">
+              <span className="nonleague__rung-num" aria-hidden="true">{i + 1}</span>
+              <div>
+                <span className="nonleague__rung-level">{s.level}</span>
+                <span className="nonleague__rung-note">{s.note}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="nonleague__actions">
+          <Link to="/pathway" className="nonleague__cta">See the full pathway →</Link>
+          <Link to="/success-stories" className="nonleague__link">Read players who did it</Link>
         </div>
       </div>
     </section>
@@ -560,7 +594,7 @@ function AgePathwaySection() {
   const pathway = selected ? AGE_PATHWAYS[selected] : null
 
   return (
-    <section className="section" id="pathways" aria-labelledby="pathway-heading">
+    <section className="section section--glass" id="pathways" aria-labelledby="pathway-heading">
       <div className="section__inner">
         <div className="section__header">
           <span className="section__eyebrow">Your Pathway</span>
@@ -630,12 +664,12 @@ function AgePathwaySection() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Support cards — symbolic Gestalt ring: closure (implied ring
+// Support cards, symbolic Gestalt ring: closure (implied ring
 // around the SUPPORT hub) + continuation (one unbroken spine)
 // ─────────────────────────────────────────────────────────────
 function SupportCardsSection() {
   return (
-    <section className="section section--alt" id="support" aria-labelledby="support-heading">
+    <section className="section section--glass" id="support" aria-labelledby="support-heading">
       <div className="section__inner">
         <div className="section__header">
           <span className="section__eyebrow">Support Areas</span>
@@ -655,7 +689,7 @@ function SupportCardsSection() {
 // ─────────────────────────────────────────────────────────────
 function GoalSection() {
   return (
-    <section className="section" id="my-goal" aria-labelledby="goal-picker-heading">
+    <section className="section section--glass" id="my-goal" aria-labelledby="goal-picker-heading">
       <div className="section__inner">
         <GoalPicker />
       </div>
@@ -668,9 +702,9 @@ function GoalSection() {
 // ─────────────────────────────────────────────────────────────
 function TestimonialsSection() {
   /* Set-my-goal fix: getGoal() was read once at render and the prompt used a
-     plain hash href — with no smooth scrolling, the jump was invisible and the
+     plain hash href, with no smooth scrolling, the jump was invisible and the
      button appeared dead. Now: live label via PROGRESS_EVENT, smooth scroll
-     with an arrival pulse — the action visibly lands somewhere (continuity). */
+     with an arrival pulse, the action visibly lands somewhere (continuity). */
   const [goal, setGoalState] = useState(getGoal)
 
   useEffect(() => {
@@ -691,12 +725,12 @@ function TestimonialsSection() {
   }
 
   return (
-    <section className="section" id="community" aria-labelledby="testimonials-heading">
+    <section className="section section--glass" id="community" aria-labelledby="testimonials-heading">
       <div className="section__inner">
         <div className="section__header">
           <span className="section__eyebrow">Peer Voices</span>
           <h2 className="section__title" id="testimonials-heading">
-            You're not alone — not even close
+            You're not alone, not even close
           </h2>
           <p className="section__subtitle">
             Here's what some of the young people we've supported have said.
@@ -704,11 +738,11 @@ function TestimonialsSection() {
           </p>
         </div>
 
-        {/* Swipeable carousel — partial next card = Gestalt closure cue.
+        {/* Swipeable carousel, partial next card = Gestalt closure cue.
             Arrow buttons are the keyboard/assistive fallback. */}
         <StoryCarousel items={TESTIMONIALS} />
 
-        {/* Fogg: spark — emotion from the stories is brief; offer the next
+        {/* Fogg: spark, emotion from the stories is brief; offer the next
             step while it's live. Prospect: gain framing. */}
         <PromptCard
           type="spark"
@@ -734,7 +768,7 @@ function CTABand({ onSignup, onLogin }) {
         </h2>
         <p className="cta-band__text">
           It takes less than two minutes to create your free account. No
-          credit card, no contract, no commitment — just a space that's
+          credit card, no contract, no commitment. Just a space that's
           entirely yours to explore at your own pace.
         </p>
         <div className="cta-band__btns">
@@ -774,7 +808,7 @@ export function FooterSection({ onLogin, onSignup }) {
             <div className="footer__crisis-title">⚡ Need help right now?</div>
             <div className="footer__crisis-lines">
               <strong>Samaritans:</strong> 116 123 (free, 24/7)<br />
-              <strong>CALM:</strong> 0800 58 58 58 (5pm–midnight)<br />
+              <strong>CALM:</strong> 0800 58 58 58 (5pm to midnight)<br />
               <strong>Crisis text line:</strong> Text SHOUT to 85258
             </div>
           </div>
@@ -1011,7 +1045,7 @@ export function LoginModal({ isOpen, onClose, onForgotPassword, onSignup }) {
           <p className="form-footer-text">
             Don't have an account?{' '}
             <button type="button" className="form-link-btn" onClick={onSignup}>
-              Sign up — it's free
+              Sign up, it's free
             </button>
           </p>
         </>
@@ -1066,7 +1100,7 @@ export function SignupModal({ isOpen, onClose, onLogin }) {
           <div className="form-success__icon"><IconCheck /></div>
           <h2 className="form-success__title">You're in, {form.name.split(' ')[0]}!</h2>
           <p className="form-success__text">
-            Your free account is ready. Welcome to the community — we're really
+            Your free account is ready. Welcome to the community. We're really
             glad you found us.
           </p>
           <button type="button" className="form-submit" onClick={onClose}>
@@ -1255,7 +1289,7 @@ export function ForgotPasswordModal({ isOpen, onClose, onBack }) {
         <>
           <h2 className="modal__title" id="forgot-title">Forgotten your password?</h2>
           <p className="modal__subtitle">
-            No worries — happens to everyone. Enter your email and we'll send
+            No worries, it happens to everyone. Enter your email and we'll send
             you a link to get back in.
           </p>
 
@@ -1385,18 +1419,17 @@ export default function App() {
 
       <main id="main-content" className="site-main">
         <HeroSection onGetStarted={openSignup} onFindPath={scrollToPathways} />
-        {/* Eye path: hero → trust strip (quiet) → pathway → goal → support */}
-        <TrustStrip />
+        {/* Pathway moved high (task A): the first thing after the hero is the
+            user choosing their own stage, before anything else. */}
         <AgePathwaySection />
-        {/* Priming + commitment: goal selection sits after the age pathway,
-            so users are primed by their own situation before committing. */}
+        <TrustStrip />
+        {/* Priming + commitment: goal selection follows the age pathway. */}
         <GoalSection />
-        {/* Playful: pitch-line divider — halfway line + centre circle */}
         <div className="pitch-divider" aria-hidden="true" />
         <SupportCardsSection />
         <TestimonialsSection />
-        {/* Moments of the Game — muted slideshow, after Peer Voices */}
-        <MomentSlideshow />
+        {/* Non-League to Pro leads its own zone lower down (task A). */}
+        <NonLeagueSection />
         <div className="pitch-divider" aria-hidden="true" />
         <CTABand onSignup={openSignup} onLogin={openLogin} />
       </main>

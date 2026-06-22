@@ -1,139 +1,224 @@
 /**
- * JobAdverts.jsx — Browse active job adverts with field + distance filters.
+ * JobAdverts.jsx, Live jobs near you.
  *
- * PLUG IN: Replace `adverts` prop with Reed.co.uk API results.
- * Reed endpoint: GET https://www.reed.co.uk/api/1.0/search
- *   ?keywords={selectedField}&locationName={userPostcode}&distanceFromLocation={radiusMiles}
- * The `radiusMiles` state maps directly to Reed's distanceFromLocation parameter.
- * Secondary: Adzuna API → https://api.adzuna.com/v1/api/jobs/gb/search/1
+ * Fetches real vacancies from the server route:
+ *   GET /api/jobs?keywords={kw}&location={town}&distance={miles}
+ * The server proxies Reed (or Adzuna) and keeps any key off the browser.
+ *
+ * Response on success:
+ *   { ok:true, configured:true, source, jobs:[{ id, title, employer,
+ *     location, salary, url, posted, distanceMiles }] }
+ *
+ * Honest states only, never invented data:
+ *   - configured:false / 503  → needs a key to go live
+ *   - 5xx / network error      → temporarily unavailable
+ *   - valid search, no jobs    → empty state
+ *   - while fetching           → loading state
  */
-import { useState, useMemo, useId } from 'react'
-import { haversine, DEFAULT_COORDS } from '../../utils/distance'
-import { JOB_FIELDS } from '../../data/educationData'
+import { useState, useId } from 'react'
+import GlassCard from '../GlassCard'
 
-const RADII = [5, 10, 20]
+const DISTANCES = [5, 10, 20, 30]
 
-const FIELD_COLOURS = {
-  'Coaching & Sport':       'edu-badge--sport',
-  'Construction & Trades':  'edu-badge--construction',
-  'Security':               'edu-badge--security',
-  'Retail':                 'edu-badge--retail',
-  'Logistics & Warehouse':  'edu-badge--logistics',
-  'Health & Social Care':   'edu-badge--health',
+// status: 'idle' | 'loading' | 'ready' | 'empty' | 'needsKey' | 'error'
+
+function formatPosted(posted) {
+  if (!posted) return null
+  // Reed gives DD/MM/YYYY, Adzuna gives an ISO date. Try both.
+  let d
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(posted)) {
+    const [day, month, year] = posted.split('/')
+    d = new Date(`${year}-${month}-${day}`)
+  } else {
+    d = new Date(posted)
+  }
+  if (isNaN(d.getTime())) return null
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-export default function JobAdverts({ adverts, userCoords }) {
-  const [radius,      setRadius]      = useState(10)
-  const [fieldFilter, setFieldFilter] = useState('')
+export default function JobAdverts() {
+  const [keywords, setKeywords] = useState('coaching')
+  const [location, setLocation] = useState('')
+  const [distance, setDistance] = useState(20)
 
-  const radiusId = useId()
-  const fieldId  = useId()
+  const [status, setStatus] = useState('idle')
+  const [jobs, setJobs]     = useState([])
+  const [message, setMessage] = useState('')
 
-  const withDistance = useMemo(() => {
-    const uc = userCoords ?? DEFAULT_COORDS
-    return adverts.map(a => ({
-      ...a,
-      distMiles: haversine(uc.lat, uc.lng, a.lat, a.lng),
-    }))
-  }, [adverts, userCoords])
+  const kwId   = useId()
+  const locId  = useId()
+  const distId = useId()
 
-  const results = useMemo(() => {
-    return withDistance
-      .filter(a => {
-        const inRadius   = a.distMiles <= radius
-        const matchField = !fieldFilter || a.field === fieldFilter
-        return inRadius && matchField
+  const search = async (e) => {
+    e?.preventDefault()
+    setStatus('loading')
+    setMessage('')
+    try {
+      const params = new URLSearchParams({
+        keywords: keywords.trim(),
+        location: location.trim(),
+        distance: String(distance),
       })
-      .sort((a, b) => a.distMiles - b.distMiles)
-  }, [withDistance, radius, fieldFilter])
+      const res = await fetch(`/api/jobs?${params}`)
+
+      // Read the JSON body where present so we can surface the server message.
+      let data = null
+      try { data = await res.json() } catch { /* non-JSON response */ }
+
+      if (res.status === 503 || data?.configured === false) {
+        setMessage(data?.message || 'Live jobs need a key to go live.')
+        setStatus('needsKey')
+        return
+      }
+      if (!res.ok || !data?.ok) {
+        setMessage(data?.message || 'Jobs are temporarily unavailable. Please try again shortly.')
+        setStatus('error')
+        return
+      }
+
+      const list = Array.isArray(data.jobs) ? data.jobs : []
+      setJobs(list)
+      setStatus(list.length ? 'ready' : 'empty')
+    } catch {
+      setMessage('We could not reach the jobs service. Please check your connection and try again.')
+      setStatus('error')
+    }
+  }
 
   return (
-    <div>
-      {/* Filters */}
-      <div className="edu-controls">
-        <div className="edu-radius-group">
-          <label htmlFor={radiusId} className="edu-filter-label">Within</label>
-          <div className="edu-radius-tabs" id={radiusId} role="group" aria-label="Distance filter">
-            {RADII.map(r => (
-              <button
-                key={r}
-                type="button"
-                className={`edu-radius-tab${radius === r ? ' edu-radius-tab--active' : ''}`}
-                onClick={() => setRadius(r)}
-                aria-pressed={radius === r}
-              >
-                {r} mi
-              </button>
-            ))}
-          </div>
+    <div className="jobs-live">
+      {/* Controls */}
+      <form className="jobs-controls glass glass--quiet glass--pad" onSubmit={search} aria-label="Search jobs near you">
+        <div className="jobs-control">
+          <label htmlFor={kwId} className="jobs-control__label">What kind of work</label>
+          <input
+            id={kwId}
+            type="text"
+            className="jobs-control__input"
+            value={keywords}
+            onChange={e => setKeywords(e.target.value)}
+            placeholder="e.g. coaching, security, warehouse"
+            autoComplete="off"
+          />
         </div>
 
-        <div className="edu-filter-group">
-          <label htmlFor={fieldId} className="edu-filter-label">Field of interest</label>
+        <div className="jobs-control">
+          <label htmlFor={locId} className="jobs-control__label">Town or postcode</label>
+          <input
+            id={locId}
+            type="text"
+            className="jobs-control__input"
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+            placeholder="e.g. Manchester or M1 1AA"
+            autoComplete="off"
+          />
+        </div>
+
+        <div className="jobs-control">
+          <label htmlFor={distId} className="jobs-control__label">Distance</label>
           <select
-            id={fieldId}
-            className="edu-select"
-            value={fieldFilter}
-            onChange={e => setFieldFilter(e.target.value)}
+            id={distId}
+            className="jobs-control__select"
+            value={distance}
+            onChange={e => setDistance(Number(e.target.value))}
           >
-            <option value="">All fields</option>
-            {JOB_FIELDS.map(f => <option key={f} value={f}>{f}</option>)}
+            {DISTANCES.map(d => (
+              <option key={d} value={d}>Within {d} miles</option>
+            ))}
           </select>
         </div>
 
-        {fieldFilter && (
-          <button
-            type="button"
-            className="edu-reset-btn"
-            onClick={() => setFieldFilter('')}
-          >
-            Reset ✕
-          </button>
-        )}
-      </div>
+        <button
+          type="submit"
+          className="jobs-control__submit"
+          disabled={status === 'loading'}
+          aria-busy={status === 'loading'}
+        >
+          {status === 'loading' ? 'Searching' : 'Search jobs'}
+        </button>
+      </form>
 
-      <p className="edu-result-count" aria-live="polite" aria-atomic="true">
-        <strong>{results.length}</strong> job{results.length !== 1 ? 's' : ''}
-        {fieldFilter ? ` in ${fieldFilter}` : ''} within {radius} miles
-      </p>
+      {/* States */}
+      {status === 'idle' && (
+        <p className="jobs-state jobs-state--hint" role="status">
+          Enter a town or postcode and search to see live vacancies near you.
+        </p>
+      )}
 
-      {results.length === 0 ? (
-        <div className="edu-empty" role="status">
-          <span aria-hidden="true">💼</span>
-          <p>No jobs found for those filters. Try a different field or wider radius.</p>
+      {status === 'loading' && (
+        <div className="jobs-state" role="status" aria-live="polite">
+          <span className="jobs-spinner" aria-hidden="true" />
+          <p>Finding jobs near you</p>
         </div>
-      ) : (
-        <ul className="edu-cards" role="list" aria-label="Job adverts">
-          {results.map(job => (
-            <li key={job.id} className="edu-card job-card">
-              <div className="edu-card__header">
-                <div style={{ flex: 1 }}>
-                  <span className={`edu-badge ${FIELD_COLOURS[job.field] ?? ''}`}>{job.field}</span>
-                  <h3 className="edu-card__title">{job.title}</h3>
-                  <p className="edu-card__employer">🏢 {job.employer}</p>
-                  <p className="edu-card__location">📍 {job.location} · <strong>{job.distMiles} mi</strong> away</p>
-                </div>
-                <div className="job-card__pay" aria-label={`Pay: ${job.pay}`}>
-                  {job.pay}
-                </div>
-              </div>
+      )}
 
-              <p className="job-card__summary">{job.summary}</p>
+      {status === 'needsKey' && (
+        <GlassCard tone="light" glow="coral" className="jobs-state jobs-state--panel" role="note">
+          <h3 className="jobs-state__title">Not live yet</h3>
+          <p>{message}</p>
+          <p className="jobs-state__sub">
+            Once a jobs key is set up on the server, this section will show real vacancies near you.
+          </p>
+        </GlassCard>
+      )}
 
-              <div className="edu-card__footer">
-                <a
-                  href={job.applyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="edu-cta edu-cta--primary"
-                  aria-label={`Apply for ${job.title} at ${job.employer}`}
-                >
-                  Apply / More info ↗
-                </a>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {status === 'error' && (
+        <GlassCard tone="light" className="jobs-state jobs-state--panel" role="alert">
+          <h3 className="jobs-state__title">Temporarily unavailable</h3>
+          <p>{message}</p>
+          <button type="button" className="jobs-control__submit jobs-state__retry" onClick={search}>
+            Try again
+          </button>
+        </GlassCard>
+      )}
+
+      {status === 'empty' && (
+        <div className="jobs-state" role="status" aria-live="polite">
+          <span aria-hidden="true" className="jobs-state__emoji">💼</span>
+          <p>No jobs matched that search. Try a different keyword, a wider distance, or another nearby town.</p>
+        </div>
+      )}
+
+      {status === 'ready' && (
+        <>
+          <p className="jobs-count" aria-live="polite" aria-atomic="true">
+            <strong>{jobs.length}</strong> {jobs.length === 1 ? 'job' : 'jobs'} near {location.trim() || 'you'}
+          </p>
+          <ul className="jobs-cards" role="list" aria-label="Live job vacancies">
+            {jobs.map(job => {
+              const posted = formatPosted(job.posted)
+              return (
+                <GlassCard as="li" tone="light" interactive className="job-card" key={job.id}>
+                  <div className="job-card__body">
+                    <h3 className="job-card__title">{job.title}</h3>
+                    {job.employer && <p className="job-card__employer">🏢 {job.employer}</p>}
+                    <ul className="job-card__meta" aria-label="Job details">
+                      {job.location && (
+                        <li className="job-card__meta-item">📍 {job.location}
+                          {job.distanceMiles != null && <> · {job.distanceMiles} mi away</>}
+                        </li>
+                      )}
+                      {job.salary && <li className="job-card__meta-item">💷 {job.salary}</li>}
+                      {posted && <li className="job-card__meta-item">🗓 Posted {posted}</li>}
+                    </ul>
+                  </div>
+                  <div className="job-card__footer">
+                    <a
+                      href={job.url}
+                      target="_blank"
+                      rel="noopener"
+                      className="job-card__apply"
+                      aria-label={`View ${job.title}${job.employer ? ` at ${job.employer}` : ''}, opens in new tab`}
+                    >
+                      View and apply ↗
+                    </a>
+                  </div>
+                </GlassCard>
+              )
+            })}
+          </ul>
+        </>
       )}
     </div>
   )

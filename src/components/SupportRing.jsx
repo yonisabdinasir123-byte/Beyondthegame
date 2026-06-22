@@ -1,22 +1,22 @@
 /**
- * SupportRing.jsx — the home-page Support group as a symbolic Gestalt figure.
+ * SupportRing.jsx, the home-page Support group as a symbolic Gestalt figure.
  *
- * CLOSURE      — "SUPPORT" hub at the centre; the 7 cards form an implied
+ * CLOSURE, "SUPPORT" hub at the centre; the 7 cards form an implied
  *                enclosing ring that is never fully drawn (the stroke stops
- *                short of closing — the viewer's mind completes the circle).
- * CONTINUATION — ONE continuous SVG path threads through every card like a
+ *                short of closing, the viewer's mind completes the circle).
+ * CONTINUATION, ONE continuous SVG path threads through every card like a
  *                spine: support is endless, someone has your back all the time.
  *                No joins, round caps, single stroke.
  *
  * The ball travels the spine as you scroll (decorative, aria-hidden).
  * Reduced motion: spine pre-drawn, ball static at the start.
- * Mobile (<960px): vertical backbone variant — hub on top, one unbroken stroke.
+ * Mobile (<960px): vertical backbone variant, hub on top, one unbroken stroke.
  */
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './SupportRing.css'
 
-// Card centres in SVG viewBox units (0 0 1000 760) — single source of truth
+// Card centres in SVG viewBox units (0 0 1000 760), single source of truth
 // for both card placement and the spine path, so they can never drift apart.
 const RING_POINTS = [
   { x: 500, y: 80 },   // top
@@ -28,7 +28,7 @@ const RING_POINTS = [
   { x: 187, y: 193 },
 ]
 
-/* Gestalt: closure — elliptical arc through all 7 points, deliberately left
+/* Gestalt: closure, elliptical arc through all 7 points, deliberately left
    open between the last and first card. ONE path, no joins. */
 const RING_PATH =
   'M 500 80 ' +
@@ -155,7 +155,7 @@ export default function SupportRing({ cards }) {
       {isRing ? (
         /* ── Desktop: implied ring around the central hub ── */
         <div className="sring-stage">
-          {/* Gestalt: continuation — single spine path, no visible joins */}
+          {/* Gestalt: continuation, single spine path, no visible joins */}
           <svg
             className="sring-svg"
             viewBox="0 0 1000 760"
@@ -185,7 +185,7 @@ export default function SupportRing({ cards }) {
           </nav>
         </div>
       ) : (
-        /* ── Mobile/tablet: vertical backbone — hub on top, one stroke ── */
+        /* ── Mobile/tablet: vertical backbone, hub on top, one stroke ── */
         <div className="sring-stack">
           <svg
             className="sring-stack__svg"
@@ -194,7 +194,7 @@ export default function SupportRing({ cards }) {
             aria-hidden="true"
             focusable="false"
           >
-            {/* preserveAspectRatio="none" would distort a ball here — the
+            {/* preserveAspectRatio="none" would distort a ball here, the
                 backbone alone carries the continuation metaphor on mobile */}
             <path ref={pathRef} className="sring-spine" d={SPINE_PATH} />
           </svg>

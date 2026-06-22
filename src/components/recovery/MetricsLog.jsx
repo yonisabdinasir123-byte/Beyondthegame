@@ -20,7 +20,7 @@ const METRICS = [
     min:   0,
     max:   14,
     goal:  8,
-    hint:  'Most people need 7–9 hours',
+    hint:  'Most people need 7 to 9 hours',
   },
   {
     key:   'steps',

@@ -1,11 +1,11 @@
 /**
- * AppContext.jsx — shared, persisted app state across every page.
+ * AppContext.jsx, shared, persisted app state across every page.
  *
  * Holds the lightweight personalisation state that should follow the user
  * around the site and survive navigation / reloads:
- *   • releaseStage — when they left the academy ('16' | '18' | '21+')
- *   • interests    — chosen interest tags (drives career suggestions)
- *   • saved        — saved items (events, contacts, clubs…) keyed by kind
+ *   • releaseStage, when they left the academy ('16' | '18' | '21+')
+ *   • interests, chosen interest tags (drives career suggestions)
+ *   • saved, saved items (events, contacts, clubs…) keyed by kind
  *
  * Persistence reuses the existing btg: localStorage helper so it sits
  * alongside the goal system rather than competing with it.

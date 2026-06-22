@@ -43,8 +43,7 @@ function HeroSection() {
       <div className="rec-hero__inner">
         <h1 className="rec-hero__title">Your Recovery Hub</h1>
         <p className="rec-hero__sub">
-          Everything in one place to help you look after your body and mind —
-          at your own pace, on your own terms.
+          Everything in one place to help you look after your body and mind,           at your own pace, on your own terms.
         </p>
       </div>
     </section>
@@ -221,7 +220,7 @@ export default function RecoveryPage() {
 
       <footer className="rec-footer">
         <p>
-          © 2025 Beyond the Game · For signposting only — always consult a qualified professional for medical advice.
+          © 2025 Beyond the Game · For signposting only, always consult a qualified professional for medical advice.
         </p>
         <Link to="/" className="rec-footer__link">← Back to home</Link>
       </footer>

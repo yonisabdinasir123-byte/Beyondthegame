@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   DESIGN TOKENS — "FLOODLIGHT"
+   DESIGN TOKENS, "FLOODLIGHT"
    Single source of truth. The new palette/type are defined first;
    every legacy token (--amber-*, --bg, --text-*, …) is then ALIASED
    onto the new values so the entire existing site adopts the new
@@ -29,11 +29,11 @@
 
   --coral-100:  #FFE3DC;
   --coral-300:  #FFA98F;
-  --coral-500:  #FF6A4D;   /* warm accent — emotional CTAs */
+  --coral-500:  #FF6A4D;   /* warm accent, emotional CTAs */
   --coral-600:  #EA4A2C;   /* coral text on light (AA) */
   --coral-800:  #B5371E;
 
-  --lime:       #C8F24E;   /* energy pop — on dark only */
+  --lime:       #C8F24E;   /* energy pop, on dark only */
   --lime-600:   #9BCB1E;
   --lime-ink:   #54710A;   /* lime-derived text on light (AA) */
 
@@ -80,7 +80,7 @@
   --text-secondary: var(--ink-700);
   --text-muted:     var(--ink-500);
 
-  /* Support card accents — retinted cool, all ≥ 4.5:1 on their bg */
+  /* Support card accents, retinted cool, all ≥ 4.5:1 on their bg */
   --c-mind:      #0E6B5F;  --c-mind-bg:   #EAF7F3;
   --c-money:     #1F6E63;  --c-money-bg:  #ECF6F3;
   --c-feelings:  #B5371E;  --c-feelings-bg: #FFF0EC;
@@ -109,7 +109,7 @@
   --type-body:    400 1.0625rem/1.65 var(--font-body);
   --type-caption: 600 .8rem/1.4 var(--font-body);
 
-  /* ── Spacing — 8px base scale ── */
+  /* ── Spacing, 8px base scale ── */
   --space-1: 0.25rem; --space-2: 0.5rem;  --space-3: 0.75rem;
   --space-4: 1rem;    --space-5: 1.5rem;  --space-6: 2rem;
   --space-7: 3rem;    --space-8: 4.5rem;  --space-9: 7rem;
@@ -122,21 +122,21 @@
   --container: 1200px;
   --container-wide: 1320px;
 
-  /* ── Radius — rounded geometry consistent with the floating nav ── */
+  /* ── Radius, rounded geometry consistent with the floating nav ── */
   --radius-sm: 0.5rem;  --radius-md: 0.875rem; --radius-lg: 1.25rem;
   --radius-xl: 1.75rem; --radius-pill: 9999px;
   /* Legacy radius aliases */
   --r-sm: var(--radius-sm); --r-md: var(--radius-md); --r-lg: var(--radius-lg);
   --r-xl: var(--radius-xl); --r-full: var(--radius-pill);
 
-  /* ── Shadows — cool teal-tinted, layered ── */
+  /* ── Shadows, cool teal-tinted, layered ── */
   --sh-sm: 0 1px 2px rgba(7,33,29,.08), 0 1px 3px rgba(7,33,29,.06);
   --sh-md: 0 4px 14px rgba(7,33,29,.10), 0 2px 6px rgba(7,33,29,.06);
   --sh-lg: 0 14px 40px rgba(7,33,29,.14), 0 6px 12px rgba(7,33,29,.06);
   --sh-xl: 0 24px 70px rgba(7,33,29,.22);
   --shadow-float: 0 10px 34px rgba(7,33,29,.16), 0 2px 8px rgba(7,33,29,.10);
 
-  /* ── Motion system — ALL transitions/animations use these tokens ── */
+  /* ── Motion system, ALL transitions/animations use these tokens ── */
   --ease-out-soft: cubic-bezier(0.25, 0.8, 0.25, 1);
   --ease-in-out:   cubic-bezier(0.45, 0, 0.25, 1);
   --ease-snap:     cubic-bezier(0.2, 0, 0, 1);
@@ -145,10 +145,53 @@
   --dur-large:  400ms;
   --dur-scene:  600ms;
 
-  /* Layout heights — floating nav occupies ~88px (16px gap + 56–64px pill).
+  /* Layout heights, floating nav occupies ~88px (16px gap + 56 to 64px pill).
      Sticky sub-navs and scroll offsets reference these. */
   --header-height:    88px;
   --subheader-height: 48px;
+
+  /* ── Glass + depth system ─────────────────────────────────────
+     Two-layer depth: a soft green backing panel sits behind a
+     frosted-glass foreground card. Every card on every page reads
+     these tokens, no hardcoded glass values per component. */
+  --glass-fill:         rgba(255, 255, 255, 0.60);
+  --glass-fill-strong:  rgba(255, 255, 255, 0.74);
+  --glass-fill-quiet:   rgba(255, 255, 255, 0.46);
+  --glass-fill-dark:    rgba(8, 34, 30, 0.46);
+  --glass-stroke:       rgba(255, 255, 255, 0.60);
+  --glass-stroke-dark:  rgba(202, 242, 78, 0.16);
+  --glass-blur:         16px;
+  --glass-blur-strong:  26px;
+  --glass-radius:       var(--radius-lg);
+  /* Layered, softly coloured shadows + top inner highlight (the "wet glass" edge) */
+  --glass-shadow:
+    0 1px 0 rgba(255,255,255,.55) inset,
+    0 10px 30px -12px rgba(7,33,29,.30),
+    0 4px 12px -6px rgba(7,33,29,.18);
+  --glass-shadow-lg:
+    0 1px 0 rgba(255,255,255,.6) inset,
+    0 28px 64px -20px rgba(7,33,29,.40),
+    0 10px 24px -12px rgba(7,33,29,.22);
+  /* Coloured glow accents for emphasis cards */
+  --glow-teal:  0 24px 60px -22px rgba(18,137,122,.55);
+  --glow-coral: 0 24px 60px -22px rgba(255,106,77,.50);
+  --glow-lime:  0 24px 60px -22px rgba(155,203,30,.50);
+  /* The green "backing layer" behind glass cards (task C two-layer depth) */
+  --backing-green:
+    radial-gradient(120% 140% at 0% 0%, rgba(18,137,122,.20) 0%, transparent 55%),
+    radial-gradient(120% 140% at 100% 100%, rgba(11,90,80,.22) 0%, transparent 55%),
+    linear-gradient(150deg, rgba(14,107,95,.16), rgba(7,33,29,.10));
+
+  /* ── Animated multi-gradient site background (task J) ──────────
+     A calm field of slow-drifting colour blobs over cool paper.
+     SiteBackground.jsx renders the layers; motion respects
+     prefers-reduced-motion (it freezes, never strobes). */
+  --field-base:   #EAF3EF;
+  --field-base-2: #E4EFE9;
+  --field-blob-teal:  rgba(18,137,122,.22);
+  --field-blob-deep:  rgba(11,90,80,.20);
+  --field-blob-lime:  rgba(155,203,30,.14);
+  --field-blob-coral: rgba(255,106,77,.10);
 }
 
 /* Clears the floating nav + any sticky sub-bar so hash-anchor nav lands cleanly */
@@ -204,7 +247,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
   overflow: hidden;
 }
 
-/* Phase: enter — whole screen slides in from above */
+/* Phase: enter, whole screen slides in from above */
 .splash--enter {
   animation: splashEnter .55s cubic-bezier(.22,.68,0,1.2) both;
 }
@@ -213,10 +256,10 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
   to   { transform: translateY(0); }
 }
 
-/* Phase: hold — static, nothing to animate */
+/* Phase: hold, static, nothing to animate */
 .splash--hold {}
 
-/* Phase: exit — slides up and off screen */
+/* Phase: exit, slides up and off screen */
 .splash--exit {
   animation: splashExit .7s cubic-bezier(.55,0,1,.45) both;
   pointer-events: none;
@@ -529,7 +572,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 
 /* ═══════════════════════════════════════════════════════════
-   HERO — "Floodlight": dark matchday ground, two-zone layout
+   HERO, "Floodlight": dark matchday ground, two-zone layout
    that fills the viewport width (thesis left, team-sheet right)
    ═══════════════════════════════════════════════════════════ */
 .hero {
@@ -542,7 +585,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
     linear-gradient(160deg, var(--teal-900) 0%, var(--bg-deep) 70%, #04201C 100%);
   color: var(--color-on-dark);
 }
-/* Floodlight cursor spotlight — desktop only (set by useSpotlight) */
+/* Floodlight cursor spotlight, desktop only (set by useSpotlight) */
 @media (hover: hover) and (pointer: fine) {
   .hero::after {
     content: '';
@@ -552,7 +595,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
     pointer-events: none;
   }
 }
-/* Pitch-line corner bracket — faint structural signature */
+/* Pitch-line corner bracket, faint structural signature */
 .hero::before {
   content: '';
   position: absolute;
@@ -607,14 +650,15 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
   font-weight: 800;
   max-width: 15ch;
 }
-/* The lime marker sweep under the key phrase — the brand signature */
+/* The lime marker sweep under the key phrase, the brand signature */
 .hero__title-mark {
   position: relative;
   display: inline-block;
-  color: #fff;
+  color: var(--lime);
   white-space: nowrap;
 }
-.hero__title-mark::after {
+/* Underline removed (task A), the word now reads in lime, no bar beneath it. */
+.hero__title-mark--legacy::after {
   content: '';
   position: absolute;
   left: -2px; right: -2px; bottom: .08em;
@@ -659,7 +703,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
   align-items: center;
   gap: .5rem;
 }
-/* Warm coral primary — the human, encouraging action */
+/* Warm coral primary, the human, encouraging action */
 .hero__cta--primary {
   background: var(--coral-500);
   color: #fff;
@@ -752,7 +796,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 .hero__panel-cta:hover { background: var(--teal-300); gap: .8rem; }
 
-/* Scroll cue — continuity */
+/* Scroll cue, continuity */
 .hero__scroll-cue {
   position: relative;
   z-index: 1;
@@ -802,31 +846,114 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 
 /* ═══════════════════════════════════════════════════════════
-   TRUST STRIP — hero body copy + stats, relocated below the
+   TRUST STRIP, hero body copy + stats, relocated below the
    fold and muted so nothing rivals the hero focal point
    ═══════════════════════════════════════════════════════════ */
 .trust-strip {
-  background: var(--bg-alt);
-  padding: 2.5rem 1rem;
-  border-bottom: 1px solid var(--amber-100);
+  background: transparent;
+  padding: 2.25rem 1rem 0.5rem;
 }
 
 .trust-strip__inner {
-  max-width: 1200px;
+  max-width: 760px;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2rem 3rem;
+  text-align: center;
 }
 
 .trust-strip__body {
-  flex: 1 1 380px;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   color: var(--text-secondary);
   line-height: 1.7;
   margin: 0;
 }
+
+/* ── Non-League to Pro (home, task A) ─────────────────────────── */
+.nonleague {
+  padding: clamp(2rem, 5vw, 4rem) 1rem;
+}
+.nonleague__inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.nonleague__head { max-width: 60ch; }
+.nonleague__title {
+  font: var(--type-h2);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin: .4rem 0 .6rem;
+}
+.nonleague__lead {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+.nonleague__ladder {
+  list-style: none;
+  margin: clamp(1.25rem, 3vw, 2rem) 0;
+  display: grid;
+  gap: .75rem;
+}
+.nonleague__rung {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--paper-deep);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  transition: transform var(--dur-std) var(--ease-out-soft), border-color var(--dur-std) var(--ease-out-soft);
+}
+.nonleague__rung:hover { transform: translateX(4px); border-left-color: var(--color-accent); }
+.nonleague__rung-num {
+  flex-shrink: 0;
+  width: 1.9rem; height: 1.9rem;
+  display: grid; place-items: center;
+  background: var(--color-primary-deep);
+  color: var(--lime);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  border-radius: var(--radius-pill);
+  font-size: .9rem;
+}
+.nonleague__rung-level {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.nonleague__rung-note {
+  display: block;
+  font-size: .9rem;
+  color: var(--text-muted);
+  margin-top: .15rem;
+}
+.nonleague__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.nonleague__cta {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 700;
+  padding: .8rem 1.4rem;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  box-shadow: var(--glow-coral);
+  transition: transform var(--dur-std) var(--ease-out-soft);
+}
+.nonleague__cta:hover { transform: translateY(-2px); }
+.nonleague__cta:focus-visible { outline: 3px solid var(--color-primary-deep); outline-offset: 3px; }
+.nonleague__link {
+  color: var(--color-primary-strong);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.nonleague__link:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; border-radius: 4px; }
 
 .trust-strip__stats {
   display: flex;
@@ -834,7 +961,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
   gap: 2rem;
 }
 
-/* Demoted: muted tones, small type — a clear step below the hero */
+/* Demoted: muted tones, small type, a clear step below the hero */
 .trust-strip__stat-value {
   display: block;
   font-size: 1.5rem;
@@ -867,6 +994,33 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 .section__inner {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* ── Floating glass sections (tasks C + J) ──────────────────────────
+   Standard content sections read as frosted glass cards floating above
+   the animated background. The section itself goes transparent; its
+   inner becomes the glass card with a soft green backing behind it. */
+.section--glass { background: transparent; position: relative; }
+.section--glass > .section__inner {
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-fill-strong);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow-lg);
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+/* Green backing layer (second depth plane) */
+.section--glass > .section__inner::before {
+  content: '';
+  position: absolute;
+  inset: -10px -8px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--backing-green);
+  opacity: .9;
 }
 
 .section__header {
@@ -1867,14 +2021,13 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MOTION SYSTEM — page entrance, unified reveal, continuity
+   MOTION SYSTEM, page entrance, unified reveal, continuity
    ═══════════════════════════════════════════════════════════ */
 
 /* Cross-document View Transitions where supported (progressive) */
 @view-transition { navigation: auto; }
 
-/* Page entrance: every route shell fades + rises on mount —
-   navigating never hard-cuts.  /* motion: scene 600ms */
+/* Page entrance: every route shell fades + rises on mount,    navigating never hard-cuts.  /* motion: scene 600ms */
 @keyframes pageEnter {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: none; }
@@ -1886,7 +2039,7 @@ main#main-content,
   animation: pageEnter var(--dur-scene) var(--ease-out-soft) both;
 }
 
-/* Unified scroll reveal — ONE entrance pattern site-wide */
+/* Unified scroll reveal, ONE entrance pattern site-wide */
 .reveal {
   opacity: 0;
   transform: translateY(12px);
@@ -1898,7 +2051,7 @@ main#main-content,
 .reveal.visible { opacity: 1; transform: none; }
 
 /* ═══════════════════════════════════════════════════════════
-   PLAYFUL LAYER — pitch divider, ball loader, gradient drift
+   PLAYFUL LAYER, pitch divider, ball loader, gradient drift
    ═══════════════════════════════════════════════════════════ */
 
 /* Pitch-line section divider: halfway line + centre circle */
@@ -1944,7 +2097,7 @@ main#main-content,
   to   { transform: translateY(-8px); }
 }
 
-/* One drifting background gradient per page max — home: CTA band */
+/* One drifting background gradient per page max, home: CTA band */
 .cta-band {
   background-size: 200% 200%;
   animation: bgDrift 24s var(--ease-in-out) infinite alternate;
@@ -1955,7 +2108,7 @@ main#main-content,
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SET-MY-GOAL FIX — arrival pulse (continuity: the prompt's
+   SET-MY-GOAL FIX, arrival pulse (continuity: the prompt's
    action visibly lands somewhere)
    ═══════════════════════════════════════════════════════════ */
 .goal-section--pulse .goal-block {
@@ -1967,7 +2120,7 @@ main#main-content,
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MACRO HERO — shared dark macro-image focal-point band
+   MACRO HERO, shared dark macro-image focal-point band
    (Pathway / Education / Jobs first viewports)
    ═══════════════════════════════════════════════════════════ */
 .macro-hero {
@@ -1988,7 +2141,7 @@ main#main-content,
   background: linear-gradient(to top, rgba(15,30,15,.88) 0%, rgba(15,30,15,.45) 55%, rgba(15,30,15,.25) 100%);
   pointer-events: none;
 }
-/* Pointer spotlight — desktop only, decoration never information */
+/* Pointer spotlight, desktop only, decoration never information */
 @media (hover: hover) and (pointer: fine) {
   .macro-hero::after {
     content: '';
@@ -2024,7 +2177,7 @@ main#main-content,
 
 .macro-hero__title {
   font-family: var(--font-heading);
-  /* Gestalt: focal point — largest type on the page */
+  /* Gestalt: focal point, largest type on the page */
   font-size: clamp(2.5rem, 6.5vw, 4.5rem);
   font-weight: 900;
   color: #fff;
@@ -2041,7 +2194,7 @@ main#main-content,
   margin: 0 0 2.25rem;
 }
 
-/* Sole amber-filled CTA in the viewport — amber→terracotta hover sweep */
+/* Sole amber-filled CTA in the viewport, amber→terracotta hover sweep */
 .macro-hero__cta {
   position: relative;
   display: inline-flex;
@@ -2076,7 +2229,7 @@ main#main-content,
 }
 .macro-hero__cta:active { transform: translateY(1px); box-shadow: 0 3px 12px rgba(232,168,56,.3); }
 
-/* Radial amber glow behind the focal CTA — never behind body text */
+/* Radial amber glow behind the focal CTA, never behind body text */
 .macro-hero__cta-wrap {
   position: relative;
   display: inline-block;
@@ -2089,7 +2242,7 @@ main#main-content,
   pointer-events: none;
 }
 
-/* Muted scroll cue — continuity: the eye is led downward */
+/* Muted scroll cue, continuity: the eye is led downward */
 .macro-hero__scroll-cue {
   display: inline-flex;
   align-items: center;
@@ -2128,7 +2281,7 @@ main#main-content,
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MOMENTS OF THE GAME — slideshow (home, after Peer Voices)
+   MOMENTS OF THE GAME, slideshow (home, after Peer Voices)
    ═══════════════════════════════════════════════════════════ */
 .moments {
   position: relative;
@@ -2153,7 +2306,7 @@ main#main-content,
   align-items: flex-end;
   padding: 2rem;
   opacity: 0;
-  /* motion: slideshow cross-fade, scene duration — never hard-cuts */
+  /* motion: slideshow cross-fade, scene duration, never hard-cuts */
   transition: opacity var(--dur-scene) var(--ease-out-soft);
   pointer-events: none;
 }
@@ -2250,7 +2403,7 @@ main#main-content,
 }
 
 /* ═══════════════════════════════════════════════════════════
-   REDUCED MOTION — every effect collapses gracefully
+   REDUCED MOTION, every effect collapses gracefully
    ═══════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   main#main-content,

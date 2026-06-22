@@ -1,5 +1,5 @@
 /**
- * NetworkingTracker.jsx — Record and track contacts made during the job search.
+ * NetworkingTracker.jsx, Record and track contacts made during the job search.
  * All data persisted to localStorage under btg:net-contacts and btg:net-prompts.
  */
 import { useState, useCallback } from 'react'

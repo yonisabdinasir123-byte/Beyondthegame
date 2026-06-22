@@ -1,5 +1,5 @@
 /**
- * educationData.js — Seed data for Education, Employability, and Careers features.
+ * educationData.js, Seed data for Education, Employability, and Careers features.
  *
  * HOW TO PLUG IN REAL APIs:
  * ─────────────────────────
@@ -14,8 +14,8 @@
  * JOB ADVERTS            → Reed.co.uk API (free key, server-side only)
  *   GET https://www.reed.co.uk/api/1.0/search?keywords={field}&locationName={postcode}
  *   &distanceFromLocation={miles}  (maps directly onto the `radiusMiles` filter below)
- *   Secondary: Adzuna API — https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={ID}&app_key={KEY}
- *   NOTE: Do NOT use GOV.UK "Find a Job" — its firewall blocks server/datacenter IPs.
+ *   Secondary: Adzuna API, https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id={ID}&app_key={KEY}
+ *   NOTE: Do NOT use GOV.UK "Find a Job", its firewall blocks server/datacenter IPs.
  *
  * CAREER PATHWAYS        → UK Gov Occupational Maps API (open licence)
  *   https://occupational-maps.skillsengland.education.gov.uk
@@ -90,7 +90,7 @@ export const colleges = [
     name: 'Trafford College',
     location: 'Stretford, Greater Manchester',
     lat: 53.4459, lng: -2.2966,
-    openingHours: 'Mon–Fri 08:30–17:00',
+    openingHours: 'Mon, Fri 08:30 to 17:00',
     openDays: ['2026-07-12', '2026-09-06'],
     courses: ['Level 3 Sport & Performance Coaching', 'Electrical Installation (City & Guilds)', 'Personal Training', 'Business Admin'],
     website: 'https://www.trafford.ac.uk',
@@ -100,7 +100,7 @@ export const colleges = [
     name: 'Salford City College',
     location: 'Salford, Greater Manchester',
     lat: 53.4879, lng: -2.2977,
-    openingHours: 'Mon–Fri 08:00–17:30',
+    openingHours: 'Mon, Fri 08:00 to 17:30',
     openDays: ['2026-07-05', '2026-09-20'],
     courses: ['Football Coaching & Development', 'Level 2 Plumbing', 'Health & Social Care', 'IT & Digital Media'],
     website: 'https://www.salfordcc.ac.uk',
@@ -110,7 +110,7 @@ export const colleges = [
     name: 'Manchester College',
     location: 'Manchester City Centre',
     lat: 53.4808, lng: -2.2426,
-    openingHours: 'Mon–Fri 08:30–18:00',
+    openingHours: 'Mon, Fri 08:30 to 18:00',
     openDays: ['2026-06-28', '2026-09-13'],
     courses: ['Sports Journalism & Media', 'Level 3 Fitness Instructor', 'Accounting & Finance', 'Construction Skills'],
     website: 'https://www.tmc.ac.uk',
@@ -120,7 +120,7 @@ export const colleges = [
     name: 'Stockport College',
     location: 'Stockport, Greater Manchester',
     lat: 53.4082, lng: -2.1575,
-    openingHours: 'Mon–Fri 08:30–17:00',
+    openingHours: 'Mon, Fri 08:30 to 17:00',
     openDays: ['2026-07-19', '2026-10-04'],
     courses: ['BTEC Sport (Extended Diploma)', 'Level 3 Security Management', 'Mechanical Engineering', 'Psychology A-Level'],
     website: 'https://www.stockport.ac.uk',
@@ -130,7 +130,7 @@ export const colleges = [
     name: 'Bolton College',
     location: 'Bolton, Greater Manchester',
     lat: 53.5779, lng: -2.4282,
-    openingHours: 'Mon–Fri 08:00–17:00',
+    openingHours: 'Mon, Fri 08:00 to 17:00',
     openDays: ['2026-07-10', '2026-09-18'],
     courses: ['Professional Football Development (HNC)', 'Gas Engineering (Level 3)', 'Childcare & Education', 'Sport & Exercise Science'],
     website: 'https://www.boltoncollege.ac.uk',
@@ -140,7 +140,7 @@ export const colleges = [
     name: 'Wigan & Leigh College',
     location: 'Wigan, Greater Manchester',
     lat: 53.5450, lng: -2.6371,
-    openingHours: 'Mon–Fri 08:30–17:00',
+    openingHours: 'Mon, Fri 08:30 to 17:00',
     openDays: ['2026-07-03', '2026-09-25'],
     courses: ['Level 3 Coaching & Development', 'Plumbing & Heating Technology', 'CCTV & Physical Security', 'Digital Skills for Business'],
     website: 'https://www.wigan-leigh.ac.uk',
@@ -150,7 +150,7 @@ export const colleges = [
     name: 'Bury College',
     location: 'Bury, Greater Manchester',
     lat: 53.5934, lng: -2.2966,
-    openingHours: 'Mon–Thu 08:30–17:00, Fri 08:30–16:00',
+    openingHours: 'Mon, Thu 08:30 to 17:00, Fri 08:30 to 16:00',
     openDays: ['2026-07-17', '2026-10-09'],
     courses: ['Sport & Exercise Science', 'Animal Care & Management', 'Construction: Bricklaying', 'Music Performance'],
     website: 'https://www.burycollege.ac.uk',
@@ -160,7 +160,7 @@ export const colleges = [
     name: 'Oldham College',
     location: 'Oldham, Greater Manchester',
     lat: 53.5409, lng: -2.1114,
-    openingHours: 'Mon–Fri 08:30–17:00',
+    openingHours: 'Mon, Fri 08:30 to 17:00',
     openDays: ['2026-07-08', '2026-09-30'],
     courses: ['Access to Higher Education (Sport)', 'Electrical & Electronic Engineering', 'Personal Training & Nutrition', 'Logistics & Supply Chain'],
     website: 'https://www.oldham.ac.uk',
@@ -170,7 +170,7 @@ export const colleges = [
     name: 'Tameside College',
     location: 'Ashton-under-Lyne, Greater Manchester',
     lat: 53.4893, lng: -2.0966,
-    openingHours: 'Mon–Fri 08:30–17:00',
+    openingHours: 'Mon, Fri 08:30 to 17:00',
     openDays: ['2026-06-21', '2026-09-05'],
     courses: ['FA Football Coaching Pathway', 'Level 2 Retail & Customer Service', 'Health & Social Care', 'Digital Content Creation'],
     website: 'https://www.tameside.ac.uk',
@@ -185,7 +185,7 @@ export const jobEvents = [
     id: 'evt001',
     name: 'Greater Manchester Jobs Fair 2026',
     date: '2026-07-15',
-    time: '10:00–15:00',
+    time: '10:00 to 15:00',
     venue: 'Manchester Central Convention Complex',
     location: 'Manchester City Centre',
     lat: 53.4770, lng: -2.2465,
@@ -196,7 +196,7 @@ export const jobEvents = [
     id: 'evt002',
     name: 'Sport & Leisure Careers Day',
     date: '2026-07-22',
-    time: '11:00–16:00',
+    time: '11:00 to 16:00',
     venue: 'National Football Museum',
     location: 'Manchester City Centre',
     lat: 53.4831, lng: -2.2374,
@@ -207,29 +207,29 @@ export const jobEvents = [
     id: 'evt003',
     name: 'Salford Construction & Trades Recruitment Day',
     date: '2026-08-05',
-    time: '09:00–13:00',
+    time: '09:00 to 13:00',
     venue: 'Salford Civic Centre',
     location: 'Salford',
     lat: 53.4883, lng: -2.2914,
     type: 'Recruitment Event',
-    description: 'Local construction firms hiring apprentices and trainees. Bring a CV — on-the-spot interviews available for electricians, plumbers, and labourers.',
+    description: 'Local construction firms hiring apprentices and trainees. Bring a CV, on-the-spot interviews available for electricians, plumbers, and labourers.',
   },
   {
     id: 'evt004',
     name: 'Stockport Youth Careers Fair',
     date: '2026-08-13',
-    time: '10:00–14:00',
+    time: '10:00 to 14:00',
     venue: 'Stockport Town Hall',
     location: 'Stockport',
     lat: 53.4082, lng: -2.1575,
     type: 'Job Fair',
-    description: 'Aimed at 16–24 year olds. Employers from retail, security, logistics and digital sectors. CV workshop at 11am.',
+    description: 'Aimed at 16 to 24 year olds. Employers from retail, security, logistics and digital sectors. CV workshop at 11am.',
   },
   {
     id: 'evt005',
     name: 'Security Industry Recruitment Event',
     date: '2026-09-03',
-    time: '12:00–17:00',
+    time: '12:00 to 17:00',
     venue: 'Trafford Park Business Centre',
     location: 'Trafford',
     lat: 53.4659, lng: -2.3321,
@@ -240,7 +240,7 @@ export const jobEvents = [
     id: 'evt006',
     name: 'Bolton Jobs & Skills Fair',
     date: '2026-09-17',
-    time: '10:00–15:30',
+    time: '10:00 to 15:30',
     venue: 'Bolton Market Hall',
     location: 'Bolton',
     lat: 53.5779, lng: -2.4282,
@@ -251,7 +251,7 @@ export const jobEvents = [
     id: 'evt007',
     name: 'NHS Healthcare Careers Open Day',
     date: '2026-09-24',
-    time: '09:30–14:00',
+    time: '09:30 to 14:00',
     venue: 'Wythenshawe Hospital Education Centre',
     location: 'Wythenshawe, Manchester',
     lat: 53.3925, lng: -2.2689,
@@ -276,7 +276,7 @@ export const jobAdverts = [
     lat: 53.4659, lng: -2.3321,
     field: 'Security',
     pay: '£12.50/hr',
-    summary: 'Entry-level door supervision role; SIA licence training fully funded by employer. No experience needed — just reliability and a professional attitude.',
+    summary: 'Entry-level door supervision role; SIA licence training fully funded by employer. No experience needed, just reliability and a professional attitude.',
     applyUrl: 'https://www.reed.co.uk/jobs/security-officer-jobs-in-manchester',
     posted: '2026-06-03',
   },
@@ -287,38 +287,38 @@ export const jobAdverts = [
     location: 'Salford, Manchester',
     lat: 53.4879, lng: -2.2977,
     field: 'Coaching & Sport',
-    pay: '£22,000–£25,000/yr',
+    pay: '£22,000, £25,000/yr',
     summary: 'Deliver after-school, holiday, and community football sessions. FA Level 1 as minimum; Level 2 preferred. Full CPD support offered.',
     applyUrl: 'https://www.reed.co.uk/jobs/football-coach-jobs-in-manchester',
     posted: '2026-06-01',
   },
   {
     id: 'job003',
-    title: 'Apprentice Electrician – Manchester City Centre',
+    title: 'Apprentice Electrician, Manchester City Centre',
     employer: 'Bright Sparks Electrical Ltd',
     location: 'Manchester City Centre',
     lat: 53.4808, lng: -2.2426,
     field: 'Construction & Trades',
-    pay: '£7.55–£10.50/hr (apprentice rate, increasing on completion)',
+    pay: '£7.55, £10.50/hr (apprentice rate, increasing on completion)',
     summary: 'Full 3-year Level 3 Electrical Installation apprenticeship. Work on commercial and residential sites across Greater Manchester. No previous experience required.',
     applyUrl: 'https://www.reed.co.uk/jobs/electrician-apprentice-manchester',
     posted: '2026-05-30',
   },
   {
     id: 'job004',
-    title: 'Warehouse Operative – Night Shifts',
+    title: 'Warehouse Operative, Night Shifts',
     employer: 'Nexus Logistics Group',
     location: 'Trafford Park, Manchester',
     lat: 53.4730, lng: -2.3451,
     field: 'Logistics & Warehouse',
-    pay: '£11.44–£13.20/hr + shift premium',
+    pay: '£11.44, £13.20/hr + shift premium',
     summary: 'Pick and pack, goods-in, and dispatch in a busy distribution centre. Physical, team-focused work with overtime available. Immediate start.',
     applyUrl: 'https://www.reed.co.uk/jobs/warehouse-operative-manchester',
     posted: '2026-06-04',
   },
   {
     id: 'job005',
-    title: 'Retail Supervisor – Sports Brand Store',
+    title: 'Retail Supervisor, Sports Brand Store',
     employer: 'JD Sports (Arndale Branch)',
     location: 'Manchester City Centre',
     lat: 53.4831, lng: -2.2374,
@@ -336,7 +336,7 @@ export const jobAdverts = [
     lat: 53.3925, lng: -2.2689,
     field: 'Health & Social Care',
     pay: '£23,615/yr (Band 2)',
-    summary: 'Assist nursing staff on a ward — taking observations, supporting patients with daily needs, and keeping records. Full training provided. No clinical experience necessary.',
+    summary: 'Assist nursing staff on a ward, taking observations, supporting patients with daily needs, and keeping records. Full training provided. No clinical experience necessary.',
     applyUrl: 'https://www.reed.co.uk/jobs/healthcare-support-worker-manchester',
     posted: '2026-05-28',
   },
@@ -347,8 +347,8 @@ export const jobAdverts = [
     location: 'Manchester City Centre',
     lat: 53.4786, lng: -2.2393,
     field: 'Coaching & Sport',
-    pay: '£20,000–£35,000/yr (self-employed earnings)',
-    summary: 'Level 3 PT qualification essential. Lead 1-to-1 and small-group sessions. The gym provides the space — you build your client base. Flexible hours.',
+    pay: '£20,000, £35,000/yr (self-employed earnings)',
+    summary: 'Level 3 PT qualification essential. Lead 1-to-1 and small-group sessions. The gym provides the space, you build your client base. Flexible hours.',
     applyUrl: 'https://www.reed.co.uk/jobs/personal-trainer-manchester',
     posted: '2026-06-05',
   },
@@ -359,8 +359,8 @@ export const jobAdverts = [
     location: 'Stockport',
     lat: 53.4082, lng: -2.1575,
     field: 'Logistics & Warehouse',
-    pay: '£13.00–£15.00/hr',
-    summary: 'Multi-drop delivery route across South Manchester. Category B or C licence required. Daily routes planned — no night shifts. Good weekly earnings with overtime.',
+    pay: '£13.00, £15.00/hr',
+    summary: 'Multi-drop delivery route across South Manchester. Category B or C licence required. Daily routes planned, no night shifts. Good weekly earnings with overtime.',
     applyUrl: 'https://www.reed.co.uk/jobs/delivery-driver-stockport',
     posted: '2026-06-03',
   },
@@ -371,7 +371,7 @@ export const jobAdverts = [
     location: 'Salford, Manchester',
     lat: 53.4883, lng: -2.2914,
     field: 'Security',
-    pay: '£11.44–£12.50/hr',
+    pay: '£11.44, £12.50/hr',
     summary: 'Monitor CCTV systems in a shopping centre and respond to incidents. SIA Licence required (support available to obtain). Day and night shift options.',
     applyUrl: 'https://www.reed.co.uk/jobs/cctv-operator-salford',
     posted: '2026-06-01',
@@ -384,19 +384,19 @@ export const jobAdverts = [
     lat: 53.5409, lng: -2.1114,
     field: 'Health & Social Care',
     pay: '£24,000/yr',
-    summary: 'Work with young people aged 16–25 facing challenges around housing, employment, and mental health. Strong communication skills and empathy are the main requirements.',
+    summary: 'Work with young people aged 16 to 25 facing challenges around housing, employment, and mental health. Strong communication skills and empathy are the main requirements.',
     applyUrl: 'https://www.reed.co.uk/jobs/community-support-worker-oldham',
     posted: '2026-05-29',
   },
   {
     id: 'job011',
-    title: 'Plumbing Apprentice – Level 2/3',
+    title: 'Plumbing Apprentice, Level 2/3',
     employer: 'Flow Right Plumbing Ltd',
     location: 'Bolton',
     lat: 53.5779, lng: -2.4282,
     field: 'Construction & Trades',
-    pay: '£7.55–£11.44/hr (apprentice rate)',
-    summary: 'Join a small, friendly team on domestic and commercial plumbing work. Attend college one day per week. No experience required — just enthusiasm and punctuality.',
+    pay: '£7.55, £11.44/hr (apprentice rate)',
+    summary: 'Join a small, friendly team on domestic and commercial plumbing work. Attend college one day per week. No experience required, just enthusiasm and punctuality.',
     applyUrl: 'https://www.reed.co.uk/jobs/plumbing-apprentice-bolton',
     posted: '2026-06-04',
   },
@@ -424,12 +424,12 @@ export const careerRules = [
   {
     interests: ['football', 'sport', 'coaching', 'working with young people', 'teaching'],
     job: 'FA-Qualified Football Coach',
-    why: 'Your love of football and working with people makes coaching a natural fit — you already know what great coaching feels like from the inside.',
+    why: 'Your love of football and working with people makes coaching a natural fit, you already know what great coaching feels like from the inside.',
     needs: ['FA Level 1 & 2 Coaching Badges', 'DBS (Enhanced) check', 'Safeguarding awareness training', 'Paediatric First Aid (for junior coaching)'],
     pathway: [
       'Volunteer or assist at a local grassroots club (contact your county FA)',
       'Complete FA Level 1 Coaching Badge (weekend course, ~£150)',
-      'Complete FA Level 2 (3–4 days + assessment)',
+      'Complete FA Level 2 (3 to 4 days + assessment)',
       'Gain paid hours at a grassroots, community, or school holiday programme',
       'Progress to age-group lead or academy development coach',
     ],
@@ -439,12 +439,12 @@ export const careerRules = [
   {
     interests: ['security', 'protecting people', 'nightlife', 'events', 'discipline', 'military', 'confidence'],
     job: 'Door Supervisor / Security Officer (SIA Licensed)',
-    why: 'A disciplined, physical mindset and confidence around people are exactly what security work demands — and many employers fund the SIA licence for you.',
+    why: 'A disciplined, physical mindset and confidence around people are exactly what security work demands, and many employers fund the SIA licence for you.',
     needs: ['SIA Door Supervision Licence (Level 2 Award)', 'First Aid at Work (Level 3)', 'DBS check', 'Right to work in UK'],
     pathway: [
-      'Find an employer who funds SIA training (many do — check Reed/Adzuna)',
+      'Find an employer who funds SIA training (many do, check Reed/Adzuna)',
       'Complete 4-day Level 2 Award in Door Supervision',
-      'Apply for your SIA licence (~£190) — valid 3 years',
+      'Apply for your SIA licence (~£190), valid 3 years',
       'Start as a door supervisor at venues or events',
       'Progress to head of security, site manager, or close-protection work',
     ],
@@ -454,11 +454,11 @@ export const careerRules = [
   {
     interests: ['fitness', 'gym', 'helping people', 'health', 'exercise', 'training', 'nutrition'],
     job: 'Personal Trainer / Fitness Coach',
-    why: 'You already live the gym life — turning that into a career means you spend your working day doing something you genuinely enjoy.',
+    why: 'You already live the gym life, turning that into a career means you spend your working day doing something you genuinely enjoy.',
     needs: ['Level 2 Gym Instructor Certificate', 'Level 3 Personal Trainer Diploma', 'First Aid certificate', 'Public liability insurance', 'CPD (ongoing)'],
     pathway: [
-      'Complete Level 2 Gym Instructor qualification (online + practical, 6–12 weeks)',
-      'Complete Level 3 PT Diploma (4–6 months, many online options ~£1,000–£2,000)',
+      'Complete Level 2 Gym Instructor qualification (online + practical, 6 to 12 weeks)',
+      'Complete Level 3 PT Diploma (4 to 6 months, many online options ~£1,000, £2,000)',
       'Get insured and start floor hours at a gym',
       'Build a client base through word of mouth and social media',
       'Specialise (youth athletes, strength & conditioning, nutrition coaching)',
@@ -469,7 +469,7 @@ export const careerRules = [
   {
     interests: ['building', 'fixing things', 'manual work', 'construction', 'electricity', 'wiring'],
     job: 'Electrician (Level 3 Qualified)',
-    why: 'Practical, problem-solving, and always in demand — electricians earn well and have real job security.',
+    why: 'Practical, problem-solving, and always in demand, electricians earn well and have real job security.',
     needs: ['Level 2 Electrical Installations (City & Guilds 2365)', 'Level 3 Electrical Installations', '18th Edition Wiring Regulations (BS 7671)', 'AM2 Assessment', 'CSCS card'],
     pathway: [
       'Enrol on a Level 2 Electrical Installations course at a local college',
@@ -484,7 +484,7 @@ export const careerRules = [
   {
     interests: ['plumbing', 'heating', 'manual work', 'fixing things', 'houses', 'building'],
     job: 'Plumber / Heating Engineer',
-    why: 'Skilled trades like plumbing are in real shortage — you could be earning well within two years and working for yourself within five.',
+    why: 'Skilled trades like plumbing are in real shortage, you could be earning well within two years and working for yourself within five.',
     needs: ['Level 2 Plumbing & Heating (City & Guilds 6035)', 'Level 3 Plumbing & Heating', 'Gas Safe registration (for gas work)', 'Water regulations awareness'],
     pathway: [
       'Complete Level 2 Plumbing & Heating at college or via apprenticeship',
@@ -499,7 +499,7 @@ export const careerRules = [
   {
     interests: ['people', 'caring', 'mental health', 'social work', 'support', 'community', 'young people', 'helping'],
     job: 'Support Worker / Community Development Officer',
-    why: 'You understand what it feels like to need support — that lived experience makes you a more effective, empathetic support worker than any textbook can.',
+    why: 'You understand what it feels like to need support, that lived experience makes you a more effective, empathetic support worker than any textbook can.',
     needs: ['Level 2 Health & Social Care (or willing to work towards)', 'DBS (Enhanced)', 'Safeguarding training', 'Good communication skills'],
     pathway: [
       'Apply for entry-level support worker roles (no formal qualification always required)',
@@ -509,7 +509,7 @@ export const careerRules = [
       'Consider a degree apprenticeship in social work',
     ],
     resource: 'https://www.skillsforcare.org.uk/Careers-in-care/Explore-roles/Support-worker.aspx',
-    resourceLabel: 'Skills for Care — Support Worker',
+    resourceLabel: 'Skills for Care, Support Worker',
   },
   {
     interests: ['driving', 'logistics', 'delivery', 'independence', 'roads', 'warehouse'],
@@ -529,7 +529,7 @@ export const careerRules = [
   {
     interests: ['media', 'football', 'writing', 'journalism', 'video', 'social media', 'content', 'creativity'],
     job: 'Sports Journalist / Content Creator',
-    why: 'You know football from the inside — that makes your content authentic. Clubs and media outlets love people who understand the game, not just the words.',
+    why: 'You know football from the inside, that makes your content authentic. Clubs and media outlets love people who understand the game, not just the words.',
     needs: ['Portfolio of written/video/audio content', 'NCTJ Journalism Qualification (optional but valued)', 'Understanding of SEO and social platforms', 'Good grammar and communication skills'],
     pathway: [
       'Start a blog, YouTube channel, or podcast covering football',
@@ -544,7 +544,7 @@ export const careerRules = [
   {
     interests: ['business', 'money', 'entrepreneurship', 'sales', 'negotiation', 'managing', 'organising'],
     job: 'Business / Enterprise / Sales Professional',
-    why: 'Football teaches you to compete, to manage pressure, and to read situations fast — all critical in business and sales.',
+    why: 'Football teaches you to compete, to manage pressure, and to read situations fast, all critical in business and sales.',
     needs: ['Level 3 Business or Sales qualification (or apprenticeship)', 'Good communication skills', 'Proficiency with basic IT/software'],
     pathway: [
       'Start in a customer service, retail, or admin role to understand business basics',
@@ -559,8 +559,8 @@ export const careerRules = [
   {
     interests: ['technology', 'computers', 'gaming', 'coding', 'data', 'IT', 'problem solving'],
     job: 'IT Technician / Junior Developer',
-    why: 'Tech is the fastest-growing sector in the UK, and you don\'t need a degree to get started — just curiosity, problem-solving skills, and the willingness to learn.',
-    needs: ['CompTIA A+ or IT Fundamentals (entry-level cert)', 'Basic coding knowledge (Python, JavaScript, or HTML) — free online resources available', 'Google IT Support Certificate (free via Coursera)'],
+    why: 'Tech is the fastest-growing sector in the UK, and you don\'t need a degree to get started, just curiosity, problem-solving skills, and the willingness to learn.',
+    needs: ['CompTIA A+ or IT Fundamentals (entry-level cert)', 'Basic coding knowledge (Python, JavaScript, or HTML), free online resources available', 'Google IT Support Certificate (free via Coursera)'],
     pathway: [
       'Complete a free or low-cost online IT or coding course (FreeCodeCamp, CS50, Codecademy)',
       'Obtain CompTIA A+ (entry-level IT certification)',
@@ -584,15 +584,15 @@ export const careerRules = [
       'Specialise in dog training, wildlife conservation, or farm management',
     ],
     resource: 'https://www.lantra.co.uk/',
-    resourceLabel: 'LANTRA — Land-based Careers',
+    resourceLabel: 'LANTRA, Land-based Careers',
   },
   {
     interests: ['music', 'performance', 'acting', 'events', 'entertainment', 'people', 'creativity'],
     job: 'Events Coordinator / Entertainment & Hospitality',
-    why: 'If you thrive in busy, people-focused environments, events and hospitality offer a career full of variety and energy — with a clear path to management.',
+    why: 'If you thrive in busy, people-focused environments, events and hospitality offer a career full of variety and energy, with a clear path to management.',
     needs: ['Level 2/3 Events Management or Hospitality (college course or apprenticeship)', 'Communication and organisation skills', 'Food Hygiene certificate (for hospitality roles)'],
     pathway: [
-      'Start in hospitality — bar, restaurant, or venue staff',
+      'Start in hospitality, bar, restaurant, or venue staff',
       'Study Level 3 Events Management or Hospitality Management',
       'Assist at events to build experience (festivals, corporate, sport)',
       'Progress to events coordinator, venue manager, or operations lead',
@@ -641,7 +641,7 @@ export const JOB_FIELDS        = ['Coaching & Sport', 'Construction & Trades', '
  * A user's self-reported qualifications.
  * @typedef {Object} QualProfile
  * @property {number}  gcseCount    - how many GCSEs they hold
- * @property {string}  gcseGrades   - free-text grade range, e.g. "4–6"
+ * @property {string}  gcseGrades   - free-text grade range, e.g. "4 to 6"
  * @property {boolean} passedMaths  - GCSE Maths at grade 4+
  * @property {boolean} passedEnglish- GCSE English at grade 4+
  * @property {string}  btecLevel    - '' | '1' | '2' | '3'
@@ -660,34 +660,34 @@ export const JOB_FIELDS        = ['Coaching & Sport', 'Construction & Trades', '
  * }>}
  */
 export const QUAL_OPPORTUNITIES = [
-  // ── Local college (16–19) ───────────────────────────────────────────────────
+  // ── Local college (16 to 19) ───────────────────────────────────────────────────
   {
     id: 'college-l3',
-    category: 'Local College (16–19)',
+    category: 'Local College (16 to 19)',
     title: 'A-Levels or BTEC Level 3',
     minReq: '5 GCSEs at grade 4+ (incl. English & Maths)',
     body: 'Pick A-Levels or a BTEC Level 3 (a 2-year course). BTEC L3 can be worth up to 3 A-Levels for university or higher apprenticeships.',
-    perks: 'Free for 16–19 year-olds · 6+ subject choices',
+    perks: 'Free for 16 to 19 year-olds · 6+ subject choices',
     link: { label: 'Find a college course (UCAS)', url: 'https://www.ucas.com/further-education' },
     evaluate: (p) => {
       const has5 = p.gcseCount >= 5 && p.passedMaths && p.passedEnglish
-      if (has5)  return { difficulty: 'achievable', eligible: true,  statusNote: 'You qualify — pick up to 4 subjects.' }
+      if (has5)  return { difficulty: 'achievable', eligible: true,  statusNote: 'You qualify, pick up to 4 subjects.' }
       const close = p.gcseCount >= 4 && (p.passedMaths || p.passedEnglish)
-      if (close) return { difficulty: 'higher', eligible: false, statusNote: 'Almost there — retaking Maths/English unlocks this.' }
-      return { difficulty: 'higher', eligible: false, statusNote: 'Work toward this — start with a Level 2 course or retakes.' }
+      if (close) return { difficulty: 'higher', eligible: false, statusNote: 'Almost there, retaking Maths/English unlocks this.' }
+      return { difficulty: 'higher', eligible: false, statusNote: 'Work toward this, start with a Level 2 course or retakes.' }
     },
   },
   {
     id: 'college-l2',
-    category: 'Local College (16–19)',
+    category: 'Local College (16 to 19)',
     title: 'Level 2 Diploma + GCSE resits',
-    minReq: '2+ GCSEs (any grade) — open to most school leavers',
+    minReq: '2+ GCSEs (any grade), open to most school leavers',
     body: 'A 1-year course that builds up to Level 3. You can resit GCSE Maths & English here for free while you study.',
-    perks: 'Free for 16–19 · resit Maths/English at the same time',
+    perks: 'Free for 16 to 19 · resit Maths/English at the same time',
     link: { label: 'Resitting GCSEs (Gov.uk)', url: 'https://www.gov.uk/government/publications/gcse-english-and-maths-resits' },
     evaluate: (p) => {
-      if (p.gcseCount >= 2) return { difficulty: 'easy', eligible: true, statusNote: 'You qualify — a solid route up to Level 3.' }
-      return { difficulty: 'easy', eligible: true, statusNote: 'Open entry — a good place to start building qualifications.' }
+      if (p.gcseCount >= 2) return { difficulty: 'easy', eligible: true, statusNote: 'You qualify, a solid route up to Level 3.' }
+      return { difficulty: 'easy', eligible: true, statusNote: 'Open entry, a good place to start building qualifications.' }
     },
   },
 
@@ -698,12 +698,12 @@ export const QUAL_OPPORTUNITIES = [
     title: 'Football Academy + BTEC (play & study)',
     minReq: '4 GCSEs at grade 3+ (varies by provider)',
     body: 'Train and play competitively while you study a BTEC in Sport. Run by clubs, the LFE (League Football Education) and providers like SCL.',
-    perks: 'Play + study · open days year-round · funded for 16–18',
+    perks: 'Play + study · open days year-round · funded for 16 to 18',
     link: { label: 'League Football Education', url: 'https://www.lfe.org.uk/' },
     evaluate: (p) => {
-      if (p.gcseCount >= 4) return { difficulty: 'easy', eligible: true, statusNote: 'You qualify — check the next open day.' }
-      if (p.gcseCount >= 2) return { difficulty: 'achievable', eligible: true, statusNote: 'Likely eligible — entry varies, contact the provider.' }
-      return { difficulty: 'achievable', eligible: false, statusNote: 'Some programmes accept fewer GCSEs — ask at an open day.' }
+      if (p.gcseCount >= 4) return { difficulty: 'easy', eligible: true, statusNote: 'You qualify, check the next open day.' }
+      if (p.gcseCount >= 2) return { difficulty: 'achievable', eligible: true, statusNote: 'Likely eligible, entry varies, contact the provider.' }
+      return { difficulty: 'achievable', eligible: false, statusNote: 'Some programmes accept fewer GCSEs, ask at an open day.' }
     },
   },
 
@@ -712,11 +712,11 @@ export const QUAL_OPPORTUNITIES = [
     id: 'appr-l2',
     category: 'Apprenticeships',
     title: 'Intermediate Apprenticeship (Level 2)',
-    minReq: 'Few or no GCSEs needed — easiest entry',
+    minReq: 'Few or no GCSEs needed, easiest entry',
     body: 'Paid, employer-funded training equal to GCSE level. You earn a wage while you learn and gain a real qualification.',
     perks: 'Paid from day one · no debt · English/Maths built in',
     link: { label: 'Find an apprenticeship (Gov.uk)', url: 'https://www.gov.uk/apply-apprenticeship' },
-    evaluate: () => ({ difficulty: 'easy', eligible: true, statusNote: 'Open to most school leavers — paid, employer-funded.' }),
+    evaluate: () => ({ difficulty: 'easy', eligible: true, statusNote: 'Open to most school leavers, paid, employer-funded.' }),
   },
   {
     id: 'appr-l3',
@@ -728,7 +728,7 @@ export const QUAL_OPPORTUNITIES = [
     link: { label: 'Find an apprenticeship (Gov.uk)', url: 'https://www.gov.uk/apply-apprenticeship' },
     evaluate: (p) => {
       const has5 = p.gcseCount >= 5 && p.passedMaths && p.passedEnglish
-      if (has5) return { difficulty: 'achievable', eligible: true, statusNote: 'You qualify — paid and employer-funded.' }
+      if (has5) return { difficulty: 'achievable', eligible: true, statusNote: 'You qualify, paid and employer-funded.' }
       return { difficulty: 'higher', eligible: false, statusNote: 'Retaking Maths/English would unlock this.' }
     },
   },
@@ -736,12 +736,12 @@ export const QUAL_OPPORTUNITIES = [
     id: 'appr-degree',
     category: 'Apprenticeships',
     title: 'Degree Apprenticeship (Level 6)',
-    minReq: 'Level 3 needed — A-Levels or BTEC Level 3',
-    body: 'Earn a full degree with no tuition fees while working. The highest-entry route — most do A-Levels or a BTEC L3 first.',
+    minReq: 'Level 3 needed, A-Levels or BTEC Level 3',
+    body: 'Earn a full degree with no tuition fees while working. The highest-entry route, most do A-Levels or a BTEC L3 first.',
     perks: 'Degree with no debt · salaried · highest entry bar',
     link: { label: 'Degree apprenticeships (UCAS)', url: 'https://www.ucas.com/apprenticeships/degree-apprenticeships' },
     evaluate: (p) => {
-      if (p.hasALevels || p.btecLevel === '3') return { difficulty: 'achievable', eligible: true, statusNote: 'You qualify — strong route, apply early.' }
+      if (p.hasALevels || p.btecLevel === '3') return { difficulty: 'achievable', eligible: true, statusNote: 'You qualify, strong route, apply early.' }
       return { difficulty: 'higher', eligible: false, statusNote: 'Work toward this after college or A-Levels.' }
     },
   },
@@ -751,23 +751,23 @@ export const QUAL_OPPORTUNITIES = [
     id: 'intern',
     category: 'Internships & Work Experience',
     title: 'Internships & Work Experience',
-    minReq: 'No formal qualifications — willingness to learn',
+    minReq: 'No formal qualifications, willingness to learn',
     body: 'Short placements that build your CV and references. A direct way into an industry while you decide your longer route.',
     perks: 'Entry-level · builds references · often leads to a job',
     link: { label: 'Search placements (Indeed)', url: 'https://uk.indeed.com/q-work-experience-jobs.html' },
-    evaluate: () => ({ difficulty: 'easy', eligible: true, statusNote: 'Open to everyone — a great first step.' }),
+    evaluate: () => ({ difficulty: 'easy', eligible: true, statusNote: 'Open to everyone, a great first step.' }),
   },
 ]
 
 // Fixed display order for opportunity categories on the page.
 export const QUAL_CATEGORY_ORDER = [
-  'Local College (16–19)',
+  'Local College (16 to 19)',
   'Football College Programmes',
   'Apprenticeships',
   'Internships & Work Experience',
 ]
 
-// ── Learn a Skill — free online certificates that lead to real jobs ────────────
+// ── Learn a Skill, free online certificates that lead to real jobs ────────────
 /**
  * @type {Array<{ id, field, title, provider, cost, leadsTo, link: {label,url} }>}
  */
@@ -778,7 +778,7 @@ export const SKILL_COURSES = [
     title: 'Google Data Analytics Certificate',
     provider: 'Google Career Certificates (on Coursera)',
     cost: 'Free to audit · ~6 months, self-paced',
-    leadsTo: 'Junior Data Analyst · ~£24k–30k starting',
+    leadsTo: 'Junior Data Analyst · ~£24k, 30k starting',
     link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/data-analytics/' },
   },
   {
@@ -787,7 +787,7 @@ export const SKILL_COURSES = [
     title: 'Google Cybersecurity Certificate',
     provider: 'Google Career Certificates (on Coursera)',
     cost: 'Free to audit · ~6 months, self-paced',
-    leadsTo: 'Security Analyst (entry) · ~£25k–35k starting',
+    leadsTo: 'Security Analyst (entry) · ~£25k, 35k starting',
     link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/cybersecurity/' },
   },
   {
@@ -795,8 +795,8 @@ export const SKILL_COURSES = [
     field: 'IT Support',
     title: 'Google IT Support Certificate',
     provider: 'Google Career Certificates (on Coursera)',
-    cost: 'Free to audit · ~3–6 months, self-paced',
-    leadsTo: 'IT Support Technician · ~£22k–28k starting',
+    cost: 'Free to audit · ~3 to 6 months, self-paced',
+    leadsTo: 'IT Support Technician · ~£22k, 28k starting',
     link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/it-support/' },
   },
   {
@@ -805,22 +805,22 @@ export const SKILL_COURSES = [
     title: 'Google Digital Marketing & E-commerce',
     provider: 'Google Career Certificates (on Coursera)',
     cost: 'Free to audit · ~6 months, self-paced',
-    leadsTo: 'Marketing Assistant · ~£22k–28k starting',
+    leadsTo: 'Marketing Assistant · ~£22k, 28k starting',
     link: { label: 'Start on Google Career Certificates', url: 'https://grow.google/certificates/digital-marketing-ecommerce/' },
   },
   {
-    id: 'ms-ai',
-    field: 'AI',
-    title: 'Microsoft Learn — AI & Azure AI Fundamentals',
+    id: 'ms-cloud',
+    field: 'Tech',
+    title: 'Microsoft Learn, Azure Cloud Fundamentals',
     provider: 'Microsoft Learn',
     cost: 'Completely free · self-paced modules',
-    leadsTo: 'AI/Data trainee roles · foundation for tech jobs',
-    link: { label: 'Start on Microsoft Learn', url: 'https://learn.microsoft.com/en-us/training/paths/get-started-with-artificial-intelligence-on-azure/' },
+    leadsTo: 'Data and cloud trainee roles · foundation for tech jobs',
+    link: { label: 'Start on Microsoft Learn', url: 'https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/' },
   },
   {
     id: 'ms-it',
     field: 'IT Support',
-    title: 'Microsoft Learn — Career Essentials in IT',
+    title: 'Microsoft Learn, Career Essentials in IT',
     provider: 'Microsoft Learn',
     cost: 'Completely free · self-paced modules',
     leadsTo: 'IT Support & Helpdesk roles',
@@ -828,7 +828,7 @@ export const SKILL_COURSES = [
   },
 ]
 
-// ── Learn a Trade — practical apprenticeship routes ────────────────────────────
+// ── Learn a Trade, practical apprenticeship routes ────────────────────────────
 /**
  * @type {Array<{ id, trade, emoji, route, leadsTo, link: {label,url} }>}
  */
@@ -838,7 +838,7 @@ export const TRADE_ROUTES = [
     trade: 'Electrician',
     emoji: '⚡',
     route: 'Level 3 Installation Electrician apprenticeship (~4 years). Earn while you train; no degree needed.',
-    leadsTo: 'Qualified electrician · ~£30k–45k+ once qualified',
+    leadsTo: 'Qualified electrician · ~£30k, 45k+ once qualified',
     link: { label: 'Find an electrical apprenticeship', url: 'https://www.gov.uk/apply-apprenticeship' },
   },
   {
@@ -846,15 +846,15 @@ export const TRADE_ROUTES = [
     trade: 'Plumbing & Heating',
     emoji: '🔧',
     route: 'Level 3 Plumbing & Domestic Heating apprenticeship (~4 years). Paid on-the-job training.',
-    leadsTo: 'Qualified plumber · ~£28k–40k+ once qualified',
+    leadsTo: 'Qualified plumber · ~£28k, 40k+ once qualified',
     link: { label: 'Find a plumbing apprenticeship', url: 'https://www.gov.uk/apply-apprenticeship' },
   },
   {
     id: 'carpenter',
     trade: 'Carpentry & Joinery',
     emoji: '🪚',
-    route: 'Level 2 then Level 3 Carpentry apprenticeship (~2–4 years). Start with few/no GCSEs.',
-    leadsTo: 'Qualified carpenter/joiner · ~£26k–38k+ once qualified',
+    route: 'Level 2 then Level 3 Carpentry apprenticeship (~2 to 4 years). Start with few/no GCSEs.',
+    leadsTo: 'Qualified carpenter/joiner · ~£26k, 38k+ once qualified',
     link: { label: 'Find a carpentry apprenticeship', url: 'https://www.gov.uk/apply-apprenticeship' },
   },
 ]

@@ -1,5 +1,5 @@
 /**
- * PageLayout.jsx — the predictable page skeleton every page can share.
+ * PageLayout.jsx, the predictable page skeleton every page can share.
  *
  * Structure (top → bottom):
  *   <PageLayout>
@@ -11,7 +11,7 @@
  *
  * Layout system: a single max-width container (--container) with consistent
  * section rhythm (--space-8 vertical), plus a `bleed` escape hatch for
- * full-width accent bands. Tokens only — nothing hardcoded.
+ * full-width accent bands. Tokens only, nothing hardcoded.
  *
  * The floating nav overlays the page, so PageLayout owns the top offset
  * (--header-height) so content never hides beneath the island.

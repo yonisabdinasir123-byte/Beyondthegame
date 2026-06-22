@@ -10,7 +10,7 @@ const METRICS = [
 const RANGES = [30, 14, 7]
 
 const ENCOURAGE = [
-  'Every check-in counts — you\'re building self-awareness.',
+  'Every check-in counts, you\'re building self-awareness.',
   'Tracking how you feel is the first step to feeling better.',
   'You\'re doing great just by showing up and checking in.',
   'Progress isn\'t always linear. You\'re still moving forward.',
@@ -119,7 +119,7 @@ export default function WellbeingTracker() {
 
   const avg = (key) => {
     const slice = history.slice(-range)
-    if (!slice.length) return '–'
+    if (!slice.length) return ', '
     return (slice.reduce((s, d) => s + (d[key] ?? 0), 0) / slice.length).toFixed(1)
   }
 

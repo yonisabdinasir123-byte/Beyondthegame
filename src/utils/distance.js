@@ -1,5 +1,5 @@
 /**
- * distance.js — Haversine distance utility + postcode → lat/lng lookup.
+ * distance.js, Haversine distance utility + postcode → lat/lng lookup.
  *
  * HOW TO PLUG IN:
  * ───────────────

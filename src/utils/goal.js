@@ -1,7 +1,7 @@
 /**
- * goal.js — goal selection + derived milestone progress.
+ * goal.js, goal selection + derived milestone progress.
  *
- * Goal gradient: progress, mastery, control — never checkbox theatre.
+ * Goal gradient: progress, mastery, control, never checkbox theatre.
  * Milestones are DERIVED from real usage signals already stored in
  * localStorage (postcode set, CV drafted, contact added, etc.) so the
  * progress bar always reflects what the user actually did.
@@ -15,7 +15,7 @@ import { storage } from './storage'
 export const GOALS = [
   { id: 'find-club',  emoji: '⚽', label: 'Find a Club',  blurb: 'Get back playing at the right level' },
   { id: 'create-cv',  emoji: '📄', label: 'Create a CV',  blurb: 'Show clubs and employers what you can do' },
-  { id: 'learn-trade', emoji: '🔧', label: 'Learn a Trade', blurb: 'Earn while you train — no student debt' },
+  { id: 'learn-trade', emoji: '🔧', label: 'Learn a Trade', blurb: 'Earn while you train, no student debt' },
   { id: 'find-job',   emoji: '💼', label: 'Find a Job',   blurb: 'Real roles near you, matched to you' },
 ]
 
@@ -58,12 +58,12 @@ export const clearGoal = () => { storage.remove('goal'); notifyProgress() }
 export function setGoal(id) {
   const def = GOALS.find(g => g.id === id)
   if (!def) return
-  /* Cialdini: commitment — store the user's own choice, shown back to them */
+  /* Cialdini: commitment, store the user's own choice, shown back to them */
   storage.set('goal', { id: def.id, label: def.label, emoji: def.emoji, setAt: new Date().toISOString() })
   notifyProgress()
 }
 
-// "Not now" is remembered forever — we never re-open the picker modal.
+// "Not now" is remembered forever, we never re-open the picker modal.
 /* No dark patterns: declining once means no nagging */
 export const skipGoalPicker = () => storage.set('goal-skipped', new Date().toISOString())
 export const goalPickerSkipped = () => Boolean(storage.get('goal-skipped', null))
@@ -102,7 +102,7 @@ export function notifyProgress() {
 }
 
 // ─── Haptics ───────────────────────────────────────────────────────────────────
-/* Norman: behavioural — physical confirmation; graceful no-op if unsupported */
+/* Norman: behavioural, physical confirmation; graceful no-op if unsupported */
 export function hapticPulse() {
-  try { navigator.vibrate?.(10) } catch { /* unsupported — silent */ }
+  try { navigator.vibrate?.(10) } catch { /* unsupported, silent */ }
 }

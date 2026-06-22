@@ -1,0 +1,54 @@
+/* SuccessStoriesPage, floating glass tiles over the animated field. */
+
+.stories-page { padding-bottom: var(--space-9); }
+
+.stories-grid-section {
+  max-width: var(--container);
+  margin: clamp(2rem, 5vw, 3.5rem) auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+.stories-grid-section__head { max-width: 60ch; margin-bottom: clamp(1.5rem, 4vw, 2.5rem); }
+.stories-grid-section__title { font: var(--type-h2); letter-spacing: -0.02em; color: var(--text-primary); margin: .35rem 0 .5rem; }
+.stories-grid-section__intro { font: var(--type-body); color: var(--text-secondary); }
+
+.stories-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.story-tile { display: flex; flex-direction: column; gap: .9rem; height: 100%; }
+.story-tile__top { display: flex; align-items: center; gap: .75rem; }
+.story-tile__avatar {
+  width: 2.75rem; height: 2.75rem; border-radius: var(--radius-pill);
+  display: grid; place-items: center;
+  color: #fff; font-weight: 800; font-family: var(--font-heading);
+  flex-shrink: 0;
+}
+.story-tile__pathway {
+  font: var(--type-caption);
+  color: var(--color-primary-strong);
+  background: var(--teal-50);
+  padding: .3rem .6rem; border-radius: var(--radius-pill);
+}
+.story-tile__quote {
+  font-family: var(--font-body);
+  font-size: 1.0625rem; line-height: 1.55;
+  color: var(--text-primary);
+  margin: 0;
+}
+.story-tile__journey {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .4rem;
+  font-size: .85rem; color: var(--text-muted);
+  margin-top: auto;
+}
+.story-tile__arrow { color: var(--color-accent-strong); font-weight: 700; }
+.story-tile__to { color: var(--color-primary-strong); font-weight: 700; }
+.story-tile__by {
+  display: flex; flex-direction: column;
+  border-top: 1px solid rgba(7,33,29,.10);
+  padding-top: .75rem;
+}
+.story-tile__by strong { color: var(--text-primary); font-family: var(--font-heading); }
+.story-tile__by span { font-size: .8rem; color: var(--text-muted); }

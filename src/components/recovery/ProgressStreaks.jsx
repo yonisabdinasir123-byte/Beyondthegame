@@ -81,7 +81,7 @@ function HeatmapWeeks({ days }) {
                 <span
                   key={cell.iso}
                   className={`streak-heatmap__cell${cell.done ? ' streak-heatmap__cell--done' : ''}${cell.iso === todayStr ? ' streak-heatmap__cell--today' : ''}`}
-                  aria-label={`${formatDate(cell.iso)}${cell.done ? ' — completed' : ''}`}
+                  aria-label={`${formatDate(cell.iso)}${cell.done ? ', completed' : ''}`}
                   role="img"
                 />
               )
@@ -131,8 +131,8 @@ export default function ProgressStreaks({ completedDates = [] }) {
       {current >= 3 && (
         <p className="streak-nudge" role="status" aria-live="polite">
           {current >= 7
-            ? `🌟 ${current} days straight — you're on fire! Keep that momentum.`
-            : `💪 ${current} days in a row — brilliant consistency!`}
+            ? `🌟 ${current} days straight, you're on fire! Keep that momentum.`
+            : `💪 ${current} days in a row, brilliant consistency!`}
         </p>
       )}
 

@@ -1,5 +1,5 @@
 /**
- * FloatingNav.jsx — the site's signature: a floating "team-sheet" pill.
+ * FloatingNav.jsx, the site's signature: a floating "team-sheet" pill.
  *
  * A rounded, elevated island that sits ~16px below the top edge, centred,
  * detached from the page (soft shadow + backdrop blur). It:
@@ -20,11 +20,12 @@ import { useApp } from '../context/AppContext.jsx'
 import './FloatingNav.css'
 
 const LINKS = [
-  { to: '/',             label: 'Home' },
-  { to: '/pathway',      label: 'Pathway' },
-  { to: '/education',    label: 'Education' },
-  { to: '/support',      label: 'Support' },
-  { to: '/jobs-careers', label: 'Jobs' },
+  { to: '/',                label: 'Home' },
+  { to: '/pathway',         label: 'Pathway' },
+  { to: '/education',       label: 'Education' },
+  { to: '/support',         label: 'Support' },
+  { to: '/jobs-careers',    label: 'Jobs' },
+  { to: '/success-stories', label: 'Stories' },
 ]
 
 export default function FloatingNav({ onLogin, onSignup }) {
@@ -94,7 +95,7 @@ export default function FloatingNav({ onLogin, onSignup }) {
     <header className={`fnav${condensed ? ' fnav--condensed' : ''}`}>
       {/* ── Desktop / tablet island ─────────────────────────────────── */}
       <nav className="fnav__bar" aria-label="Primary">
-        <Link to="/" className="fnav__brand" aria-label="Beyond the Game — home">
+        <Link to="/" className="fnav__brand" aria-label="Beyond the Game, home">
           <span className="fnav__mark" aria-hidden="true" />
           <span className="fnav__brand-text">Beyond&nbsp;the&nbsp;Game</span>
         </Link>

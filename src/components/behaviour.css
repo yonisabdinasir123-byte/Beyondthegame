@@ -1,10 +1,10 @@
 /**
- * behaviour.css — styles for the behavioural/emotional design layer:
+ * behaviour.css, styles for the behavioural/emotional design layer:
  * goal picker, progress gradient, Fogg prompt cards, mood board, carousel.
  * Uses the established light amber/cream tokens from App.css.
  */
 
-/* Screen-reader only — self-contained so these components work on any page */
+/* Screen-reader only, self-contained so these components work on any page */
 .sr-only {
   position: absolute;
   width: 1px; height: 1px;
@@ -14,7 +14,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   GOAL PICKER  (Norman: visceral — warm, inviting cards)
+   GOAL PICKER  (Norman: visceral, warm, inviting cards)
    ═══════════════════════════════════════════════════════════ */
 .goal-block {
   max-width: 1200px;
@@ -89,7 +89,7 @@
   line-height: 1.45;
 }
 
-/* Plain decline — same visual dignity as any quiet action.
+/* Plain decline, same visual dignity as any quiet action.
    No confirm-shaming, ever. */
 .goal-skip {
   display: block;
@@ -222,7 +222,7 @@
 }
 .goal-progress__change:hover { color: var(--amber-700); }
 
-/* Celebration glow — brief, warm, skipped under reduced motion */
+/* Celebration glow, brief, warm, skipped under reduced motion */
 @keyframes goalCelebrate {
   0%   { box-shadow: var(--sh-sm); }
   35%  { box-shadow: 0 0 0 4px rgba(245, 158, 11, .35), var(--sh-md); }
@@ -294,7 +294,7 @@
 .prompt-card__cta:hover { background: var(--amber-700); transform: translateY(-2px); }
 
 /* ═══════════════════════════════════════════════════════════
-   MOOD BOARD  (Norman: reflective — future identity)
+   MOOD BOARD  (Norman: reflective, future identity)
    ═══════════════════════════════════════════════════════════ */
 .moodboard__intro {
   font-size: .9375rem;
@@ -429,7 +429,7 @@
 }
 
 .story-carousel__card {
-  flex: 0 0 85%;            /* partial next card peeks in — "there's more" */
+  flex: 0 0 85%;            /* partial next card peeks in, "there's more" */
   max-width: 380px;
   scroll-snap-align: start;
 }
@@ -465,7 +465,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — verified at 375px
+   RESPONSIVE, verified at 375px
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
   .goal-picker-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
@@ -478,7 +478,7 @@
 
 
 /* ═══════════════════════════════════════════════════════════
-   PEER VOICES — tappable story cards (affordance + 3D tilt)
+   PEER VOICES, tappable story cards (affordance + 3D tilt)
    ═══════════════════════════════════════════════════════════ */
 .story-card-link {
   display: flex;
@@ -487,13 +487,13 @@
   position: relative;
   isolation: isolate;
   border-radius: var(--r-lg);
-  /* motion: system tokens — affordance set */
+  /* motion: system tokens, affordance set */
   transition:
     transform  var(--dur-std) var(--ease-out-soft),
     box-shadow var(--dur-std) var(--ease-out-soft);
 }
 
-/* Gradient border sweep — amber→terracotta conic ring on hover/focus */
+/* Gradient border sweep, amber→terracotta conic ring on hover/focus */
 .story-card-link::before {
   content: '';
   position: absolute;
@@ -529,7 +529,7 @@
   margin: 0;
 }
 
-/* Affordance label — the card states its action */
+/* Affordance label, the card states its action */
 .story-card-link__cta {
   margin-top: .625rem;
   font-size: .875rem;
@@ -541,7 +541,7 @@
   transform: translateX(3px);
 }
 
-/* 2D/3D mix: tilt toward cursor — pointer-fine devices only */
+/* 2D/3D mix: tilt toward cursor, pointer-fine devices only */
 @media (hover: hover) and (pointer: fine) {
   .story-card-link {
     transform:

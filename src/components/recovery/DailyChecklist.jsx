@@ -136,7 +136,7 @@ export default function DailyChecklist({ defaultItems, onDayComplete }) {
 
       {allDone && (
         <div className="checklist-celebrate" role="status" aria-live="polite">
-          🎉 Amazing work — you completed every item today! Keep that streak going.
+          🎉 Amazing work, you completed every item today! Keep that streak going.
         </div>
       )}
     </div>

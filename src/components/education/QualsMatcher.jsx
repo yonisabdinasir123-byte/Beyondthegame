@@ -1,5 +1,5 @@
 /**
- * QualsMatcher.jsx — "What Can I Study?"
+ * QualsMatcher.jsx, "What Can I Study?"
  * ─────────────────────────────────────────────────────────────────────────────
  * A client-side qualifications matcher. The user enters what they already have,
  * and we evaluate every opportunity in QUAL_OPPORTUNITIES against that profile
@@ -65,8 +65,7 @@ export default function QualsMatcher() {
     <div className="qm">
       <form className="qm-form" onSubmit={handleSubmit} aria-label="Enter your qualifications">
         <p className="qm-form__intro">
-          Tell us what you have now. We'll instantly show what you can study —
-          and what to work toward. Nothing is shared; it's saved only on your device.
+          Tell us what you have now. We'll instantly show what you can study,           and what to work toward. Nothing is shared; it's saved only on your device.
         </p>
 
         <div className="qm-grid">
@@ -95,11 +94,11 @@ export default function QualsMatcher() {
               className="qm-input"
               value={profile.gcseGrades}
               onChange={e => update('gcseGrades', e.target.value)}
-              placeholder="e.g. 4–6"
+              placeholder="e.g. 4 to 6"
             />
           </div>
 
-          {/* Maths / English passes — grade 4 = pass */}
+          {/* Maths / English passes, grade 4 = pass */}
           <fieldset className="qm-field qm-field--checks">
             <legend className="qm-label">Did you pass these at grade 4+?</legend>
             <label className="qm-check">
@@ -189,8 +188,7 @@ export default function QualsMatcher() {
           <h3 className="qm-results__title">Your matched options</h3>
           {profile.retake.trim() && (
             <p className="qm-results__retake">
-              👍 Great that you want to improve <strong>{profile.retake.trim()}</strong> —
-              colleges let you resit Maths &amp; English for free while you study.
+              👍 Great that you want to improve <strong>{profile.retake.trim()}</strong>,               colleges let you resit Maths &amp; English for free while you study.
             </p>
           )}
 

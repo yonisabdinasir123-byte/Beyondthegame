@@ -1,10 +1,10 @@
 /**
- * PromptCard.jsx — Fogg Behaviour Model prompts (B = M·A·P).
+ * PromptCard.jsx, Fogg Behaviour Model prompts (B = M·A·P).
  *
  * Three types, matched to user state:
- *   spark       — high ability, low motivation → ignite desire after stories
- *   facilitator — high motivation, low ability → make the action easier
- *   signal      — high motivation, high ability → point straight at the action
+ *   spark, high ability, low motivation → ignite desire after stories
+ *   facilitator, high motivation, low ability → make the action easier
+ *   signal, high motivation, high ability → point straight at the action
  *
  * Every prompt offers exactly ONE next step (behaviour chaining), is
  * gain-framed, and never blocks or traps. CVD-safe: type is carried by
@@ -22,7 +22,7 @@ const TYPE_META = {
 export default function PromptCard({ type = 'spark', children, ctaLabel, to, href, onAction, live = false }) {
   const meta = TYPE_META[type] || TYPE_META.spark
 
-  /* Fogg: one clear action per prompt — no competing choices */
+  /* Fogg: one clear action per prompt, no competing choices */
   const cta = ctaLabel && (
     to ? (
       <Link to={to} className="prompt-card__cta">{ctaLabel}</Link>

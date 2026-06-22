@@ -1,12 +1,12 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   AcademyPage.css — "Life After the Academy" page.
-   All rules scoped under .academy-scope — nothing leaks to the rest of the app.
+   AcademyPage.css, "Life After the Academy" page.
+   All rules scoped under .academy-scope, nothing leaks to the rest of the app.
    Design: light amber/cream to match the rest of the site; amber accents,
    generous whitespace. Decorative accents (rose/teal) kept for card variety.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .academy-scope {
-  /* Backgrounds (light) — names kept for minimal churn in rule bodies. */
+  /* Backgrounds (light), names kept for minimal churn in rule bodies. */
   --aca-green-950: #FFFBF5;   /* page / hero / cta background + text on accent chips */
   --aca-green-900: #FEF9F0;
   --aca-green-800: #FEF3C7;   /* alternating section background */

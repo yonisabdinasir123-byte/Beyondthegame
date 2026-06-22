@@ -10,11 +10,10 @@
  *   Then load in useEffect / React Query / SWR and pass the data as props.
  *
  * CV BUILDER (guided suggestions)
- *   Requires VITE_ANTHROPIC_API_KEY in .env — see AICVBuilder.jsx for details.
+ *   Requires VITE_ANTHROPIC_API_KEY in .env. See CVBuilder.jsx for details.
  */
 
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 import SiteLayout from '../components/SiteLayout'
 
 import { clubs, showcaseGames, tournaments, leagues, testimonials } from '../data/pathwayData'
@@ -25,7 +24,7 @@ import ClubResults       from '../components/pathway/ClubResults'
 import ShowcaseGames     from '../components/pathway/ShowcaseGames'
 import Tournaments       from '../components/pathway/Tournaments'
 import CompatibleLeagues from '../components/pathway/CompatibleLeagues'
-import AICVBuilder       from '../components/pathway/AICVBuilder'
+import CVBuilder         from '../components/pathway/CVBuilder'
 import SuccessStories    from '../components/pathway/SuccessStories'
 import { GoalProgress }  from '../components/GoalSystem'
 import PromptCard        from '../components/PromptCard'
@@ -35,19 +34,7 @@ import { useMagnetic, useSpotlight } from '../App.jsx'
 
 import './PathwayPage.css'
 
-// ─── Section nav config ────────────────────────────────────────────────────────
-const SECTIONS = [
-  { id: 'pyramid',    label: '🪜 The Pyramid' },
-  { id: 'clubs',      label: '⚽ Clubs'       },
-  { id: 'showcases',  label: '🔍 Showcases'   },
-  { id: 'tournaments',label: '🏆 Tournaments' },
-  { id: 'leagues',    label: '📋 Leagues'     },
-  { id: 'cv-builder', label: '📄 CV Builder'  },
-  { id: 'moodboard',  label: '🎨 Mood Board'  },
-  { id: 'stories',    label: '💬 Stories'     },
-]
-
-// ─── Animated stat counter — counts up when scrolled into view ─────────────────
+// ─── Animated stat counter, counts up when scrolled into view ─────────────────
 function usePyramidCounters(rootRef) {
   useEffect(() => {
     const root = rootRef.current
@@ -89,7 +76,7 @@ function usePyramidCounters(rootRef) {
   }, [rootRef])
 }
 
-// ─── The Pyramid — non-league → professional ladder (moved from Academy page) ──
+// ─── The Pyramid, non-league → professional ladder (moved from Academy page) ──
 function PyramidSection() {
   const ref = useRef(null)
   usePyramidCounters(ref)
@@ -103,7 +90,7 @@ function PyramidSection() {
         </h2>
         <p className="pwy-pyramid__lead">
           The English football pyramid has more than 24 levels. Professional football
-          is at the top — but there are routes all the way up, and real players use
+          is at the top, but there are routes all the way up, and real players use
           them every season.
         </p>
 
@@ -180,7 +167,7 @@ function PyramidSection() {
               <div className="pwy-pyr-step__bar pwy-pyr-step__bar--prem" />
               <div className="pwy-pyr-step__info">
                 <div className="pwy-pyr-step__name">EFL League Two → Championship → Premier League</div>
-                <div className="pwy-pyr-step__detail">Jake Tabor signed his first professional contract with Swindon Town (League One) in 2025 — a five-division leap.</div>
+                <div className="pwy-pyr-step__detail">Jake Tabor signed his first professional contract with Swindon Town (League One) in 2025, a five-division leap.</div>
               </div>
               <div className="pwy-pyr-step__badge pwy-pyr-step__badge--white">Pro football</div>
             </div>
@@ -192,14 +179,14 @@ function PyramidSection() {
             <div className="pwy-pyr-callout">
               <div className="pwy-pyr-callout__title">Jake Tabor&rsquo;s story</div>
               <div className="pwy-pyr-callout__body">
-                Wycombe Wanderers told Jake Tabor he wasn&rsquo;t good enough. He dropped to Step 5 and proved them wrong — <strong>127 goals in 91 games</strong> for Amersham Town in the Combined Counties League. In 2025, Swindon Town signed him to his first professional contract, leaping five divisions in a single move.<br /><br />
+                Wycombe Wanderers told Jake Tabor he wasn&rsquo;t good enough. He dropped to Step 5 and proved them wrong with <strong>127 goals in 91 games</strong> for Amersham Town in the Combined Counties League. In 2025, Swindon Town signed him to his first professional contract, leaping five divisions in a single move.<br /><br />
                 Tabor didn&rsquo;t wait for a club to believe in him. He went and made it impossible for them not to.
               </div>
             </div>
 
             <div className="pwy-pyr-keystat">
               <div className="pwy-pyr-keystat__num">127</div>
-              <div className="pwy-pyr-keystat__text">goals in 91 non-league games for Jake Tabor — the form that earned his professional contract</div>
+              <div className="pwy-pyr-keystat__text">goals in 91 non-league games for Jake Tabor, the form that earned his professional contract</div>
             </div>
 
             <div className="pwy-pyr-keystat">
@@ -208,7 +195,7 @@ function PyramidSection() {
             </div>
 
             <div className="pwy-pyr-scout">
-              <p><strong>What scouts look for:</strong> consistency, goals or assists per 90, professionalism, and a player who performs under pressure week in, week out — regardless of the level. High stats at Step 5 do get noticed.</p>
+              <p><strong>What scouts look for:</strong> consistency, goals or assists per 90, professionalism, and a player who performs under pressure week in, week out, regardless of the level. High stats at Step 5 do get noticed.</p>
             </div>
           </div>
         </div>
@@ -217,50 +204,7 @@ function PyramidSection() {
   )
 }
 
-// ─── Section navigation ────────────────────────────────────────────────────────
-function SectionNav({ activeSection }) {
-  const scrollTo = (id) => {
-    const el = document.getElementById(id)
-    if (!el) return
-    const offset = 120 // height of both sticky bars
-    const top = el.getBoundingClientRect().top + window.scrollY - offset
-    window.scrollTo({ top, behavior: 'smooth' })
-  }
-
-  return (
-    <nav className="section-nav" aria-label="Jump to section">
-      {SECTIONS.map(s => (
-        <button
-          key={s.id}
-          type="button"
-          className={`section-nav__btn${activeSection === s.id ? ' active' : ''}`}
-          onClick={() => scrollTo(s.id)}
-          aria-current={activeSection === s.id ? 'page' : undefined}
-        >
-          {s.label}
-        </button>
-      ))}
-    </nav>
-  )
-}
-
-// ─── Academy entry card (shown after pyramid section) ─────────────────────────
-function AcademyEntryCard() {
-  return (
-    <div className="pwy-academy-card">
-      <div className="pwy-academy-card__inner">
-        <span className="pwy-academy-card__emoji" aria-hidden="true">🏆</span>
-        <div className="pwy-academy-card__body">
-          <h3 className="pwy-academy-card__title">Life After the Academy</h3>
-          <p className="pwy-academy-card__text">Player stories, psychological support, the freedom player market, and practical life skills for your next chapter.</p>
-        </div>
-        <Link to="/academy" className="pwy-academy-card__link">Explore guide →</Link>
-      </div>
-    </div>
-  )
-}
-
-// ─── Hero — macro focal point: one headline, one amber CTA ────────────────────
+// ─── Hero, macro focal point: one headline, one amber CTA ────────────────────
 function Hero() {
   const spotRef   = useSpotlight() /* mouse: spotlight follows pointer */
   const magnetRef = useMagnetic()  /* mouse: CTA eases toward cursor */
@@ -282,9 +226,9 @@ function Hero() {
     >
       <div className="macro-hero__inner">
         <span className="macro-hero__eyebrow">Pathway</span>
-        {/* Gestalt: focal point — largest type, top-left F-pattern zone */}
+        {/* Gestalt: focal point, largest type, top-left F-pattern zone */}
         <h1 className="macro-hero__title">Your route to professional football.</h1>
-        <p className="macro-hero__sub">The pyramid has 24 levels — each one a step up.</p>
+        <p className="macro-hero__sub">The pyramid has 24 levels, and each one is a step up.</p>
         <span className="macro-hero__cta-wrap">
           {/* Sole amber-filled button in this viewport */}
           <button type="button" className="macro-hero__cta" onClick={() => scrollTo('pyramid')} ref={magnetRef}>
@@ -354,33 +298,9 @@ export default function PathwayPage() {
     })
   }, [search, filters])
 
-  // ── Active section tracking (IntersectionObserver) ────────────────────────
-  const [activeSection, setActiveSection] = useState('pyramid')
-  const observerRef = useRef(null)
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      entries => {
-        // Pick the section with the largest intersection ratio
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible.length > 0) setActiveSection(visible[0].target.id)
-      },
-      // top margin clears both sticky bars (navbar 64 + sub-nav ≈ 54)
-      { threshold: [0.2, 0.5], rootMargin: '-114px 0px -40% 0px' },
-    )
-    SECTIONS.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) observerRef.current.observe(el)
-    })
-    return () => observerRef.current?.disconnect()
-  }, [])
-
   return (
     <SiteLayout>
     <div className="pathway-page">
-      <SectionNav activeSection={activeSection} />
       <Hero />
 
       {/* Goal gradient: progress visible wherever the work happens */}
@@ -390,7 +310,6 @@ export default function PathwayPage() {
 
       {/* ── 0. The Pyramid ─────────────────────────────────────────────────── */}
       <PyramidSection />
-      <AcademyEntryCard />
 
       {/* ── 1. Club Finder ─────────────────────────────────────────────────── */}
       <PwySection
@@ -416,11 +335,11 @@ export default function PathwayPage() {
         title="Upcoming showcase & trial events"
         subtitle="Scout-attended events across the country. Register your interest to secure your spot."
       >
-        {/* Fogg: signal — goal-matched, points straight at the action.
-            Cialdini: scarcity, truthfully — showcases genuinely run once. */}
+        {/* Fogg: signal, goal-matched, points straight at the action.
+            Cialdini: scarcity, truthfully, showcases genuinely run once. */}
         {getGoal()?.id === 'find-club' && (
           <PromptCard type="signal">
-            Your goal: ⚽ Find a Club. The events below are scout-attended —
+            Your goal: ⚽ Find a Club. The events below are scout-attended, so
             register before the date shown. Most run once a season.
           </PromptCard>
         )}
@@ -454,11 +373,11 @@ export default function PathwayPage() {
         title="Build your football CV in seconds"
         subtitle="Fill in your details and we'll turn them into a polished, professional football CV you can copy and send straight to clubs."
       >
-        <AICVBuilder />
+        <CVBuilder />
       </PwySection>
 
       {/* ── 6. Mood Board ───────────────────────────────────────────────────── */}
-      {/* Norman: reflective — "I'm someone building my future" */}
+      {/* Norman: reflective, "I'm someone building my future" */}
       <PwySection
         id="moodboard"
         eyebrow="Mood Board"
@@ -473,7 +392,7 @@ export default function PathwayPage() {
         id="stories"
         eyebrow="Success Stories"
         title="Players who found their pathway"
-        subtitle="Real journeys from grassroots to the professional game — and everywhere in between."
+        subtitle="Real journeys from grassroots to the professional game, and everywhere in between."
       >
         <SuccessStories stories={testimonials} />
       </PwySection>

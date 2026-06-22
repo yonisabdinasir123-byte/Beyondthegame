@@ -1,0 +1,124 @@
+/* ═══════════════════════════════════════════════════════════════
+   GLASS + FLOATING DEPTH SYSTEM  (site-wide, token-driven)
+   ───────────────────────────────────────────────────────────────
+   Two-layer depth used on every page:
+     • a soft green backing panel (.floating-section::before)
+     • a frosted glass foreground card (.glass)
+   All values come from tokens in App.css, nothing hardcoded here.
+   Imported once in main.jsx so the classes are global.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── The animated multi-gradient site background (task J) ──────── */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--field-base) 0%, var(--field-base-2) 100%);
+  pointer-events: none;
+}
+.site-bg__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  will-change: transform;
+}
+.site-bg__blob--1 {
+  width: 46vw; height: 46vw; top: -8vw; left: -6vw;
+  background: var(--field-blob-teal);
+  animation: bgDrift1 38s var(--ease-in-out) infinite alternate;
+}
+.site-bg__blob--2 {
+  width: 40vw; height: 40vw; top: 22vh; right: -10vw;
+  background: var(--field-blob-deep);
+  animation: bgDrift2 46s var(--ease-in-out) infinite alternate;
+}
+.site-bg__blob--3 {
+  width: 34vw; height: 34vw; bottom: -8vw; left: 18vw;
+  background: var(--field-blob-lime);
+  animation: bgDrift3 52s var(--ease-in-out) infinite alternate;
+}
+.site-bg__blob--4 {
+  width: 28vw; height: 28vw; bottom: 6vh; right: 14vw;
+  background: var(--field-blob-coral);
+  animation: bgDrift1 60s var(--ease-in-out) infinite alternate-reverse;
+}
+
+@keyframes bgDrift1 { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(4vw,5vh,0) scale(1.12); } }
+@keyframes bgDrift2 { from { transform: translate3d(0,0,0) scale(1.05); } to { transform: translate3d(-5vw,3vh,0) scale(1); } }
+@keyframes bgDrift3 { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(3vw,-4vh,0) scale(1.1); } }
+
+/* ── Frosted glass card ───────────────────────────────────────── */
+.glass {
+  position: relative;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
+}
+.glass--strong { background: var(--glass-fill-strong); -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(160%); backdrop-filter: blur(var(--glass-blur-strong)) saturate(160%); }
+.glass--quiet  { background: var(--glass-fill-quiet); }
+.glass--lg     { box-shadow: var(--glass-shadow-lg); }
+.glass--pad    { padding: clamp(1.25rem, 3vw, 2rem); }
+
+/* Dark glass for use over night/macro sections */
+.glass--dark {
+  background: var(--glass-fill-dark);
+  border-color: var(--glass-stroke-dark);
+  color: var(--color-on-dark);
+}
+
+/* Coloured glow emphasis */
+.glass--glow-teal  { box-shadow: var(--glass-shadow), var(--glow-teal); }
+.glass--glow-coral { box-shadow: var(--glass-shadow), var(--glow-coral); }
+.glass--glow-lime  { box-shadow: var(--glass-shadow), var(--glow-lime); }
+
+/* Interactive lift for clickable glass cards */
+.glass--interactive { transition: transform var(--dur-std) var(--ease-out-soft), box-shadow var(--dur-std) var(--ease-out-soft); }
+.glass--interactive:hover { transform: translateY(-4px); box-shadow: var(--glass-shadow-lg); }
+.glass--interactive:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+
+/* ── Floating section: green backing layer + glass foreground ──── */
+.floating-section {
+  position: relative;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  margin-block: clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--radius-xl);
+  isolation: isolate;
+}
+/* The green layer behind */
+.floating-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--backing-green);
+  box-shadow: var(--glass-shadow-lg);
+}
+.floating-section--flush { margin-inline: clamp(1rem, 4vw, 2rem); }
+/* When backing is off, drop the green layer + outer padding */
+.floating-section--flat { padding: 0; }
+.floating-section--flat::before { display: none; }
+
+.floating-section__card { padding: clamp(1.5rem, 4vw, 2.75rem); }
+.floating-section__head { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+.floating-section__title {
+  font: var(--type-h2);
+  color: var(--text-primary);
+  margin: .35rem 0 .5rem;
+  letter-spacing: -0.02em;
+}
+.floating-section__intro {
+  font: var(--type-body);
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-bg__blob { animation: none !important; }
+}

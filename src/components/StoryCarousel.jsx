@@ -1,13 +1,13 @@
 /**
- * StoryCarousel.jsx — swipeable peer-story carousel.
+ * StoryCarousel.jsx, swipeable peer-story carousel.
  *
  * Built on native CSS scroll-snap: touch swipe works with zero JS touch
- * handlers (sustainable HCI — no listener overhead), and the partially
+ * handlers (sustainable HCI, no listener overhead), and the partially
  * visible next card is a Gestalt closure cue ("there's more").
- * Arrow buttons are the keyboard/assistive fallback — gestures never
+ * Arrow buttons are the keyboard/assistive fallback, gestures never
  * stand alone.
  *
- * Cards are tappable links to the Stories section — full affordance set,
+ * Cards are tappable links to the Stories section, full affordance set,
  * desktop-only 3D tilt (±4°), amber→terracotta border sweep on hover.
  */
 import { useRef, useState, useEffect } from 'react'
@@ -46,7 +46,7 @@ export default function StoryCarousel({ items }) {
     track.scrollBy({ left: dir * step, behavior: 'smooth' })
   }
 
-  /* 2D/3D mix: ±4° tilt toward the cursor — desktop pointer only,
+  /* 2D/3D mix: ±4° tilt toward the cursor, desktop pointer only,
      decoration never information */
   const handleTilt = (e) => {
     if (!tiltAllowed()) return
@@ -69,7 +69,7 @@ export default function StoryCarousel({ items }) {
         ref={trackRef}
         tabIndex={0}
         role="region"
-        aria-label="Peer stories — scroll or use the arrow buttons"
+        aria-label="Peer stories, scroll or use the arrow buttons"
       >
         {items.map((t, i) => {
           const firstName = t.name.split(',')[0].trim()
@@ -102,7 +102,7 @@ export default function StoryCarousel({ items }) {
         })}
       </div>
 
-      {/* Button fallback — 44px targets, works without touch or hover */}
+      {/* Button fallback, 44px targets, works without touch or hover */}
       <div className="story-carousel__nav">
         <button
           type="button"

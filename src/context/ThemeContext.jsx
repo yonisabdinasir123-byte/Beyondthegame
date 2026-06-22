@@ -1,5 +1,5 @@
 /**
- * ThemeContext.jsx — single source of truth for design tokens in JS.
+ * ThemeContext.jsx, single source of truth for design tokens in JS.
  *
  * The canonical tokens live as CSS custom properties in App.css (:root).
  * This context mirrors the ones components may need to read in JavaScript

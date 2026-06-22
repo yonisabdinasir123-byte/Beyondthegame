@@ -60,7 +60,7 @@ export default function GymList({ gyms, onSaveSession }) {
           <select id={bandId} className="rec-select" value={bandFilter} onChange={e => setBandFilter(e.target.value)}>
             <option value="">All</option>
             <option value="Amazing value">Amazing value (&lt;£20)</option>
-            <option value="Fair value">Fair (£20–£30)</option>
+            <option value="Fair value">Fair (£20, £30)</option>
             <option value="Pricey">Pricey (&gt;£30)</option>
           </select>
         </div>

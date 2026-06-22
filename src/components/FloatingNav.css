@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   FLOATING NAV — the signature "team-sheet" island
+   FLOATING NAV, the signature "team-sheet" island
    ═══════════════════════════════════════════════════════════ */
 .fnav {
   position: fixed;
@@ -92,7 +92,7 @@
               background var(--dur-micro) var(--ease-out-soft);
 }
 .fnav__link:hover { color: var(--ink); background: rgba(18, 137, 122, 0.08); }
-/* Active page: the brand "pitch line" — a lime underline marker */
+/* Active page: the brand "pitch line", a lime underline marker */
 .fnav__link.is-active { color: var(--teal-700); }
 .fnav__link.is-active::after {
   content: '';

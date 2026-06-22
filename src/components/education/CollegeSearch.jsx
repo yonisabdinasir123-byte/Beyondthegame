@@ -1,91 +1,109 @@
 /**
  * CollegeSearch.jsx
- * Live search + radius filter for local colleges and open days.
+ * Live local colleges and opening hours, with a distance filter.
  *
- * PLUG IN: Replace `colleges` prop with Google Places API results.
- * Postcode → lat/lng via postcodes.io (see src/utils/distance.js).
- * Reed API: radius maps to distanceFromLocation param.
+ * Data source: the server route GET /api/colleges (Google Places, server-side).
+ * Postcode to lat/lng is resolved via postcodes.io (see src/utils/distance.js).
+ * The radius (miles) maps straight to the route's `radius` query param.
+ *
+ * Open-day DATES are not available from Google Places, so each college shows an
+ * editable open-day field (saved to localStorage) with a clear note that those
+ * dates need a per-college source.
  */
-import { useState, useMemo, useCallback, useId } from 'react'
-import { haversine, lookupPostcode, DEFAULT_COORDS } from '../../utils/distance'
-import { storage, today, formatDate } from '../../utils/storage'
+import { useState, useEffect, useCallback, useId } from 'react'
+import { DEFAULT_COORDS } from '../../utils/distance'
+import { storage } from '../../utils/storage'
+import GlassCard from '../GlassCard'
 
 const RADII = [5, 10, 20]
 
-function OpenDayBadge({ date }) {
-  const d    = new Date(date + 'T00:00:00')
-  const t    = new Date(today() + 'T00:00:00')
-  const diff = Math.ceil((d - t) / 86400000)
-  if (diff < 0)   return null
-  if (diff === 0) return <span className="edu-badge edu-badge--today">Open day TODAY</span>
-  if (diff <= 14) return <span className="edu-badge edu-badge--soon">Open day in {diff}d</span>
-  return <span className="edu-badge edu-badge--upcoming">Open day {formatDate(date)}</span>
+/**
+ * Turn a Places weekday_text array into a compact, readable line.
+ * Returns null when no hours are present.
+ */
+function summariseHours(hours) {
+  if (!hours || hours.length === 0) return null
+  return hours
 }
 
-export default function CollegeSearch({ colleges, userCoords, onSaveOpenDay }) {
-  const [query,  setQuery]  = useState('')
+export default function CollegeSearch({ userCoords, onSaveOpenDay }) {
   const [radius, setRadius] = useState(10)
+  const [status, setStatus] = useState('idle') // idle|loading|ok|empty|needsKey|error
+  const [message, setMessage] = useState('')
+  const [colleges, setColleges] = useState([])
+  // User-typed open-day dates, keyed by college id, persisted locally.
+  const [openDays, setOpenDays] = useState(() => storage.get('college-opendays', {}))
 
-  const inputId  = useId()
   const radiusId = useId()
 
-  const savedIds = storage.get('saved-opendays', []).map(s => s.openDayKey)
+  const coords = userCoords ?? DEFAULT_COORDS
 
-  const withDistance = useMemo(() => {
-    const uc = userCoords ?? DEFAULT_COORDS
-    return colleges.map(c => ({
-      ...c,
-      distMiles: haversine(uc.lat, uc.lng, c.lat, c.lng),
-    }))
-  }, [colleges, userCoords])
+  // Fetch live colleges whenever the location or radius changes.
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      setStatus('loading')
+      setMessage('')
+      try {
+        const params = new URLSearchParams({
+          lat: String(coords.lat),
+          lng: String(coords.lng),
+          radius: String(radius),
+          query: 'college',
+        })
+        const res = await fetch(`/api/colleges?${params}`)
+        let body = {}
+        try { body = await res.json() } catch { /* non-JSON */ }
 
-  const results = useMemo(() => {
-    const q = query.toLowerCase().trim()
-    return withDistance
-      .filter(c => {
-        const matchQ = !q ||
-          c.name.toLowerCase().includes(q) ||
-          c.location.toLowerCase().includes(q) ||
-          c.courses.some(co => co.toLowerCase().includes(q))
-        return matchQ && c.distMiles <= radius
-      })
-      .sort((a, b) => a.distMiles - b.distMiles)
-  }, [withDistance, query, radius])
+        if (cancelled) return
 
-  const handleSave = useCallback((college, date) => {
+        if (res.status === 503 || body.configured === false) {
+          setColleges([])
+          setMessage(body.message || 'Live local colleges needs a key to go live.')
+          setStatus('needsKey')
+          return
+        }
+        if (!res.ok || body.ok === false) {
+          setColleges([])
+          setMessage(body.message || 'The colleges source is temporarily unavailable. Try again shortly.')
+          setStatus('error')
+          return
+        }
+
+        const list = Array.isArray(body.colleges) ? body.colleges : []
+        setColleges(list)
+        setStatus(list.length === 0 ? 'empty' : 'ok')
+      } catch {
+        if (cancelled) return
+        setColleges([])
+        setMessage('The colleges source is temporarily unavailable. Try again shortly.')
+        setStatus('error')
+      }
+    }
+    load()
+    return () => { cancelled = true }
+  }, [coords.lat, coords.lng, radius])
+
+  const handleOpenDayChange = useCallback((id, value) => {
+    setOpenDays(prev => {
+      const next = { ...prev, [id]: value }
+      storage.set('college-opendays', next)
+      return next
+    })
+  }, [])
+
+  const handleSaveOpenDay = useCallback((college) => {
+    const date = (openDays[college.id] || '').trim()
+    if (!date) return
     onSaveOpenDay({ collegeId: college.id, collegeName: college.name, openDayDate: date })
-  }, [onSaveOpenDay])
+  }, [openDays, onSaveOpenDay])
 
   return (
     <div>
       <div className="edu-controls">
-        <div className="edu-search-wrap">
-          <label htmlFor={inputId} className="sr-only">Search colleges by name, area, or course</label>
-          <span className="edu-search-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </span>
-          <input
-            id={inputId}
-            type="search"
-            className="edu-input edu-input--search"
-            placeholder="Search by name, area, or course…"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            autoComplete="off"
-          />
-          {query && (
-            <button
-              type="button"
-              className="edu-search-clear"
-              onClick={() => setQuery('')}
-              aria-label="Clear search"
-            >✕</button>
-          )}
-        </div>
-
         <div className="edu-radius-group">
-          <label htmlFor={radiusId} className="edu-filter-label">Within</label>
-          <div className="edu-radius-tabs" id={radiusId} role="group" aria-label="Radius filter">
+          <span className="edu-filter-label" id={radiusId}>Within</span>
+          <div className="edu-radius-tabs" role="group" aria-labelledby={radiusId}>
             {RADII.map(r => (
               <button
                 key={r}
@@ -102,73 +120,131 @@ export default function CollegeSearch({ colleges, userCoords, onSaveOpenDay }) {
       </div>
 
       <p className="edu-result-count" aria-live="polite" aria-atomic="true">
-        <strong>{results.length}</strong> college{results.length !== 1 ? 's' : ''} within {radius} miles
+        {status === 'ok' && (
+          <><strong>{colleges.length}</strong> college{colleges.length !== 1 ? 's' : ''} within {radius} miles</>
+        )}
+        {status === 'loading' && 'Finding colleges near you…'}
       </p>
 
-      {results.length === 0 ? (
-        <div className="edu-empty" role="status">
-          <span aria-hidden="true">🏫</span>
-          <p>No colleges match your search within {radius} miles. Try widening the radius or changing your search.</p>
-        </div>
-      ) : (
-        <ul className="edu-cards" role="list" aria-label="Colleges">
-          {results.map(college => {
-            const upcomingDays = college.openDays
-              .filter(d => d >= today())
-              .sort()
+      {status === 'loading' && (
+        <GlassCard className="edu-state-card" role="status" aria-live="polite">
+          <p className="edu-state-card__text">Finding colleges within {radius} miles…</p>
+        </GlassCard>
+      )}
+
+      {status === 'needsKey' && (
+        <GlassCard glow="coral" className="edu-state-card" role="status">
+          <h3 className="edu-state-card__title">This needs a key to go live</h3>
+          <p className="edu-state-card__text">{message}</p>
+          <p className="edu-state-card__note">
+            Once a Google Places key is set on the server, real colleges near your postcode appear here automatically.
+          </p>
+        </GlassCard>
+      )}
+
+      {status === 'error' && (
+        <GlassCard className="edu-state-card" role="alert">
+          <h3 className="edu-state-card__title">Temporarily unavailable</h3>
+          <p className="edu-state-card__text">{message}</p>
+          <button
+            type="button"
+            className="edu-cta edu-cta--primary"
+            onClick={() => setRadius(r => r)}
+          >
+            Try again
+          </button>
+        </GlassCard>
+      )}
+
+      {status === 'empty' && (
+        <GlassCard className="edu-state-card" role="status">
+          <span className="edu-state-card__emoji" aria-hidden="true">🏫</span>
+          <p className="edu-state-card__text">
+            No colleges found within {radius} miles. Try widening the distance.
+          </p>
+        </GlassCard>
+      )}
+
+      {status === 'ok' && (
+        <ul className="edu-cards" role="list" aria-label="Colleges near you">
+          {colleges.map(college => {
+            const hours = summariseHours(college.hours)
+            const openDayValue = openDays[college.id] || ''
             return (
-              <li key={college.id} className="edu-card college-card">
-                <div className="edu-card__header">
-                  <div>
-                    {upcomingDays[0] && <OpenDayBadge date={upcomingDays[0]} />}
-                    <h3 className="edu-card__title">{college.name}</h3>
-                    <p className="edu-card__location">📍 {college.location} · <strong>{college.distMiles} mi</strong> away</p>
-                  </div>
-                </div>
-
-                <dl className="edu-card__details">
-                  <div className="edu-detail">
-                    <dt>⏰ Hours</dt>
-                    <dd>{college.openingHours}</dd>
-                  </div>
-                  {upcomingDays.length > 0 && (
-                    <div className="edu-detail">
-                      <dt>📅 Open days</dt>
-                      <dd>{upcomingDays.map(formatDate).join(', ')}</dd>
-                    </div>
+              <GlassCard
+                as="li"
+                key={college.id}
+                glow="teal"
+                className="college-card"
+              >
+                <div className="college-card__head">
+                  {college.openNow != null && (
+                    <span className={`edu-badge ${college.openNow ? 'edu-badge--open' : 'edu-badge--closed'}`}>
+                      {college.openNow ? 'Open now' : 'Closed now'}
+                    </span>
                   )}
-                </dl>
-
-                <div className="edu-card__courses" aria-label="Courses offered">
-                  {college.courses.map(c => (
-                    <span key={c} className="edu-course-tag">{c}</span>
-                  ))}
+                  <h3 className="college-card__title">{college.name}</h3>
+                  <p className="college-card__location">
+                    📍 {college.address}
+                    {college.distanceMiles != null && (
+                      <> · <strong>{college.distanceMiles} mi</strong> away</>
+                    )}
+                  </p>
+                  {college.rating != null && (
+                    <p className="college-card__rating">★ {college.rating} on Google</p>
+                  )}
                 </div>
 
-                <div className="edu-card__footer">
+                {hours && (
+                  <div className="college-card__hours">
+                    <h4 className="college-card__subhead">⏰ Opening hours</h4>
+                    <ul className="college-card__hours-list" role="list">
+                      {hours.map((line, i) => (
+                        <li key={i}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="college-card__openday">
+                  <label htmlFor={`openday-${college.id}`} className="college-card__subhead">
+                    📅 Open day date
+                  </label>
+                  <p className="college-card__openday-note">
+                    Open-day dates are not provided by the colleges feed, so add the date once you find it on the college site.
+                  </p>
+                  <div className="college-card__openday-row">
+                    <input
+                      id={`openday-${college.id}`}
+                      type="text"
+                      className="edu-input college-card__openday-input"
+                      placeholder="e.g. Sat 12 Oct, 10am"
+                      value={openDayValue}
+                      onChange={e => handleOpenDayChange(college.id, e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="edu-cta edu-cta--primary"
+                      onClick={() => handleSaveOpenDay(college)}
+                      disabled={!openDayValue.trim()}
+                    >
+                      Save open day
+                    </button>
+                  </div>
+                </div>
+
+                <div className="college-card__footer">
                   <a
-                    href={college.website}
+                    href={`https://www.google.com/maps/search/${encodeURIComponent(college.name + ' ' + college.address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="edu-cta edu-cta--outline"
-                    aria-label={`Visit ${college.name} website`}
+                    aria-label={`Find ${college.name} on the map`}
                   >
-                    Visit website ↗
+                    View on map ↗
                   </a>
-                  {upcomingDays[0] && (
-                    <button
-                      type="button"
-                      className={`edu-cta edu-cta--primary${savedIds.includes(college.id + '_' + upcomingDays[0]) ? ' edu-cta--saved' : ''}`}
-                      onClick={() => handleSave(college, upcomingDays[0])}
-                      aria-label={`Save open day at ${college.name} on ${formatDate(upcomingDays[0])}`}
-                    >
-                      {savedIds.includes(college.id + '_' + upcomingDays[0])
-                        ? '✓ Saved'
-                        : '+ Save open day'}
-                    </button>
-                  )}
                 </div>
-              </li>
+              </GlassCard>
             )
           })}
         </ul>

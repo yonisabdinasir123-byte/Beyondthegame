@@ -1,5 +1,5 @@
 /**
- * GoalSystem.jsx — goal picker, goal-gradient progress bar, celebrations,
+ * GoalSystem.jsx, goal picker, goal-gradient progress bar, celebrations,
  * and the protective unsaved-work guard.
  */
 import { useState, useEffect, useCallback, useRef } from 'react'
@@ -20,7 +20,7 @@ export function GoalPicker() {
   const [justSet, setJustSet]  = useState(false)
 
   // Stay in sync when the goal changes elsewhere (e.g. "Change goal"
-  // inside GoalProgress) — re-shows the picker without a reload.
+  // inside GoalProgress), re-shows the picker without a reload.
   useEffect(() => {
     const sync = () => { setGoalState(getGoal()); setJustSet(false) }
     window.addEventListener(PROGRESS_EVENT, sync)
@@ -31,7 +31,7 @@ export function GoalPicker() {
     setGoal(id)
     setGoalState(getGoal())
     setJustSet(true)
-    hapticPulse() /* Norman: behavioural — confirm the commitment physically */
+    hapticPulse() /* Norman: behavioural, confirm the commitment physically */
   }
 
   const skip = () => { skipGoalPicker(); setSkipped(true) }
@@ -41,7 +41,7 @@ export function GoalPicker() {
     return (
       <div className="goal-block">
         {justSet && (
-          /* Cialdini: commitment — reflect the user's own choice back */
+          /* Cialdini: commitment, reflect the user's own choice back */
           <p className="goal-block__confirm" aria-live="polite">
             Goal set: {goal.emoji} {goal.label}. We'll track your progress everywhere.
           </p>
@@ -55,7 +55,7 @@ export function GoalPicker() {
   if (skipped) {
     return (
       <div className="goal-block goal-block--quiet">
-        {/* Storage flag stays — if they still don't pick, next visit shows
+        {/* Storage flag stays, if they still don't pick, next visit shows
             this quiet chip again, never the full picker. */}
         <button type="button" className="goal-chip" onClick={() => setSkipped(false)}>
           🎯 Set a goal when you're ready
@@ -87,7 +87,7 @@ export function GoalPicker() {
         ))}
       </div>
 
-      {/* Plain decline — equal dignity, no confirm-shaming */}
+      {/* Plain decline, equal dignity, no confirm-shaming */}
       <button type="button" className="goal-skip" onClick={skip}>
         Not now
       </button>
@@ -110,10 +110,10 @@ export function GoalProgress() {
     const fresh = uncelebratedSteps(p)
     if (fresh.length > 0) {
       markCelebrated(p, fresh)
-      // Celebrate only milestones completed during use — not on first paint
+      // Celebrate only milestones completed during use, not on first paint
       // of historical progress.
       if (!firstRun.current) {
-        /* Norman: behavioural — feedback the moment it happens */
+        /* Norman: behavioural, feedback the moment it happens */
         setAnnounce(`Milestone complete: ${fresh[fresh.length - 1].label}. ${p.done} of ${p.total} steps done.`)
         setCelebrating(true)
         hapticPulse()
@@ -132,7 +132,7 @@ export function GoalProgress() {
   if (!progress) return null
   const { goal, steps, done, total, next } = progress
   const pct = Math.round((done / total) * 100)
-  /* Goal gradient: effort accelerates near completion — emphasise it */
+  /* Goal gradient: effort accelerates near completion, emphasise it */
   const nearlyThere = done >= total - 1 && done < total
   const complete = done === total
 
@@ -154,7 +154,7 @@ export function GoalProgress() {
         aria-label={`${goal.label} progress: ${done} of ${total} steps complete`}
       >
         <div className="goal-progress__fill" style={{ width: `${pct}%` }} />
-        {/* Milestone markers — visible structure, Gestalt uniform connectedness */}
+        {/* Milestone markers, visible structure, Gestalt uniform connectedness */}
         {steps.map((s, i) => (
           <span
             key={s.id}
@@ -172,8 +172,8 @@ export function GoalProgress() {
         </p>
       ) : (
         <p className="goal-progress__next">
-          {/* Prospect: gain framing — what's left to gain, never what's missing */}
-          {nearlyThere ? 'Nearly there — ' : 'Next: '}
+          {/* Prospect: gain framing, what's left to gain, never what's missing */}
+          {nearlyThere ? 'Nearly there, ' : 'Next: '}
           <Link to={next.href} className="goal-progress__link">{next.label} →</Link>
         </p>
       )}
@@ -194,7 +194,7 @@ export function GoalProgress() {
 
 // ─── Protective unsaved-work guard ─────────────────────────────────────────────
 /**
- * useUnsavedGuard(active) — honest beforeunload warning while `active`.
+ * useUnsavedGuard(active), honest beforeunload warning while `active`.
  * Protects work, never traps: the browser shows its standard
  * "leave site?" dialog with equal Stay/Leave options.
  * No dark patterns: protective warning only while work would be lost.

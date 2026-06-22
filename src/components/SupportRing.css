@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   SUPPORT RING — closure (implied ring) + continuation (spine)
+   SUPPORT RING, closure (implied ring) + continuation (spine)
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Desktop ring stage ───────────────────────────────────── */
@@ -7,7 +7,7 @@
   position: relative;
   max-width: 1100px;
   margin: 0 auto;
-  aspect-ratio: 1000 / 760; /* matches the SVG viewBox — CLS 0 */
+  aspect-ratio: 1000 / 760; /* matches the SVG viewBox, CLS 0 */
 }
 
 .sring-svg {
@@ -19,7 +19,7 @@
   pointer-events: none;
 }
 
-/* Gestalt: continuation — ONE unbroken stroke, round caps, no joins */
+/* Gestalt: continuation, ONE unbroken stroke, round caps, no joins */
 .sring-spine {
   fill: none;
   stroke: var(--amber-500);
@@ -41,14 +41,14 @@
   }
 }
 
-/* Playful: the travelling ball — decorative only */
+/* Playful: the travelling ball, decorative only */
 .sring-ball__bg {
   fill: var(--bg-card);
   stroke: var(--amber-500);
   stroke-width: 1.5;
 }
 
-/* ── Central hub — Gestalt: closure focal centre ──────────── */
+/* ── Central hub, Gestalt: closure focal centre ──────────── */
 .sring-hub {
   position: absolute;
   left: 50%;
@@ -84,7 +84,7 @@
   color: var(--text-muted);
 }
 
-/* ── Ring cards — identical anatomy, absolute on ring points ── */
+/* ── Ring cards, identical anatomy, absolute on ring points ── */
 .sring-cards {
   list-style: none;
   margin: 0;
@@ -110,7 +110,7 @@
   color: inherit;
   box-shadow: var(--sh-sm);
   position: relative;
-  /* motion: system tokens — affordance set */
+  /* motion: system tokens, affordance set */
   transition:
     transform  var(--dur-std) var(--ease-out-soft),
     box-shadow var(--dur-std) var(--ease-out-soft);

@@ -1,7 +1,7 @@
 /**
- * MoodBoard.jsx — "Who are you becoming?" role-scheme builder.
+ * MoodBoard.jsx, "Who are you becoming?" role-scheme builder.
  *
- * Norman: reflective — identity visualisation is the deepest motivator.
+ * Norman: reflective, identity visualisation is the deepest motivator.
  * The user assembles a board of role cards representing their future self.
  *
  * Interaction: tap to add/remove (primary, works for everyone);
@@ -13,7 +13,7 @@ import { storage } from '../utils/storage'
 import { notifyProgress, hapticPulse } from '../utils/goal'
 import './behaviour.css'
 
-// Curated palette — grouped, limited choices. /* Choice architecture */
+// Curated palette, grouped, limited choices. /* Choice architecture */
 const ROLE_CARDS = [
   { id: 'coach',      emoji: '📋', label: 'Coach' },
   { id: 'captain',    emoji: '🧢', label: 'Captain' },
@@ -68,7 +68,7 @@ export default function MoodBoard() {
     setAnnounce(`${next[to].label} moved ${dir < 0 ? 'up' : 'down'}. Position ${to + 1} of ${next.length}.`)
   }
 
-  // HTML5 drag — enhancement only; ▲▼ buttons are the guaranteed path.
+  // HTML5 drag, enhancement only; ▲▼ buttons are the guaranteed path.
   const handleDragStart = (i) => () => { dragIndex.current = i }
   const handleDragOver  = (e) => e.preventDefault()
   const handleDrop = (i) => (e) => {

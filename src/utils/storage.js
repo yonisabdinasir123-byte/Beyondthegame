@@ -1,5 +1,5 @@
 /**
- * storage.js — localStorage read/write helpers with JSON parse safety.
+ * storage.js, localStorage read/write helpers with JSON parse safety.
  * All keys are prefixed with 'btg:' to avoid collisions.
  */
 
@@ -19,7 +19,7 @@ export const storage = {
     try {
       localStorage.setItem(PREFIX + key, JSON.stringify(value))
     } catch {
-      // Storage quota exceeded — fail silently
+      // Storage quota exceeded, fail silently
     }
   },
 

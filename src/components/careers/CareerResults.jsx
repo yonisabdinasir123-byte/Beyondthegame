@@ -1,7 +1,8 @@
 /**
- * CareerResults.jsx — Display matched career suggestions with full detail.
- * Receives ruleMatches (always present) and optional aiSuggestions (from Anthropic API).
+ * CareerResults.jsx, Display matched career suggestions with full detail.
+ * Receives ruleMatches (always present) and optional tailored suggestions.
  */
+import GlassCard from '../GlassCard'
 
 function PathwayStep({ step, index }) {
   return (
@@ -14,7 +15,7 @@ function PathwayStep({ step, index }) {
 
 function CareerCard({ rule }) {
   return (
-    <li className="career-card">
+    <GlassCard as="li" tone="light" className="career-card">
       <h3 className="career-card__title">{rule.job}</h3>
 
       <div className="career-card__why">
@@ -22,8 +23,8 @@ function CareerCard({ rule }) {
         <p>{rule.why}</p>
       </div>
 
-      <section className="career-card__section" aria-label="What you'd need">
-        <h4 className="career-card__section-title">What you'd need to get there</h4>
+      <section className="career-card__section" aria-label="What you would need">
+        <h4 className="career-card__section-title">What you would need to get there</h4>
         <ul className="career-card__needs" role="list">
           {rule.needs.map(n => (
             <li key={n} className="career-card__need">
@@ -33,8 +34,8 @@ function CareerCard({ rule }) {
         </ul>
       </section>
 
-      <section className="career-card__section" aria-label="Step-by-step pathway">
-        <h4 className="career-card__section-title">Step-by-step pathway</h4>
+      <section className="career-card__section" aria-label="Step by step pathway">
+        <h4 className="career-card__section-title">Step by step pathway</h4>
         <ol className="career-steps" aria-label="Career progression steps">
           {rule.pathway.map((step, i) => (
             <PathwayStep key={i} step={step} index={i} />
@@ -48,14 +49,14 @@ function CareerCard({ rule }) {
             href={rule.resource}
             target="_blank"
             rel="noopener noreferrer"
-            className="edu-cta edu-cta--outline"
-            aria-label={`${rule.resourceLabel} — opens in new tab`}
+            className="career-card__link"
+            aria-label={`${rule.resourceLabel}, opens in new tab`}
           >
             {rule.resourceLabel} ↗
           </a>
         </div>
       )}
-    </li>
+    </GlassCard>
   )
 }
 
@@ -65,16 +66,16 @@ export default function CareerResults({ ruleMatches, aiSuggestions }) {
   return (
     <section className="career-results" aria-label="Career suggestions">
       <div className="career-results__header">
-        <h2 className="career-results__title">Careers that could suit you</h2>
+        <h3 className="career-results__title">Careers that could suit you</h3>
         <p className="career-results__sub">
           Based on what you told us, these are some paths worth looking into.
-          None of them require you to start over — most build on what you already know.
+          None of them mean starting over. Most build on what you already know.
         </p>
       </div>
 
       {aiSuggestions?.length > 0 && (
-        <div className="career-results__ai-note" role="note">
-          <span aria-hidden="true">✨</span> These suggestions are personalised from what you told us about your interests.
+        <div className="career-results__note" role="note">
+          <span aria-hidden="true">✨</span> These suggestions are tailored from what you told us about your interests.
         </div>
       )}
 
@@ -85,9 +86,9 @@ export default function CareerResults({ ruleMatches, aiSuggestions }) {
       </ul>
 
       {ruleMatches.length === 0 && (
-        <div className="edu-empty" role="status">
+        <div className="careers-empty" role="status">
           <span aria-hidden="true">🔍</span>
-          <p>We didn't find a strong match for those interests — try adding a few more or being more specific.</p>
+          <p>We did not find a strong match for those interests. Try adding a few more, or being more specific.</p>
         </div>
       )}
     </section>

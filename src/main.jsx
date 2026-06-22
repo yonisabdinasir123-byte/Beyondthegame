@@ -8,8 +8,11 @@ import EducationPage   from './pages/EducationPage.jsx'
 import JobsCareersPage from './pages/JobsCareersPage.jsx'
 import AcademyPage     from './pages/AcademyPage.jsx'
 import SupportPage     from './pages/SupportPage.jsx'
+import SuccessStoriesPage from './pages/SuccessStoriesPage.jsx'
+import SiteBackground  from './components/SiteBackground.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AppProvider }   from './context/AppContext.jsx'
+import './styles/glass.css'
 import './index.css'
 
 // ThemeProvider (design tokens) + AppProvider (shared, persisted state:
@@ -19,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
       <AppProvider>
+        <SiteBackground />
         <BrowserRouter basename={import.meta.env.BASE_URL}>
           <Routes>
             <Route path="/"            element={<App />} />
@@ -27,6 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/education"   element={<EducationPage />} />
             <Route path="/support"     element={<SupportPage />} />
             <Route path="/jobs-careers" element={<JobsCareersPage />} />
+            <Route path="/success-stories" element={<SuccessStoriesPage />} />
             <Route path="/academy"     element={<AcademyPage />} />
           </Routes>
         </BrowserRouter>

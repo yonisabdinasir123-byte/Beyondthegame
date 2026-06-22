@@ -16,7 +16,7 @@
 /* ─── Page shell ─────────────────────────────────────────────────────────────── */
 .pathway-page {
   min-height: 100vh;
-  background: var(--bg);
+  background: transparent; /* let the animated site background show through */
   font-family: var(--font-body);
   color: var(--text-primary);
 }
@@ -171,19 +171,38 @@
   border-bottom-color: var(--amber-600);
 }
 
-/* ─── Page sections ──────────────────────────────────────────────────────────── */
+/* ─── Page sections, floating glass over the animated field (tasks C + J) ───── */
 .pwy-section {
-  padding: 4rem 1.25rem;
-  border-bottom: 1px solid var(--amber-100);
-  scroll-margin-top: 128px; /* navbar 64 + section-nav 64 */
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem);
+  border-bottom: none;
+  background: transparent;
+  scroll-margin-top: calc(var(--header-height) + 0.5rem);
 }
 .pwy-section:nth-child(even) {
-  background: var(--bg-alt);
+  background: transparent;
 }
 
 .pwy-section__inner {
   max-width: 1280px;
   margin: 0 auto;
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-fill-strong);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow-lg);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+}
+.pwy-section__inner::before {
+  content: '';
+  position: absolute;
+  inset: -10px -8px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--backing-green);
+  opacity: .9;
 }
 
 .pwy-section__header {
@@ -798,7 +817,7 @@
 }
 .empty-state__text { font-size: .9375rem; color: var(--text-secondary); }
 
-/* ─── AI CV Builder ──────────────────────────────────────────────────────────── */
+/* ─── CV Builder ─────────────────────────────────────────────────────────────── */
 .cv-builder { }
 
 .cv-builder__layout {
@@ -1327,7 +1346,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   PYRAMID SECTION — light amber/cream editorial band
+   PYRAMID SECTION, light amber/cream editorial band
    ═══════════════════════════════════════════════════════════ */
 .pwy-pyramid {
   scroll-margin-top: calc(var(--header-height) + var(--subheader-height));
@@ -1447,7 +1466,7 @@
   box-shadow: 0 1px 3px rgba(28,16,9,.06);
 }
 
-/* 2D/3D mix: the ladder reads with subtle depth — desktop pointer only */
+/* 2D/3D mix: the ladder reads with subtle depth, desktop pointer only */
 @media (hover: hover) and (pointer: fine) {
   .pwy-pyr-steps {
     perspective: 900px;

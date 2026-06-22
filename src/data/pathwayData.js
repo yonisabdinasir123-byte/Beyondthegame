@@ -1,5 +1,5 @@
 /**
- * pathwayData.js — Seed data for the Pathway page.
+ * pathwayData.js, Seed data for the Pathway page.
  *
  * HOW TO SWAP TO A REAL API
  * Replace each exported array with an async loader, e.g.:
@@ -306,7 +306,7 @@ export const showcaseGames = [
     level: 'Semi-Pro',
     spotsRemaining: 10,
     description:
-      'Dedicated to players currently in Step 4–7 non-league football. A great platform for 19–23 year olds to be seen by a wider network of clubs and agents.',
+      'Dedicated to players currently in Step 4 to 7 non-league football. A great platform for 19 to 23 year olds to be seen by a wider network of clubs and agents.',
   },
   {
     id: 'sg08',
@@ -328,7 +328,7 @@ export const tournaments = [
   {
     id: 'tr01',
     name: 'Summer Grassroots Cup',
-    dates: '2 – 3 Aug 2026',
+    dates: '2 to 3 Aug 2026',
     location: 'Throstle Nest, Leeds',
     format: '11-a-side',
     ageCategory: 'U18',
@@ -349,12 +349,12 @@ export const tournaments = [
     entryFee: '£85',
     registrationDeadline: '1 Aug 2026',
     description:
-      'Fast-paced 7-a-side competition — excellent exposure for technical and attacking players. Scouts from two North West Semi-Pro clubs confirmed.',
+      'Fast-paced 7-a-side competition, excellent exposure for technical and attacking players. Scouts from two North West Semi-Pro clubs confirmed.',
   },
   {
     id: 'tr03',
     name: 'Lancashire Senior Cup',
-    dates: '6 – 7 Sep 2026',
+    dates: '6 to 7 Sep 2026',
     location: 'Leyland, Lancashire',
     format: '11-a-side',
     ageCategory: 'Open',
@@ -380,7 +380,7 @@ export const tournaments = [
   {
     id: 'tr05',
     name: 'Yorkshire 5s Summer League',
-    dates: '5 – 6 Jul 2026',
+    dates: '5 to 6 Jul 2026',
     location: 'Ponds Forge, Sheffield',
     format: '5-a-side',
     ageCategory: 'U23',
@@ -388,12 +388,12 @@ export const tournaments = [
     entryFee: '£15/player or £65/team',
     registrationDeadline: '25 Jun 2026',
     description:
-      'Indoor summer competition ideal for maintaining sharpness during pre-season. Individual entry available — perfect if you\'re between clubs.',
+      'Indoor summer competition ideal for maintaining sharpness during pre-season. Individual entry available, perfect if you\'re between clubs.',
   },
   {
     id: 'tr06',
     name: 'Pennine Trophy',
-    dates: '27 – 28 Sep 2026',
+    dates: '27 to 28 Sep 2026',
     location: 'Burnley, Lancashire',
     format: '11-a-side',
     ageCategory: 'U21',
@@ -427,7 +427,7 @@ export const tournaments = [
     entryFee: '£75',
     registrationDeadline: '8 Nov 2026',
     description:
-      'Popular indoor winter tournament — fully weather-proof. Football Manchester scouts in attendance to watch the group stages and final.',
+      'Popular indoor winter tournament, fully weather-proof. Football Manchester scouts in attendance to watch the group stages and final.',
   },
 ]
 
@@ -441,7 +441,7 @@ export const leagues = [
     tier: 'Grassroots',
     region: 'Yorkshire',
     ageGroup: 'Open (U18+)',
-    seasonWindow: 'Aug – May',
+    seasonWindow: 'Aug, May',
     howToJoin: 'Apply through the league secretary. Clubs must be FA-affiliated and pass a ground grading inspection.',
     description:
       'Covers South Yorkshire, West Yorkshire, Lincolnshire, and parts of Nottinghamshire. Strong competition with a clear pathway upward to Step 4.',
@@ -453,7 +453,7 @@ export const leagues = [
     tier: 'Grassroots',
     region: 'North West',
     ageGroup: 'Open (U18+)',
-    seasonWindow: 'Aug – May',
+    seasonWindow: 'Aug, May',
     howToJoin: 'Contact the league registrations office. Clubs must pass ground grading prior to acceptance.',
     description:
       'One of the largest non-league leagues in England, covering Greater Manchester, Lancashire, Cheshire, and Merseyside. Competitive and well-organised.',
@@ -465,7 +465,7 @@ export const leagues = [
     tier: 'Semi-Pro',
     region: 'National (Northern)',
     ageGroup: 'Open / U23',
-    seasonWindow: 'Aug – Apr',
+    seasonWindow: 'Aug, Apr',
     howToJoin: 'Via promotion from Step 4, or by invitation/application to the league management committee.',
     description:
       'Competitive semi-professional league across the north of England. Many players in this league are paid part-time and train multiple sessions per week.',
@@ -477,7 +477,7 @@ export const leagues = [
     tier: 'Grassroots',
     region: 'Midlands',
     ageGroup: 'Open (U16+)',
-    seasonWindow: 'Aug – Apr',
+    seasonWindow: 'Aug, Apr',
     howToJoin: 'Applications open each spring for the following season. Contact the league administrator.',
     description:
       'Covers the East and West Midlands with over 90 clubs across multiple divisions. Well-organised league with a strong cup competition structure.',
@@ -489,7 +489,7 @@ export const leagues = [
     tier: 'Semi-Pro',
     region: 'South East',
     ageGroup: 'Open / U23',
-    seasonWindow: 'Aug – Apr',
+    seasonWindow: 'Aug, Apr',
     howToJoin: 'Promotion from Step 4, or application if starting a new club at the appropriate entry level.',
     description:
       'One of the oldest football leagues in the world. Covers London, the Home Counties, and surrounding areas. Strong media profile and regular scout attendance.',
@@ -501,7 +501,7 @@ export const leagues = [
     tier: 'Grassroots',
     region: 'South',
     ageGroup: 'Open (U18+)',
-    seasonWindow: 'Aug – Apr',
+    seasonWindow: 'Aug, Apr',
     howToJoin: 'Application to league secretary with FA affiliation and ground grading certificate.',
     description:
       'Well-structured league covering Surrey, Berkshire, Hampshire, and surrounding counties. Ideal entry point for clubs and players moving into the non-league pyramid.',
@@ -513,7 +513,7 @@ export const leagues = [
     tier: 'Grassroots',
     region: 'North East',
     ageGroup: 'Open (U16+)',
-    seasonWindow: 'Sep – Apr',
+    seasonWindow: 'Sep, Apr',
     howToJoin: 'Apply through Durham FA or Northumberland FA to join the appropriate division.',
     description:
       'Community-focused league serving the North East. An excellent entry point for players new to structured adult football or returning after a break.',
@@ -525,7 +525,7 @@ export const leagues = [
     tier: 'Pro Academy',
     region: 'National',
     ageGroup: 'U18',
-    seasonWindow: 'Aug – Mar',
+    seasonWindow: 'Aug, Mar',
     howToJoin: 'Invitation only, via EFL club academy affiliation. Scouts regularly attend showcase and trial events to identify talent.',
     description:
       'Under-18 development competition run by EFL clubs. The highest standard of youth football below the Premier League Academy structure.',
@@ -542,7 +542,7 @@ export const testimonials = [
     to: 'Salford City U21s',
     pathway: 'Non-League → Pro Academy',
     quote:
-      "I'd never even heard of showcases until I found this platform. Six months later I was training at Salford's academy three times a week. The AI CV helped me look professional when I reached out to clubs.",
+      "I'd never even heard of showcases until I found this platform. Six months later I was training at Salford's academy three times a week. The CV builder helped me look professional when I reached out to clubs.",
     year: '2025',
     position: 'Striker',
     age: 20,
@@ -570,7 +570,7 @@ export const testimonials = [
     to: "Liverpool FC Women's U21s",
     pathway: "College → Women's Pro Academy",
     quote:
-      "The women's showcase section pointed me to the exact trial that changed my life. I registered in five minutes. The whole platform just made it simple — no gatekeepers, no confusion.",
+      "The women's showcase section pointed me to the exact trial that changed my life. I registered in five minutes. The whole platform just made it simple, no gatekeepers, no confusion.",
     year: '2025',
     position: 'Winger',
     age: 19,
@@ -612,7 +612,7 @@ export const testimonials = [
     to: 'Radcliffe FC → Northern Premier League',
     pathway: 'University → Non-League Pyramid',
     quote:
-      "I graduated not knowing where I fit. The level-matching tool said Northern Counties East or North West Counties — and it was absolutely right. I'm now playing at a higher level than I ever imagined.",
+      "I graduated not knowing where I fit. The level-matching tool said Northern Counties East or North West Counties, and it was absolutely right. I'm now playing at a higher level than I ever imagined.",
     year: '2024',
     position: 'Attacking Midfielder',
     age: 22,
