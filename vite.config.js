@@ -41,10 +41,11 @@ function apiDevServer(mode) {
   }
 }
 
-// On Vercel the site sits at the domain root, so base must be '/'.
-// On GitHub Pages it's served from a sub-path, so base must be '/Beyondthegame/'.
-// Vercel injects VERCEL=1 into every build environment automatically.
-export default defineConfig(({ command, mode }) => ({
-  base: process.env.VERCEL ? '/' : (command === 'build' ? '/Beyondthegame/' : '/'),
+// Base path is driven by explicit env vars so there is no guessing:
+//   VERCEL=1        set automatically by Vercel     → site root '/'
+//   DEPLOY_TARGET=github-pages  set by deploy.yml   → '/Beyondthegame/' sub-path
+//   (neither)                   local dev            → '/'
+export default defineConfig(({ mode }) => ({
+  base: process.env.VERCEL ? '/' : process.env.DEPLOY_TARGET === 'github-pages' ? '/Beyondthegame/' : '/',
   plugins: [react(), apiDevServer(mode)],
 }))

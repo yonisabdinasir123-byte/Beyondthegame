@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
+      - main
       - claude/football-academy-homepage-tr4DF
   workflow_dispatch:
 
@@ -33,6 +34,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          DEPLOY_TARGET: github-pages
 
       # SPA fallback: GitHub Pages serves 404.html for unknown paths, so a copy
       # of index.html lets deep links like /Beyondthegame/pathway boot the app.
