@@ -41,10 +41,10 @@ function apiDevServer(mode) {
   }
 }
 
-// `base` is set for production builds so assets resolve correctly when the
-// site is served from the GitHub Pages project sub-path
-// (https://<user>.github.io/Beyondthegame/). Dev server stays at root.
+// On Vercel the site sits at the domain root, so base must be '/'.
+// On GitHub Pages it's served from a sub-path, so base must be '/Beyondthegame/'.
+// Vercel injects VERCEL=1 into every build environment automatically.
 export default defineConfig(({ command, mode }) => ({
-  base: command === 'build' ? '/Beyondthegame/' : '/',
+  base: process.env.VERCEL ? '/' : (command === 'build' ? '/Beyondthegame/' : '/'),
   plugins: [react(), apiDevServer(mode)],
 }))
