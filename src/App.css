@@ -118,9 +118,11 @@
   --sp-lg: var(--space-5); --sp-xl: var(--space-6); --sp-2xl: var(--space-7);
   --sp-3xl: var(--space-8);
 
-  /* Shared content container */
-  --container: 1200px;
-  --container-wide: 1320px;
+  /* Shared content container. Desktop-first: sections fill a wide, confident
+     band (60px margins at 1440px viewport) instead of a stranded column. */
+  --container: 1320px;
+  --container-wide: 1480px;
+  --container-narrow: 900px;  /* prose-heavy inners that must stay readable */
 
   /* ── Radius, rounded geometry consistent with the floating nav ── */
   --radius-sm: 0.5rem;  --radius-md: 0.875rem; --radius-lg: 1.25rem;
@@ -416,7 +418,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 
 .navbar__inner {
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
@@ -995,7 +997,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 
 .section__inner {
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
 }
 
@@ -1533,7 +1535,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 }
 
 .footer__grid {
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -1617,7 +1619,7 @@ body { background: var(--paper); color: var(--text-primary); font-family: var(--
 .footer__link:hover { color: var(--amber-300); }
 
 .footer__bottom {
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
   padding: 1.5rem 0;
   border-top: 1px solid rgba(255,255,255,.08);
@@ -2061,7 +2063,7 @@ main#main-content,
 .pitch-divider {
   position: relative;
   height: 48px;
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
 }
 .pitch-divider::before {
@@ -2159,7 +2161,7 @@ main#main-content,
 .macro-hero__inner {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
   text-align: left; /* F-pattern: top-left landing zone */
 }
@@ -2288,7 +2290,7 @@ main#main-content,
    ═══════════════════════════════════════════════════════════ */
 .moments {
   position: relative;
-  max-width: 1200px;
+  max-width: var(--container);
   margin: 0 auto;
 }
 

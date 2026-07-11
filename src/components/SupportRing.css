@@ -5,7 +5,7 @@
 /* ── Desktop ring stage ───────────────────────────────────── */
 .sring-stage {
   position: relative;
-  max-width: 1100px;
+  max-width: var(--container);
   margin: 0 auto;
   aspect-ratio: 1000 / 760; /* matches the SVG viewBox, CLS 0 */
 }

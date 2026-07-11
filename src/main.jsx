@@ -10,6 +10,7 @@ import AcademyPage     from './pages/AcademyPage.jsx'
 import SupportPage     from './pages/SupportPage.jsx'
 import SuccessStoriesPage from './pages/SuccessStoriesPage.jsx'
 import SiteBackground  from './components/SiteBackground.jsx'
+import ScrollToTop     from './components/ScrollToTop.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AppProvider }   from './context/AppContext.jsx'
 import './styles/glass.css'
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AppProvider>
         <SiteBackground />
         <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <ScrollToTop />
           <Routes>
             <Route path="/"            element={<App />} />
             <Route path="/pathway"     element={<PathwayPage />} />
