@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import SiteLayout from '../components/SiteLayout'
+import NextStep from '../components/NextStep'
 import PromptCard from '../components/PromptCard'
 import './AcademyPage.css'
 
@@ -480,6 +481,14 @@ export default function AcademyPage() {
             </p>
           </div>
         </section>
+
+        <NextStep
+          eyebrow="When you're ready"
+          title="What happened at the academy is a chapter, not the whole story."
+          line="See where players like you went next, or start mapping your own route at your own pace."
+          primary={{ to: '/success-stories', label: 'Read player stories' }}
+          secondary={{ to: '/pathway', label: 'Explore your pathway' }}
+        />
 
       </div>
     </SiteLayout>
