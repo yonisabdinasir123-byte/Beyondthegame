@@ -8,6 +8,7 @@
 import SiteLayout from '../components/SiteLayout'
 import GlassCard from '../components/GlassCard'
 import FloatingSection from '../components/FloatingSection'
+import NextStep from '../components/NextStep'
 import FloatingLogos from '../components/support/FloatingLogos'
 import './SupportPage.css'
 
@@ -850,6 +851,14 @@ export default function SupportPage() {
             />
           </div>
         </FloatingSection>
+
+        <NextStep
+          eyebrow="When you're ready"
+          title="No rush. The next step will still be there tomorrow."
+          line="When it feels right, have a look at where other players landed, or start mapping your own route."
+          primary={{ to: '/success-stories', label: 'Read player stories' }}
+          secondary={{ to: '/pathway', label: 'Explore your pathway' }}
+        />
       </div>
     </SiteLayout>
   )

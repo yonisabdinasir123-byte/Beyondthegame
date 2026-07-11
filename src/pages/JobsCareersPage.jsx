@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SiteLayout        from '../components/SiteLayout'
 import FloatingSection   from '../components/FloatingSection'
+import NextStep          from '../components/NextStep'
 import GlassCard         from '../components/GlassCard'
 import InterestsForm     from '../components/careers/InterestsForm'
 import CareerResults     from '../components/careers/CareerResults'
@@ -585,6 +586,12 @@ export default function JobsCareersPage() {
           <NetworkingTracker />
         </FloatingSection>
 
+        <NextStep
+          title="Applications out? See where they can take you."
+          line="Players who left the academy system are now coaches, physios, analysts and founders. Their stories are proof the plan works."
+          primary={{ to: '/success-stories', label: 'Read their stories' }}
+          secondary={{ to: '/support', label: 'Feeling stuck? Get support' }}
+        />
       </div>
     </SiteLayout>
   )

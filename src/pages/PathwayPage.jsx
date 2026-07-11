@@ -27,6 +27,7 @@ import Tournaments       from '../components/pathway/Tournaments'
 import CompatibleLeagues from '../components/pathway/CompatibleLeagues'
 import CVBuilder         from '../components/pathway/CVBuilder'
 import SuccessStories    from '../components/pathway/SuccessStories'
+import NextStep          from '../components/NextStep'
 import { GoalProgress }  from '../components/GoalSystem'
 import PromptCard        from '../components/PromptCard'
 import MoodBoard         from '../components/MoodBoard'
@@ -397,6 +398,13 @@ export default function PathwayPage() {
       >
         <SuccessStories stories={testimonials} />
       </PwySection>
+
+      <NextStep
+        title="Sorted your next club? Sort your next qualification."
+        line="Playing is one half of the plan. Courses, apprenticeships and open days near you are the other."
+        primary={{ to: '/education', label: 'Explore education options' }}
+        secondary={{ to: '/success-stories', label: 'Read player stories' }}
+      />
 
     </div>
     </SiteLayout>

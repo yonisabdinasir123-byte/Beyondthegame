@@ -8,6 +8,7 @@ import SiteLayout from '../components/SiteLayout'
 import GlassCard from '../components/GlassCard'
 import FloatingSection from '../components/FloatingSection'
 import SuccessStories from '../components/pathway/SuccessStories'
+import NextStep from '../components/NextStep'
 import { testimonials } from '../data/pathwayData'
 import { useMagnetic, useSpotlight } from '../App.jsx'
 import './SuccessStoriesPage.css'
@@ -94,6 +95,13 @@ export default function SuccessStoriesPage() {
             ))}
           </ul>
         </section>
+
+        <NextStep
+          title="Their story started with one step. Yours can too."
+          line="Find a club at your level, build your CV, and map what comes next."
+          primary={{ to: '/pathway', label: 'Start your pathway' }}
+          secondary={{ to: '/support', label: 'Talk to someone first' }}
+        />
       </div>
     </SiteLayout>
   )

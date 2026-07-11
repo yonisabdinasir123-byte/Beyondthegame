@@ -25,9 +25,9 @@
   gap: var(--space-4);
   height: 64px;
   padding: 0 10px 0 18px;
-  background: rgba(255, 255, 255, 0.82);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  backdrop-filter: blur(16px) saturate(150%);
+  background: var(--glass-fill-raised);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   border: 1px solid rgba(7, 33, 29, 0.08);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-float);
@@ -190,8 +190,8 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur-std) var(--ease-out-soft);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(var(--glass-blur-scrim));
+  backdrop-filter: blur(var(--glass-blur-scrim));
 }
 .fnav__scrim.is-open { opacity: 1; pointer-events: auto; }
 

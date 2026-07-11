@@ -119,6 +119,57 @@
   max-width: 60ch;
 }
 
+/* ── NextStep: the closing beat of every inner page ─────────────
+   A centred, quieter glass band: eyebrow, one-line invitation, one
+   solid link and an optional ghost link. Tokens only. */
+.next-step__card {
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: .5rem;
+}
+.next-step__title {
+  font: var(--type-h2);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  margin: .3rem 0 0;
+}
+.next-step__line {
+  font: var(--type-body);
+  color: var(--text-secondary);
+  max-width: 52ch;
+  margin: 0;
+}
+.next-step__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+.next-step__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: .8rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--dur-std) var(--ease-out-soft), box-shadow var(--dur-std) var(--ease-out-soft);
+}
+.next-step__btn--solid {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: var(--glow-teal);
+}
+.next-step__btn--ghost {
+  color: var(--color-primary-strong);
+  border: 1.5px solid var(--teal-300);
+  background: var(--glass-fill-quiet);
+}
+.next-step__btn:hover { transform: translateY(-2px); }
+.next-step__btn:focus-visible { outline: 3px solid var(--color-primary-deep); outline-offset: 3px; }
+
 @media (prefers-reduced-motion: reduce) {
   .site-bg__blob { animation: none !important; }
+  .next-step__btn:hover { transform: none; }
 }

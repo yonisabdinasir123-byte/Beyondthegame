@@ -162,6 +162,9 @@
   --glass-stroke-dark:  rgba(202, 242, 78, 0.16);
   --glass-blur:         16px;
   --glass-blur-strong:  26px;
+  --glass-blur-sm:      8px;   /* child cards nested inside a glass panel */
+  --glass-blur-scrim:   2px;   /* mobile-menu scrim softening */
+  --glass-fill-raised:  rgba(255, 255, 255, 0.82); /* nested child card fill */
   --glass-radius:       var(--radius-lg);
   /* Layered, softly coloured shadows + top inner highlight (the "wet glass" edge) */
   --glass-shadow:

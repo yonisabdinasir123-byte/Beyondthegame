@@ -17,6 +17,7 @@ import { storage } from '../utils/storage'
 import SiteLayout    from '../components/SiteLayout'
 import GlassCard     from '../components/GlassCard'
 import FloatingSection from '../components/FloatingSection'
+import NextStep from '../components/NextStep'
 import CollegeSearch from '../components/education/CollegeSearch'
 import EventsList    from '../components/education/EventsList'
 import QualsMatcher  from '../components/education/QualsMatcher'
@@ -287,6 +288,13 @@ export default function EducationPage() {
         >
           <EventsList town={town} />
         </FloatingSection>
+
+        <NextStep
+          title="Qualification in progress? Get paid while you learn."
+          line="See live jobs near you, keep your applications organised, and track who you have spoken to."
+          primary={{ to: '/jobs-careers', label: 'See live jobs near you' }}
+          secondary={{ to: '/pathway', label: 'Keep playing while you study' }}
+        />
       </div>
     </SiteLayout>
   )
