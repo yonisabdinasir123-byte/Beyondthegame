@@ -30,15 +30,32 @@ function Hero() {
       ref={spotRef}
       style={{ '--macro-ground': 'radial-gradient(ellipse at 30% 50%, #114b41 0%, #0b2e29 55%, #071a17 100%)' }}
     >
-      <div className="macro-hero__inner">
-        <span className="macro-hero__eyebrow">Success Stories</span>
-        <h1 className="macro-hero__title">They were exactly where you are.</h1>
-        <p className="macro-hero__sub">Real players. Real routes back into the game and beyond it.</p>
-        <span className="macro-hero__cta-wrap">
-          <button type="button" className="macro-hero__cta" onClick={toStories} ref={magnetRef}>
-            Read their journeys →
-          </button>
-        </span>
+      <div className="macro-hero__inner macro-hero__inner--split">
+        <div>
+          <span className="macro-hero__eyebrow">Success Stories</span>
+          <h1 className="macro-hero__title">They were exactly where you are.</h1>
+          <p className="macro-hero__sub">Real players. Real routes back into the game and beyond it.</p>
+          <span className="macro-hero__cta-wrap">
+            <button type="button" className="macro-hero__cta" onClick={toStories} ref={magnetRef}>
+              Read their journeys →
+            </button>
+          </span>
+        </div>
+
+        {/* Where each player actually started and where they are now. Shows the
+            range of routes straight away instead of leaving the hero half empty. */}
+        <aside className="macro-hero__aside" aria-labelledby="hero-routes-title">
+          <h2 className="macro-hero__aside-title" id="hero-routes-title">Routes on this page</h2>
+          <ul className="macro-hero__routes" role="list">
+            {testimonials.slice(0, 4).map(s => (
+              <li key={s.id} className="macro-hero__route">
+                <span className="macro-hero__route-from">{s.from}</span>
+                <span className="macro-hero__route-arrow" aria-hidden="true">→</span>
+                <span className="macro-hero__route-to">{s.to}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </div>
   )
