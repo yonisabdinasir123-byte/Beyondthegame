@@ -16,6 +16,7 @@
  *   - while fetching           → loading state
  */
 import { useState, useId } from 'react'
+import SkeletonList from '../SkeletonList'
 import GlassCard from '../GlassCard'
 
 const DISTANCES = [5, 10, 20, 30]
@@ -147,10 +148,12 @@ export default function JobAdverts() {
       )}
 
       {status === 'loading' && (
-        <div className="jobs-state" role="status" aria-live="polite">
-          <span className="jobs-spinner" aria-hidden="true" />
-          <p>Finding jobs near you</p>
-        </div>
+        <>
+          <p className="jobs-loading-label">
+            <span className="t-shimmer" data-text="Finding jobs near you">Finding jobs near you</span>
+          </p>
+          <SkeletonList rows={4} label="Finding jobs near you" />
+        </>
       )}
 
       {status === 'needsKey' && (

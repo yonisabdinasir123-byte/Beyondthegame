@@ -13,6 +13,7 @@ import SiteBackground  from './components/SiteBackground.jsx'
 import ScrollToTop     from './components/ScrollToTop.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import { AppProvider }   from './context/AppContext.jsx'
+import './styles/transitions.css'
 import './styles/glass.css'
 import './index.css'
 

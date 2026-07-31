@@ -880,6 +880,27 @@ export function FooterSection({ onLogin, onSignup }) {
 function Modal({ isOpen, onClose, labelId, children }) {
   const overlayRef = useRef(null)
   const modalRef = useRef(null)
+  // Stay mounted for the length of the close transition, otherwise the modal
+  // vanishes instantly and the scale-down never plays. `phase` is the visual
+  // state; `mounted` is whether we render at all.
+  const [mounted, setMounted] = useState(isOpen)
+  const [phase, setPhase] = useState(isOpen ? 'open' : 'closed')
+
+  useEffect(() => {
+    if (isOpen) {
+      setMounted(true)
+      // Paint once in the pre-open state, then flip to open so the transition runs.
+      const raf = requestAnimationFrame(() => setPhase('open'))
+      return () => cancelAnimationFrame(raf)
+    }
+    if (!mounted) return
+    setPhase('closing')
+    const closeMs = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--modal-close-dur')
+    ) || 150
+    const t = setTimeout(() => { setPhase('closed'); setMounted(false) }, closeMs)
+    return () => clearTimeout(t)
+  }, [isOpen, mounted])
 
   // Body scroll lock
   useEffect(() => {
@@ -928,18 +949,21 @@ function Modal({ isOpen, onClose, labelId, children }) {
     }
   }, [isOpen])
 
-  if (!isOpen) return null
+  if (!mounted) return null
 
   return (
     <div
-      className="modal-overlay"
+      className={`modal-overlay${phase === 'open' ? ' is-open' : ''}`}
       ref={overlayRef}
       onClick={(e) => { if (e.target === overlayRef.current) onClose() }}
       role="dialog"
       aria-modal="true"
       aria-labelledby={labelId}
     >
-      <div className="modal" ref={modalRef}>
+      <div
+        className={`modal t-modal${phase === 'open' ? ' is-open' : ''}${phase === 'closing' ? ' is-closing' : ''}`}
+        ref={modalRef}
+      >
         {children}
       </div>
     </div>

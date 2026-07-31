@@ -11,6 +11,7 @@
  *   - genuinely empty
  */
 import { useState, useEffect, useId } from 'react'
+import SkeletonList from '../SkeletonList'
 import GlassCard from '../GlassCard'
 
 const RADII = [5, 10, 20]
@@ -115,13 +116,13 @@ export default function EventsList({ town }) {
         {status === 'ok' && (
           <><strong>{events.length}</strong> event{events.length !== 1 ? 's' : ''} within {distance} miles of {location}</>
         )}
-        {status === 'loading' && 'Looking for events near you…'}
+        {status === 'loading' && (
+          <span className="t-shimmer" data-text="Looking for events near you">Looking for events near you</span>
+        )}
       </p>
 
       {status === 'loading' && (
-        <GlassCard className="edu-state-card" role="status" aria-live="polite">
-          <p className="edu-state-card__text">Looking for events within {distance} miles…</p>
-        </GlassCard>
+        <SkeletonList rows={3} label={`Looking for events within ${distance} miles`} />
       )}
 
       {status === 'needsKey' && (

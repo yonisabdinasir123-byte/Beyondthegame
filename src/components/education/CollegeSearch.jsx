@@ -11,6 +11,7 @@
  * dates need a per-college source.
  */
 import { useState, useEffect, useCallback, useId } from 'react'
+import SkeletonList from '../SkeletonList'
 import { DEFAULT_COORDS } from '../../utils/distance'
 import { storage } from '../../utils/storage'
 import GlassCard from '../GlassCard'
@@ -123,13 +124,13 @@ export default function CollegeSearch({ userCoords, onSaveOpenDay }) {
         {status === 'ok' && (
           <><strong>{colleges.length}</strong> college{colleges.length !== 1 ? 's' : ''} within {radius} miles</>
         )}
-        {status === 'loading' && 'Finding colleges near you…'}
+        {status === 'loading' && (
+          <span className="t-shimmer" data-text="Finding colleges near you">Finding colleges near you</span>
+        )}
       </p>
 
       {status === 'loading' && (
-        <GlassCard className="edu-state-card" role="status" aria-live="polite">
-          <p className="edu-state-card__text">Finding colleges within {radius} miles…</p>
-        </GlassCard>
+        <SkeletonList rows={3} label={`Finding colleges within ${radius} miles`} />
       )}
 
       {status === 'needsKey' && (
