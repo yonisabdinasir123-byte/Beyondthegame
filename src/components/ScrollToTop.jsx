@@ -16,7 +16,22 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export default function ScrollToTop() {
-  const { pathname, hash } = useLocation()
+  // `key` is unique per history entry, so it changes even when the path does
+  // not. Keying off pathname alone missed the common case of clicking the nav
+  // link for the page you are already on (Home while on Home), which left the
+  // reader stranded where they were.
+  const { pathname, hash, key } = useLocation()
+
+  // The browser restores the previous scroll position on a history entry
+  // asynchronously, which lands AFTER our reset and undoes it. Owning scroll
+  // ourselves is the only way to make the reset stick.
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      const prev = window.history.scrollRestoration
+      window.history.scrollRestoration = 'manual'
+      return () => { window.history.scrollRestoration = prev }
+    }
+  }, [])
 
   useEffect(() => {
     if (hash) {
@@ -28,9 +43,31 @@ export default function ScrollToTop() {
       })
       return
     }
-    // Plain route change: land at the very top, instantly.
+    // Plain navigation: land at the very top, instantly.
+    // Re-assert over the next two frames. Pages whose content settles after
+    // mount (reveal animations, late layout) can otherwise drift a hundred
+    // pixels down before the reader sees anything. Cancelled if the reader
+    // scrolls in the meantime, so we never fight a deliberate scroll.
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-  }, [pathname, hash])
+
+    let frames = 0
+    let raf = 0
+    const settle = () => {
+      if (window.scrollY > 0) window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      if (++frames < 2) raf = requestAnimationFrame(settle)
+    }
+    raf = requestAnimationFrame(settle)
+
+    const cancel = () => { cancelAnimationFrame(raf); frames = 2 }
+    window.addEventListener('wheel', cancel, { passive: true, once: true })
+    window.addEventListener('touchstart', cancel, { passive: true, once: true })
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('wheel', cancel)
+      window.removeEventListener('touchstart', cancel)
+    }
+  }, [pathname, hash, key])
 
   return null
 }
