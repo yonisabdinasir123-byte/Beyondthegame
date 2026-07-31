@@ -17,6 +17,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext.jsx'
+import { cssDurationMs } from '../utils/motion'
 import './FloatingNav.css'
 
 const LINKS = [
@@ -32,6 +33,9 @@ export default function FloatingNav({ onLogin, onSignup }) {
   const { pathname } = useLocation()
   const [condensed, setCondensed] = useState(false)
   const [open, setOpen] = useState(false)
+  // Keep the panel in the DOM for the length of the close so the dismissal
+  // transition can play; `hidden` alone removes it instantly.
+  const [closing, setClosing] = useState(false)
   const panelRef = useRef(null)
   const toggleRef = useRef(null)
   const { savedCount } = useApp()
@@ -60,6 +64,21 @@ export default function FloatingNav({ onLogin, onSignup }) {
   // ── Close the mobile panel on route change ───────────────────────────
   useEffect(() => { setOpen(false) }, [pathname])
 
+  // ── Hold the panel mounted through the close transition ──────────────
+  // The timer is started here rather than in an effect: an effect keyed on
+  // [open, closing] re-runs on the same tick that sets both, and clears the
+  // closing flag before the transition can paint.
+  const closeTimer = useRef(0)
+  const closePanel = () => {
+    if (!open) return
+    const ms = cssDurationMs('--dropdown-close-dur', 150)
+    setClosing(true)
+    setOpen(false)
+    clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setClosing(false), ms)
+  }
+  useEffect(() => () => clearTimeout(closeTimer.current), [])
+
   // ── Mobile panel: body lock, Escape, focus trap ──────────────────────
   useEffect(() => {
     if (!open) return
@@ -75,7 +94,7 @@ export default function FloatingNav({ onLogin, onSignup }) {
     const t = setTimeout(() => first?.focus(), 40)
 
     const onKey = (e) => {
-      if (e.key === 'Escape') { setOpen(false); toggleRef.current?.focus(); return }
+      if (e.key === 'Escape') { closePanel(); toggleRef.current?.focus(); return }
       if (e.key !== 'Tab' || !focusable?.length) return
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl?.focus() }
       else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first?.focus() }
@@ -88,8 +107,8 @@ export default function FloatingNav({ onLogin, onSignup }) {
     }
   }, [open])
 
-  const handleLogin  = () => { onLogin?.();  setOpen(false) }
-  const handleSignup = () => { onSignup?.(); setOpen(false) }
+  const handleLogin  = () => { onLogin?.();  closePanel() }
+  const handleSignup = () => { onSignup?.(); closePanel() }
 
   return (
     <header className={`fnav${condensed ? ' fnav--condensed' : ''}`}>
@@ -128,7 +147,7 @@ export default function FloatingNav({ onLogin, onSignup }) {
           type="button"
           ref={toggleRef}
           className="fnav__toggle"
-          onClick={() => setOpen(o => !o)}
+          onClick={() => (open ? closePanel() : setOpen(true))}
           aria-expanded={open}
           aria-controls="fnav-panel"
           aria-label={open ? 'Close menu' : 'Open menu'}
@@ -142,17 +161,18 @@ export default function FloatingNav({ onLogin, onSignup }) {
       {/* ── Mobile full panel ───────────────────────────────────────── */}
       <div
         className={`fnav__scrim${open ? ' is-open' : ''}`}
-        onClick={() => setOpen(false)}
+        onClick={closePanel}
         aria-hidden="true"
       />
       <div
         id="fnav-panel"
         ref={panelRef}
-        className={`fnav__panel${open ? ' is-open' : ''}`}
+        className={`fnav__panel${open ? ' is-open' : ''}${closing ? ' is-closing' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
-        hidden={!open}
+        data-phase={open ? 'open' : closing ? 'closing' : 'closed'}
+        hidden={!open && !closing}
       >
         <ul className="fnav__panel-links" role="list">
           {LINKS.map(({ to, label }) => (

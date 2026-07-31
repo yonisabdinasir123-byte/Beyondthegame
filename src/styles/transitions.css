@@ -501,11 +501,16 @@
 .t-shimmer { --shimmer-base: var(--text-secondary); --shimmer-highlight: var(--teal-600); }
 
 /* Overlay fades with the modal so the backdrop does not snap in/out */
+/* Open/close asymmetry: the backdrop leaves at close speed (150ms), not the
+   250ms it arrived with. A dismissal has to get out of the way. */
 .modal-overlay {
   opacity: 0;
+  transition: opacity var(--modal-close-dur) var(--modal-ease);
+}
+.modal-overlay.is-open {
+  opacity: 1;
   transition: opacity var(--modal-open-dur) var(--modal-ease);
 }
-.modal-overlay.is-open { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay { transition: none !important; }
 }

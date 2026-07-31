@@ -208,12 +208,21 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--sh-xl);
   transform-origin: top center;
-  transform: translateY(-10px) scale(0.98);
+  /* Dropdown usage: opens from --dropdown-pre-scale (0.97) over 250ms,
+     closes quicker (150ms) and barely scales (0.99) so dismissal feels
+     immediate. Open/close asymmetry per the motion tokens. */
+  transform: translateY(-10px) scale(var(--dropdown-pre-scale));
   opacity: 0;
-  transition: transform var(--dur-std) var(--ease-out-soft),
-              opacity var(--dur-std) var(--ease-out-soft);
+  transition: transform var(--dropdown-open-dur) var(--dropdown-ease),
+              opacity var(--dropdown-open-dur) var(--dropdown-ease);
 }
 .fnav__panel.is-open { transform: none; opacity: 1; }
+.fnav__panel.is-closing {
+  transform: translateY(-4px) scale(var(--dropdown-closing-scale));
+  opacity: 0;
+  transition: transform var(--dropdown-close-dur) var(--dropdown-ease),
+              opacity var(--dropdown-close-dur) var(--dropdown-ease);
+}
 
 .fnav__panel-links {
   list-style: none;

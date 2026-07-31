@@ -1,3 +1,4 @@
+import { cssDurationMs } from './utils/motion'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { GoalPicker } from './components/GoalSystem.jsx'
@@ -895,9 +896,7 @@ function Modal({ isOpen, onClose, labelId, children }) {
     }
     if (!mounted) return
     setPhase('closing')
-    const closeMs = parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue('--modal-close-dur')
-    ) || 150
+    const closeMs = cssDurationMs('--modal-close-dur', 150)
     const t = setTimeout(() => { setPhase('closed'); setMounted(false) }, closeMs)
     return () => clearTimeout(t)
   }, [isOpen, mounted])
